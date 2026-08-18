@@ -10,7 +10,10 @@ class UserModel {
             $stmt = $conexao->prepare($sql);
             $stmt->bind_param("ss", $data["email_user"], $data["senha_user"]);
             $stmt->execute();
+            
             $userId = $stmt->insert_id;
+            $stmt->close();
+            $conexao->close();
 
             return $userId;
         }
@@ -18,8 +21,5 @@ class UserModel {
             echo "Erro";
             return null;
         }
-
-        $stmt->close();
-        $conexao->close();
     }
 }

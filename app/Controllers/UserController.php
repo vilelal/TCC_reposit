@@ -12,7 +12,6 @@ class UserController {
             echo "Erro";
             return;
         }
-        
         if (!is_string($_POST["senha_user"])) {
             echo "Erro";
             return;
@@ -21,7 +20,7 @@ class UserController {
         $user = new UserModel();
         $userId = $user->cadastroUser($_POST);
 
-        if (!$userid) {
+        if (!$userId) {
             return;
         }
         header("Location: ?route=home");

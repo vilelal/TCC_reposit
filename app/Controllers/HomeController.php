@@ -2,6 +2,6 @@
 
 class HomeController {
     public function home() {
-        include_once "app/Views/home.php";
+        require_once "app/Views/home.php";
     }
 }
