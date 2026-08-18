@@ -25,4 +25,13 @@ switch ($route) {
         $controller->home();
 
         break;
+
+    case "cadastro-form":
+        $controller = new UserController();
+        $controller->formCadastro();
+        break;
+
+    case "cadastro": 
+        $controller = new UserController();
+        $controller->cadastro();
 }

@@ -12,10 +12,11 @@ class UserModel {
             $stmt->execute();
             $userId = $stmt->insert_id;
 
-            return $userId
+            return $userId;
         }
         catch(Exception $err) {
             echo "Erro";
+            return null;
         }
 
         $stmt->close();

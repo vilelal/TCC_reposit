@@ -7,5 +7,6 @@
 </head>
 <body>
     <h1>oiiiiiiiiiii</h1>
+    <a href="?route=cadastro-form">cadastro</a>
 </body>
 </html>
