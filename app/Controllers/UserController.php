@@ -1,6 +1,7 @@
 <?php
 
 require_once __DIR__ . "/../Models/UserModel.php";
+require_once __DIR__ . "/CriptoController.php";
 
 class UserController {
     public function formCadastro() {
@@ -8,17 +9,17 @@ class UserController {
     }
 
     public function cadastro() {
-        if (!is_string($_POST["email_user"])) {
-            echo "Erro";
-            return;
-        }
-        if (!is_string($_POST["senha_user"])) {
-            echo "Erro";
-            return;
-        }
+        $data = $_POST;
+        $cripto = new CriptoController();
+
+        // alguem tem que validar isso ai em
+
+        $data["senha_user"] = password_hash($data["senha_user"], PASSWORD_DEFAULT);
+        $data["cpf_user"] = $cripto::encrypt($data["cpf_user"]);
+        $data["telefone_user"] = $cripto::encrypt($data["telefone_user"]);
 
         $user = new UserModel();
-        $userId = $user->cadastroUser($_POST);
+        $userId = $user->cadastroUser($data);
 
         if (!$userId) {
             return;
