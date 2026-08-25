@@ -1,0 +1,45 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+.header{   
+    width: 100%;
+    min-height: 11.6vh;
+    background-color: rgb(201, 199, 196);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.logo{
+    width: 105%;
+    height: clamp(10px, 6.7vh, 500px);
+}
+
+.nome_empresa{
+    font-size: clamp(0.8rem, 1.2vw, 3rem);
+    font-family:'Archivo', sans-serif ;
+    font-weight: bolder;
+}
+
+.logo_area {
+    display: flex;
+    align-items: center;
+    margin-left: 6.5vh;
+   
+}
+
+/* .cabecalho{
+    font-size: ;
+    font-family: ;
+    font-weight: ;
+    
+    cursor: pointer;
+    
+
+} */
+
+
+
+
