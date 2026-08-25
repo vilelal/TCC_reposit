@@ -17,12 +17,17 @@ class UserController {
         $data["cpf_user"] = $cripto::encrypt($data["cpf_user"]);
         $data["telefone_user"] = $cripto::encrypt($data["telefone_user"]);
 
-        $user = new UserModel();
-        $userId = $user->cadastroUser($data);
+        $user = UserModel::cadastroUser($data);
 
-        if (!$userId) {
+        if (!$user) {
             return;
         }
+
+        // cria as variaveis de sessão apos o cadastro
+        $_SESSION["id"] = $user["id"];
+        $_SESSION["nome"] = $user["nome"];
+        $_SESSION["tipo"] = $user["tipo"];
+
         header("Location: ?route=home");
     }
 }

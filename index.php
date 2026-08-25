@@ -1,6 +1,24 @@
 <?php
 
-session_start();
+$time = 7 * 24 * 60 * 60; // tempo da session (quanto tempo ele fica logado aofazer login)
+
+// config da session
+session_set_cookie_params([
+    "lifetime" => $time,
+    "path" => "/",
+    "httponly" => true,
+    "samesite" => "Lax"
+]);
+
+// configura tempo maximo da session no servidor
+ini_set("session.gc_maxlifetime", $time);
+
+session_start(); // inicia session
+
+// renova o tempo da sessão a cada requisição
+if (isset($_COOKIE[session_name()])) {
+    setcookie(session_name(), session_id(), time() + $time, "/");
+}
 
 $route = $_GET["route"] ?? "home";
 

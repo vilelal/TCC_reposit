@@ -4,13 +4,13 @@ require_once __DIR__ . "/../conexao.php";
 
 class UserModel
 {
-    public function cadastroUser($data)
+    public static function cadastroUser($data)
     {
         // Ativa o disparo de exceções no mysqli para entrar no catch em caso de erro
         mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
 
         try {
-            $conexao = conectarBanco();
+            $conexao = Database::conectarBanco();
 
             // Inicia uma transação
             $conexao->begin_transaction();
@@ -51,7 +51,13 @@ class UserModel
             $conexao->commit();
             $conexao->close();
 
-            return $userId;
+            $user = [
+                "id" => $userId,
+                "nome" => $data["nome_user"],
+                "tipo" => "cliente",
+            ];
+
+            return $user;
         } catch (Exception $err) {
             // Desfaz alterações no banco caso algo falhe
             if (isset($conexao) && $conexao instanceof mysqli) {
