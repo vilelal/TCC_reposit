@@ -8,12 +8,6 @@
 </head>
 
 <body>
-    <?php
-    if (isset($_SESSION["id"])) {
-        echo $_SESSION["nome"];
-    }
-
-    ?>
     <form action="?route=cadastro" method="post">
         <input type="email" name="email_user" placeholder="nome@exemplo.com" required>
         <input type="password" name="senha_user" placeholder="Digite sua senha" required>

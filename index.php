@@ -52,4 +52,20 @@ switch ($route) {
     case "cadastro": 
         $controller = new UserController();
         $controller->cadastro();
+        break;
+    
+    case "login-form":
+        $controller = new UserController();
+        $controller->formLogin();
+        break;
+    
+    case "login":
+        $controller = new UserController();
+        $controller->login();
+        break;
+
+    case "logout": 
+        $controller = new UserController();
+        $controller->logout();
+        break;
 }
