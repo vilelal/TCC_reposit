@@ -69,4 +69,27 @@ class UserController
 
         header("Location: ?route=home");
     }
+
+    public function cadastroPrestador() {
+        $data = $_POST;
+        $cripto = new CriptoController();
+
+
+        $data["senha_user"] = password_hash($data["senha_user"], PASSWORD_DEFAULT);
+        $data["cpf_cnpj_user"] = $cripto::encrypt($data["cpf_cnpj_user"]);
+        $data["tel_user"] = $cripto::encrypt($data["tel_user"]);
+
+        $user = UserModel::cadastroUser($data);
+
+        if (!$user) {
+            return;
+        }
+
+        // cria as variaveis de sessão apos o cadastro
+        $_SESSION["id"] = $user["id"];
+        $_SESSION["nome"] = $user["nome"];
+        $_SESSION["tipo"] = $user["tipo"];
+
+        header("Location: ?route=home");
+    }
 }
