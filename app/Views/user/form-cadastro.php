@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cadastro</title>
-    <link rel="stylesheet" href="/TCC_reposit/TCC_reposit/CSS/styleCad.css">
+    <link rel="stylesheet" href="app/css/styleCad.css">
 </head>
 
 <body>

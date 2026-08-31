@@ -93,4 +93,9 @@ class UserModel
 
         return $user;
     }
+
+    public static function cadastroPrestador() {
+        $conexao = Database::conectarBanco();
+        $sql = ""
+    }
 }
