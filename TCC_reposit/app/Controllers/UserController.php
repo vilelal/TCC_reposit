@@ -12,7 +12,6 @@ class UserController {
         $data = $_POST;
         $cripto = new CriptoController();
 
-        // alguem tem que validar isso ai em
 
         $data["senha_user"] = password_hash($data["senha_user"], PASSWORD_DEFAULT);
         $data["cpf_user"] = $cripto::encrypt($data["cpf_user"]);
