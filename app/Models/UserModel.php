@@ -28,17 +28,12 @@ class UserModel
                     cep_TB_cliente, rua_TB_cliente, cidade_TB_cliente, numeroCasa_TB_cliente)
                     VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
             $stmt = $conexao->prepare($sql);
-            // Remove qualquer caractere que não seja número
-            $telefoneLimpo = preg_replace('/[^0-9]/', '', $data["telefone_user"]);
-            $cpfLimpo = preg_replace('/[^0-9]/', '', $data["cpf_user"]);
-
-            // Utilize as variáveis limpadas no bind_param
             $stmt->bind_param(
                 "isssssss",
                 $userId,
                 $data["nome_user"],
-                $cpfLimpo,
-                $telefoneLimpo, // Passa o telefone sem máscara/espaços
+                $data["cpf_user"],
+                $data["telefone_user"],
                 $data["cep_user"],
                 $data["rua_user"],
                 $data["cidade_user"],
@@ -108,13 +103,12 @@ class UserModel
                 $stmt->close();
             } else {
                 $userId = $_SESSION["id"];
-                $sql = "UPDATE TB_usuario SET tipo_TB_usuario = prestador WHERE PK_id_TB_usuario = ?";
+                $sql = "UPDATE TB_usuario SET tipo_TB_usuario = 'prestador' WHERE PK_id_TB_usuario = ?";
                 $stmt = $conexao->prepare($sql);
                 $stmt->bind_param("i", $_SESSION["id"]);
                 $stmt->execute();
                 $stmt->close();
             }
-
             // 2. Inserção do Perfil do Prestador
             $sql = "INSERT INTO TB_prestadorPerfil (FK_id_TB_usuario, nome_TB_prestador, cpf_cnpj_TB_prestador, tel_TB_prestador,
                     cep_TB_prestadorPerfil, rua_TB_prestadorPerfil, cidade_TB_prestadorPerfil, numeroCasa_TB_prestadorPerfil, bio_TB_prestador)
@@ -151,8 +145,23 @@ class UserModel
             if (isset($conexao) && $conexao instanceof mysqli) {
                 $conexao->rollback();
                 $conexao->close();
+                echo $err;
             }
         }
-
+    }
+    public static function getClientById($id) {
+        $conexao = Database::conectarBanco();
+        $sql = "SELECT * FROM TB_clientePerfil
+                INNER JOIN TB_usuario ON FK_id_TB_usuario = PK_id_TB_usuario
+                WHERE FK_id_TB_usuario = ?";
+        $stmt = $conexao->prepare($sql);
+        $stmt->bind_param("i", $id);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $user = $result->fetch_assoc();
+        if (!$user) {
+            return null;
+        }
+        return $user;
     }
 }
