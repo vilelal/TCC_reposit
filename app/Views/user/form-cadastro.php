@@ -21,7 +21,7 @@
     <div class="cadastro">
            <h1>Cadastro</h1>
 
-             <form action="?route=cadastro" method="post">
+        <form action="?route=cadastro" method="post">
         <input type="email" name="email_user" placeholder="nome@exemplo.com" required>
         <input type="text" name="senha_user" placeholder="Digite sua senha" required>
         <input type="text" name="nome_user" placeholder="Digite seu nome" required>
