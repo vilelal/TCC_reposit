@@ -1,0 +1,145 @@
+body {
+    background-color: #F8F9FA;
+    margin: 0;
+    padding: 0;
+    font-family: 'Montserrat', sans-serif;
+}
+
+input {
+    display: block;
+    margin-bottom: 10px;
+    font-size: 28px;
+    border-radius: 15px;
+    border: 1px solid #000000;
+    background-color: #E7E5E5;
+    font-weight: 1000;
+    width: 100%;             /* Preenche a largura até o limite do padding */
+    max-width: 320px;        /* Define o tamanho exato da largura do campo */
+    margin-left: auto;       /* Centraliza na esquerda */
+    margin-right: auto;      /* Centraliza na direita */
+    margin-bottom: 20px;     /* Espaço entre os campos */
+
+}
+
+.container {
+    display: flex;
+    width: 100%;
+    min-height: 100vh;
+}
+
+.lado-laranja {
+    width: 33%;
+    background-color: #ffbd59;
+    text-align: center;
+}
+
+.cadastro {
+    
+    padding: 40px 50px;
+    background-color: #F8F9FA;
+    border-radius: 15px;
+    box-shadow: 0px 10px 25px rgba(0, 0, 0, 0.08);
+    box-sizing: border-box;
+    background-color: #FFFFFF;
+    box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.12);
+    width: 800px;           
+    text-align: center;
+}
+
+/* Título */
+h1 {
+    font-size: 64px;
+    color: #FBD34F;
+    font-weight: 800;
+}
+
+/* Botão */
+.btnLogar {
+    margin-top: 5%;
+    background-color: #FFFFFF;
+    color: #000000;
+    padding: 12px 0;
+    width: 70%;
+    display: inline-block;
+    font-size: 36px;
+    font-weight: 800;
+    border-style: none;
+    border-radius: 15px;
+}
+
+/* Textos */
+p {
+    font-size: 24px;
+    line-height: 0.1;
+    color: #FFFFFF;
+    font-weight: 800;
+    margin-bottom: 30px;
+}
+
+.bemvindo {
+    margin-top: 50%;
+    font-size: 64px;
+    color: #FFFFFF;
+    font-weight: 800;
+}
+
+.dados{
+    font-size: 28px;
+
+}
+
+.lado-direito{
+    width: 75%; /* Ganhou mais espaço lateral */
+    display: flex;
+    justify-content: center; /* Mantém o card centralizado no espaço extra */
+    align-items: center;
+}
+
+.endereco{
+    display:none;
+}
+
+.botoes {
+    display: flex;
+    justify-content: center; /* Coloca lado a lado e centraliza */
+    gap: 15px;               /* Espaço entre os botões */
+    margin-top: 25px;
+    width: 100%;
+}
+
+.btn-cadastrar{
+    display: none;
+}
+
+button {
+    padding: 10px 24px;
+    font-size: 16px;
+    font-weight: 700;
+    border-radius: 10px;
+    cursor: pointer;
+    border: none;
+}
+
+.btn-avancar{
+background-color: #FBD34F;
+  color: #FFFFFF;
+  border: none;
+  border-radius: 10px;
+  padding: 10px 24px;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+}
+.btn-voltar{
+    background-color: #FFFFFF;
+  color: #000000;
+  border: 1px solid #E0E0E0;
+  border-radius: 10px;
+  padding: 10px 24px;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+}
+
