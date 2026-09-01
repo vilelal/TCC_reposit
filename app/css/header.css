@@ -5,22 +5,25 @@
 }
 .header{   
     width: 100%;
-    min-height: 11.6vh;
-    background-color: rgb(201, 199, 196);
+    min-height: 11vh;
     display: flex;
     align-items: center;
     justify-content: space-between;
+      border-bottom: 3px solid #FDB441;
+      
 }
 
 .logo{
     width: 105%;
     height: clamp(10px, 6.7vh, 500px);
+    margin-top: 2%;
 }
 
 .nome_empresa{
-    font-size: clamp(0.8rem, 1.2vw, 3rem);
+    font-size: clamp(0.9rem, 1.30vw, 3rem);
     font-family:'Archivo', sans-serif ;
     font-weight: bolder;
+    
 }
 
 .logo_area {
@@ -30,15 +33,99 @@
    
 }
 
-/* .cabecalho{
-    font-size: ;
-    font-family: ;
-    font-weight: ;
-    
-    cursor: pointer;
-    
+.cabecalho a {
+text-decoration: none;
+font-family: 'Archivo', sans-serif;
+font-weight: bold;
+color: black;
+font-size: clamp(0.8rem, 0.9vw, 3.5rem);
 
-} */
+}
+
+.cabecalho a.btn-login{
+padding: clamp(0.5rem, 1vw, 0.75rem) clamp(0.1rem, 2vw, 1.5rem);
+background-color: #FDB441;
+border-radius: 5px;
+color: #ffffff;
+
+}
+
+.cabecalho a.btn-profissional{
+padding: clamp(0.5rem, 1.1vw, 3rem) 11px;
+background-color: #FDB441;
+border-radius: 5px;
+color: #ffffff;
+
+}
+.cabecalho {
+    display: flex;
+    align-items: center;
+    gap: clamp(1rem, 2vw, 2.5rem); /* distancia entre os links da direita */
+    margin-right: 6.5vh;
+}
+
+.separar{
+display: flex;
+    align-items: center;
+    gap: 2.3rem; /* Distanciaa entre o funcionamento e o serviços */
+    margin-right: 1rem; /*  botões para a direita (texto esquerda) */
+    margin-top: 2%;
+
+}
+
+.chat{
+    width:115% ;
+    opacity: 110%;
+    margin-top: 2%;
+    
+    padding-bottom: 6px;
+    /* Borda invisível para não dar o "pulo" no layout */
+    border-bottom: 2px solid transparent; 
+    transition: border-color 0.2s ease, color 0.2s ease;
+}
+
+.chat:hover{
+    border-bottom: 5px solid #FDB441;
+    border-radius: 2%;
+    transition: all 0.2s ease;
+}
+
+
+.cabecalho a.btn-login,
+.cabecalho a.btn-profissional {
+    transition: all 0.3s ease; /* Transição de 0.3 segundos */
+}
+
+/* 2. HOVER no Botão de Login */
+.cabecalho a.btn-login:hover {
+    background-color: #b87c1d; /* Amarelo um pouco mais escuro que o #FDB441 */
+    transform: translateY(-2px); /* Eleva o botão levemente para cima */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15); /* Sombra suave abaixo */
+}
+
+/* 3. HOVER no Botão Seja um Profissional */
+.cabecalho a.btn-profissional:hover {
+    background-color: #b87c1d;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.separar a{
+    padding-bottom: 10px; /* Aumente este valor se quiser a linha ainda mais para baixo */
+    
+    /* Borda invisível para não dar o "pulo" no layout */
+    border-bottom: 2px solid transparent; 
+    
+    /* Transição suave ao passar o mouse */
+    transition: border-color 0.3s ease, color 0.3s ease;
+}
+
+.separar a:hover{
+    border-bottom: 5px solid #FDB441;
+}
+
+
+
 
 
 
