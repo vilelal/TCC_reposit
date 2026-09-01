@@ -78,4 +78,8 @@ switch ($route) {
         $controller = new UserController();
         $controller->logout();
         break;
+    case "cadastro-servico":
+        $controller = new ServiceController();
+        $controller->salvarPedido();
+        break;
 }

@@ -16,6 +16,7 @@
     <br>
     <br>
     <a href="?route=cadastro-form">cadastro</a>
+    <a href="?route=cadastro-servico">cadastro serivco</a>
     <a href="?route=prestador-form">cadastro prestador</a>
     <?php 
     if (isset($_SESSION["id"])) {
