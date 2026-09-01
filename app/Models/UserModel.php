@@ -4,13 +4,13 @@ require_once __DIR__ . "/../conexao.php";
 
 class UserModel
 {
-    public function cadastroUser($data)
+    public static function cadastroUser($data)
     {
         // Ativa o disparo de exceções no mysqli para entrar no catch em caso de erro
         mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
 
         try {
-            $conexao = conectarBanco();
+            $conexao = Database::conectarBanco();
 
             // Inicia uma transação
             $conexao->begin_transaction();
@@ -51,7 +51,13 @@ class UserModel
             $conexao->commit();
             $conexao->close();
 
-            return $userId;
+            $user = [
+                "id" => $userId,
+                "nome" => $data["nome_user"],
+                "tipo" => "cliente",
+            ];
+
+            return $user;
         } catch (Exception $err) {
             // Desfaz alterações no banco caso algo falhe
             if (isset($conexao) && $conexao instanceof mysqli) {
@@ -62,5 +68,29 @@ class UserModel
             // Exibe a mensagem real do erro do MySQL para diagnóstico
             die("Erro no cadastro: " . $err->getMessage());
         }
+    }
+
+    public static function login($data) {
+        $conexao = Database::conectarBanco();
+        $sql = "SELECT * FROM TB_clientePerfil
+        INNER JOIN TB_usuario ON FK_id_TB_usuario = PK_id_TB_usuario
+        WHERE email_TB_usuario = ?";
+
+        $stmt = $conexao->prepare($sql);
+        $stmt->bind_param("s", $data["email_user"]);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $stmt->close();
+        $conexao->close();
+        $user = $result->fetch_assoc();
+
+        if (!$user) {
+            return false;
+        }
+        if (!password_verify($data["senha_user"], $user["senha_TB_usuario"])) {
+            return false;
+        }
+
+        return $user;
     }
 }

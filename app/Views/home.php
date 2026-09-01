@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/TCC_reposit/css/style.css">
+    <link rel="stylesheet" href="app/css/style.css">
     <title>home</title>
 </head>
 <body>
@@ -17,6 +17,16 @@
     <br>
     <br>
     <a href="?route=cadastro-form">cadastro</a>
+    <?php 
+    if (isset($_SESSION["id"])) {
+        echo "<a href='?route=logout'>logout</a>";
+        echo "<h3> Olá {$_SESSION['nome']} </h3>";
+    }
+    else {
+        echo "<a href='?route=login-form'>login</a>";
+    }
+    ?>
+
     <form action="" method="POST">
         <input type="text" name="nome" placeholder="Digite o nome do serviço">
         <br>
