@@ -5,37 +5,55 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cadastro</title>
-    <link rel="stylesheet" href="app/css/styleCad.css">
+    <link rel="stylesheet" href="app/css/styleCadastro.css">
 </head>
 
 <body>
 
 <div class="container">
     <div class="lado-laranja">
-        <h1>Bem vindo!</h1>
-            <p>Já tem uma conta? 
-            Faça o login! </p>
+        <div class="bemvindo">Bem vindo!</div>
+
+            <p>Já tem uma conta? </p> 
+            <p>Faça o login! </p>
              <button class="btnLogar">Logar</button>
     </div>
 
+
+
+<div class="lado-direito">
     <div class="cadastro">
            <h1>Cadastro</h1>
-
-        <form action="?route=cadastro" method="post">
-        <input type="email" name="email_user" placeholder="nome@exemplo.com" required>
-        <input type="text" name="senha_user" placeholder="Digite sua senha" required>
-        <input type="text" name="nome_user" placeholder="Digite seu nome" required>
-        <input type="tel" name="telefone_user" placeholder="Digite seu telefone"> <!-- Preencher no formato de telefone automaticamente **FAZER   -->
-        <input type="text" name="cpf_user" placeholder="Digite seu CPF"> <!-- Preencher no formato de cpf automaticamente **FAZER   -->
+        <div class="dados">
+             <form action="?route=cadastro" method="post">
+        Digite seu E-mail
+        <input type="email" name="email_user" placeholder="" required>
+        Digite sua senha
+        <input type="text" name="senha_user" placeholder="" required>
+        Digite seu nome completo
+        <input type="text" name="nome_user" placeholder="" required>
+        Digite seu telefone
+        <input type="tel" name="telefone_user" placeholder=""> <!-- Preencher no formato de telefone automaticamente **FAZER   -->
+        Digite seu CPF
+        <input type="text" name="cpf_user" placeholder=""> <!-- Preencher no formato de cpf automaticamente **FAZER   -->
+        
+        <div class="endereco">        
         <h3> Endereço </h3>
         <input type="text" id="cep" name="cep_user" placeholder="Digite seu CEP" maxlength="8" pattern="\d{8}">
         <input type="text" name="rua_user" id="rua" placeholder="Digite sua rua">
         <input type="text" name="cidade_user" id="cidade" placeholder="Digite a sua cidade">
         <input type="text" name="numero_user" placeholder="Digite o numero">
+    </div>
 
-        <button type="submit"> cadastrar </button>
+    <div class="botoes">
+  <button class="btn-cadastrar">Cadastrar</button>
+  <button class="btn-avancar">Avançar</button>
+  <button class="btn-voltar">Voltar</button>
+  
+    </div>
     </form>
     </div>
+</div>
 </div>
 </body>
 

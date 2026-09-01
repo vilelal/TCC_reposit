@@ -70,6 +70,10 @@ class UserController
         header("Location: ?route=home");
     }
 
+    public function formPrestador() {
+        require_once __DIR__ . "/../Views/user/form-prestador.php";
+    }
+
     public function cadastroPrestador() {
         $data = $_POST;
         $cripto = new CriptoController();
@@ -79,7 +83,7 @@ class UserController
         $data["cpf_cnpj_user"] = $cripto::encrypt($data["cpf_cnpj_user"]);
         $data["tel_user"] = $cripto::encrypt($data["tel_user"]);
 
-        $user = UserModel::cadastroUser($data);
+        $user = UserModel::cadastroPrestador($data);
 
         if (!$user) {
             return;
