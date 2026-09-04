@@ -26,13 +26,13 @@ public static function criarSolicitacao($data) {
     try {
         $conexao = Database::conectarBanco();
         
-        $sql = "INSERT INTO TB_SolicitacaoServico (FK_id_TB_cliente, FK_id_TB_prestadorServico, data_agendamento_TB_SolicitacaoServico, valorTotal_TB_SolicitacaoServico) VALUES (?, ?, ?, ?)";
+        $sql = "INSERT INTO TB_SolicitacaoServico (FK_id_TB_cliente, FK_id_TB_prestadorServico, data_agendamento_TB_SolicitacaoServico, status_TB_SolicitacaoServico , valorTotal_TB_SolicitacaoServico) VALUES (?, ?, ?,'Pendente', ?)";
         $stmt = $conexao->prepare($sql);
         
-        $stmt->bind_param("iids", 
+        $stmt->bind_param("iidss", 
             $data["FK_id_TB_cliente"], 
             $data["FK_id_TB_prestadorServico"], 
-            $data["data_agendamento"], 
+            $data["data_agendamento"],
             $data["valor_total"]
         );
         

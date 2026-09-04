@@ -7,13 +7,13 @@ class ServiceController {
     
 public function salvarPedido() {
     // Garante que o cliente está logado e o ID existe na sessão
-    if (!isset($_SESSION["id_cliente"])) {
+    if (!isset($_SESSION["id"])) {
         header("Location: ?route=login-form");
         exit;
     }
 
     $data = $_POST;
-    $data["FK_id_TB_cliente"] = $_SESSION["id_cliente"]; 
+    $data["FK_id_TB_cliente"] = $_SESSION["id"]; 
 
     $sucesso = ServiceModel::criarSolicitacao($data);
 
