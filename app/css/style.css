@@ -10,10 +10,24 @@ body{
     text-decoration: none;
     font-weight: bold;
 }
+.sub-h1{
+    text-align: center;
+     margin-left: 0px;  
+     margin-right: 100px;
+    color: #eec34c;
+    text-decoration: none;
+    font-weight: bold;
+}
 .a{
     text-align: left;
   
     color: #eec34c;
+    text-decoration: none;
+    font-weight: bold;
+}
+.icone{
+    text-align: left;
+    color: #000000;
     text-decoration: none;
     font-weight: bold;
 }
@@ -110,4 +124,146 @@ button[type="submit"] {
 .category-card span {
     font-size: 0.8rem;
     font-weight: bold;
+}
+.popular-services {
+   display: grid;
+    grid-template-columns: repeat(3, 3fr);
+    width: 80%;
+    height: 50%;
+   margin-left: 150px;
+   gap: 10px;
+ 
+}
+.service-card{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    border: 1px solid #888888;
+    border-radius: 8px;
+    max-width: 400px;
+    max-height: 400px;
+
+}
+.card-button {
+    background-color: #ffc107;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+    margin-bottom: 10px;
+    font-weight: bold;
+    cursor: pointer;
+    margin-top: 10px;
+}
+.a-card{
+
+    color: #000000;
+    text-decoration: none;
+
+}
+.ad-banner {
+    display: flex;
+    flex-direction: column;
+    justify-content: left;
+    gap: 10px;
+    align-items: left;
+    background-color: #FCBA52;
+    color: #000000;
+    padding: 20px;
+    margin-top: 50px;
+    border-radius: 8px;
+    max-width: 1200%;
+    text-align:left;
+    margin-right: 20px;
+}
+.h2-esp{
+    color: #ffffff;
+    font-weight: bold;
+    margin-top: -60px;
+    text-align: center;
+    margin-right: 42%;
+}
+.titulo-ad{
+    text-align: left;
+    color: #000000;
+    font-weight: bold;
+}
+.ad-button {
+    margin-top: -70px;
+    display: flex;
+    justify-content: left;
+    align-items: left;
+    background-color: #ffffff;
+    color: #000000;
+    border: none;
+    margin-left: 0px;
+    padding: 10px 20px;
+    border-radius: 4px;
+    font-weight: bold;
+    cursor: pointer;
+    max-width: 300px;
+}
+
+.testimonials-container {
+    margin-top: -40px;
+    display: flex;
+    flex-direction: column;      
+    justify-content: right;
+    align-items: right;
+
+}
+
+.testimonial-card {
+    margin-left: 45%; 
+    border-bottom:5px solid  #FFCE2C;
+           
+}
+.comentario{
+    color: #000000;
+    font-weight: bold;
+}
+
+.star{
+    max-width: 20px;
+}
+.user{
+    margin-top: 10px;
+    max-width: 50px;
+    max-height: 50px;
+    border-radius: 50%;
+}
+.h1-center{
+    text-align: center;
+    color: #000000;
+    font-weight: bold;
+}
+.p-center{
+    display: flex;
+    justify-content: center;
+   margin-right: 15%;
+   margin-left: 15%;
+    color: #7c7c7c;
+    text-decoration: none;
+    font-weight: normal;
+}
+.conteiner-card-esp{
+    align-items: center;
+    margin-top: 20px;
+    display: grid;
+    grid-template-columns: repeat(3, 3fr);
+    width: 80%;
+    height: 50%;
+   margin-left: 150px;
+   gap: 10px;
+}
+.card-esp{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    border: 1px solid #888888;
+    border-radius: 8px;
+    max-width: 400px;
+    max-height: 400px;
+
 }

@@ -70,16 +70,22 @@ class UserController
         header("Location: ?route=home");
     }
 
+    public function formPrestador() {
+        require_once __DIR__ . "/../Views/user/form-prestador.php";
+    }
+
     public function cadastroPrestador() {
         $data = $_POST;
         $cripto = new CriptoController();
 
-
-        $data["senha_user"] = password_hash($data["senha_user"], PASSWORD_DEFAULT);
+        // criptografar senha caso o usuario tenha que digitar senha pra cadatro
+        if (!isset($_SESSION["id"])) {
+            $data["senha_user"] = password_hash($data["senha_user"], PASSWORD_DEFAULT);
+        }
         $data["cpf_cnpj_user"] = $cripto::encrypt($data["cpf_cnpj_user"]);
         $data["tel_user"] = $cripto::encrypt($data["tel_user"]);
 
-        $user = UserModel::cadastroUser($data);
+        $user = UserModel::cadastroPrestador($data);
 
         if (!$user) {
             return;
