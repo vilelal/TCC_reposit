@@ -143,3 +143,23 @@ background-color: #FBD34F;
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
 }
 
+
+img{
+    height: auto;
+    width: 400px;
+    position: absolute;
+  /* Gruda a imagem no lado direito, deixando 20px de margem */
+     top: 20%;     /* Opcional: centraliza verticalmente se quiser */
+  transform: translateY(-50%);
+  left: 800px;
+}
+
+.img{
+  height: auto;  
+  width: 10px;
+  position: relative; /* Ativa o controle de empilhamento */
+  z-index: 10;        /* Um número maior que o do formulário coloca a imagem na frente */
+
+
+}
+
