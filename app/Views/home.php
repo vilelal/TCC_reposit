@@ -7,11 +7,12 @@
     <title>home</title>
 </head>
 <body>
+    <div class="div-lado">
     <section class="hero-section">
     
     <div class="conteiner">
         <br><br><br><br><br><br>
-            <h1 class="h1">O profissional certo em poucos cliques. <a href="" class="a">Contrate já</a></h1>
+            <h1 class="h1">O profissional certo em poucos cliques. <br><a href="" class="a">Contrate já</a></h1>
     <p>Segurança e rapidez em encontrar o profissional ideal para suas necessidades.</p>
     <br>
     <br>
@@ -33,7 +34,7 @@
         <br>
         <button type="submit">Pesquisar</button>
     </form>
-    
+    </div>
     </div>
         <section class="categories-section">
         <h3>Profissionais Por Categoria</h3>
@@ -69,7 +70,7 @@
 <br><br>
 <h1 class="sub-h1">Nossos Serviços Populares</h1>
 <br>
-<!-- Adicione aqui a seção de cards de serviços populares -->
+
  <!-- 3 cards de serviços populares -->
 <div class="popular-services">
     
@@ -111,18 +112,24 @@
         <div class="titulo-ad">
         <h1>Quer ganhar mais renda e visibilidade?</h1>
 <!-- comentários -->
-<div class="testimonials-container">
-    <div class="testimonial-card"><h4><img  src="app/css/img/icone-user.png" alt="">Mario Fernandez <img class ="star" src="app/css/img/icone-estrela.png"  alt=""> 4.9</h4><p class="comentario">Uma das melhores decisões que tomei foi me cadastrar na FastService!! Desde os primeiros dias, os números de
-clientes e serviços realizados só vem aumentando mais!!</p>
-</div>
-    <div class="testimonial-card"><h4><img src="app/css/img/icone-user.png" alt="">Jéssica Silva <img class ="star" src="app/css/img/icone-estrela.png"  alt=""> 4.8</h4><p class="comentario">Sem dúvidas é algo que realmente faz a diferença no meu
-serviço! Cada vez mais consigo serviços, queria ter feito cadastro antes. Recomendo muito!!!</p>
-</div>
-    <div class="testimonial-card"><h4><img class="user" src="app/css/img/icone-user.png" alt="">Cléber Santos <img class ="star" src="app/css/img/icone-estrela.png"  alt=""> 4.7</h4> <p class="comentario">Além de ser uma plataforma que de muita visibilidade, é
-interessante como ajuda muito com dados, ela apresenta números de serviços, estatísticas em geral e outras funcões</p></div>
-</div>
-        <button class="ad-button"><a class="a-card" href=""><h4>Virar profissional da Fast Service</h4></a></button>
-    
+            <div class="testimonials-container">
+                 
+                <div class="testimonial-card"><h4><img  src="app/css/img/icone-user.png" alt="">Mario Fernandez <img class ="star" src="app/css/img/icone-estrela.png"  alt=""> 4.9</h4><p class="comentario">Uma das melhores decisões que tomei foi me cadastrar na FastService!! Desde os primeiros dias, os números de
+            clientes e serviços realizados só vem aumentando mais!!</p>
+            </div>
+           
+                <div class="testimonial-card"><h4><img src="app/css/img/icone-user.png" alt="">Jéssica Silva <img class ="star" src="app/css/img/icone-estrela.png"  alt=""> 4.8</h4><p class="comentario">Sem dúvidas é algo que realmente faz a diferença no meu
+            serviço! Cada vez mais consigo serviços, queria ter feito cadastro antes. Recomendo muito!!!</p>
+            </div>
+             <div class="ad-button-wrapper">
+                    <img src="app/css/img/logo.png" alt="" class="button-icon">
+                    <a class="ad-button" href="#">Virar Profissional do Fast Service</a>
+                </div>
+                <div class="testimonial-card"><h4><img class="user" src="app/css/img/icone-user.png" alt="">Cléber Santos <img class ="star" src="app/css/img/icone-estrela.png"  alt=""> 4.7</h4> <p class="comentario">Além de ser uma plataforma que de muita visibilidade, é
+            interessante como ajuda muito com dados, ela apresenta números de serviços, estatísticas em geral e outras funcões</p></div>
+            </div>
+             
+      
  </div>
  </div>
 
@@ -130,13 +137,27 @@ interessante como ajuda muito com dados, ela apresenta números de serviços, es
  <br>
  <h1 class="h1-center"><img src="app/css/img/icone-treco.png" alt=""></h1>
  <p class="p-center">Fast Service é a melhor plataforma de contratação de pequenos serviços do Brasil.Fazemos a conexão de trabalhadores com clientes mais próximos, que solicitam e recebem atendimento de qualidade, rapidez e com segurança.</p>
+ 
  <div class="conteiner-card-esp">
-    <div class="card-esp">
-        <img src="app/css/img/icone-casa.png" alt="">
-        <h4>Serviços domésticos</h4>
-        <p>Encontre profissionais para serviços domésticos, como limpeza, jardinagem, manutenção e muito mais.</p>
+  <div class="card-esp">
+    <img src="app/css/img/icone-escudo.png" alt="" class="card-icon">
+    <h4>Confiabilidade</h4>
+    <p><strong>Profissionais confiáveis</strong></p>
+    <p>Prestadores avaliados e organizados em um catálogo acessível</p>
+  </div>
+  <div class="card-esp">
+    <img src="app/css/img/icone-estrela-azul.png" alt="" class="card-icon">
+    <h4>Qualidade</h4>
+    <p><strong>Avaliações reais</strong></p>
+    <p>Consulte feedbacks antes de contratar</p>
+  </div>
+  <div class="card-esp">
+    <img src="app/css/img/icone-raio-azul.png" alt="" class="card-icon">
+    <h4>Rapidez</h4>
+    <p><strong>Contratação simplificada</strong></p>
+    <p>Pesquise, compare e encontre serviços rapidamente</p>
+  </div>
+</div>
 
-    </div>
- </div>
 </body>
 </html>

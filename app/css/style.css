@@ -1,19 +1,23 @@
 body{
     background-color: #ffffff;
     font-family: Arial, sans-serif;
-     margin-left: 100px;  
+    margin-left: 20px;
+    margin-right: 0;
+}
+.div-lado{
+    margin-left: 10px;
 }
 .h1{
     text-align: left;
      margin-left: 100px;  
-    color: #000000;
+    color: #000000; 
     text-decoration: none;
     font-weight: bold;
 }
 .sub-h1{
     text-align: center;
      margin-left: 0px;  
-     margin-right: 100px;
+     margin-right: 20px;
     color: #eec34c;
     text-decoration: none;
     font-weight: bold;
@@ -88,6 +92,7 @@ button[type="submit"] {
 
 .categories-section {
     padding: 20px 8%;
+    margin-top: -80px;
 }
 
 .categories-section h3 {
@@ -126,40 +131,68 @@ button[type="submit"] {
     font-weight: bold;
 }
 .popular-services {
-   display: grid;
-    grid-template-columns: repeat(3, 3fr);
-    width: 80%;
-    height: 50%;
-   margin-left: 150px;
-   gap: 10px;
- 
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    /* 3 colunas de tamanhos iguais */
+    gap: 20px;
+    /* Aumentado o espaço entre os cards */
+    max-width: 1000px;
+    margin: 0 auto;
+    /* Centraliza a grade na página */
+    padding: 20px;
 }
-.service-card{
+
+.service-card {
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: flex-end;
+    /* Empurra o conteúdo para a parte inferior */
     text-align: center;
-    border: 1px solid #888888;
-    border-radius: 8px;
-    max-width: 400px;
-    max-height: 400px;
-
+    border: 1px solid #7c7c7c;
+    /* Borda fina escura */
+    border-radius: 12px;
+    /* Cantos levemente arredondados */
+    padding: 30px 20px 20px 20px;
+    /* Espaço interno amplo */
+    height: 240px;
+    /* Altura fixa proporcional à imagem */
+    background-color: #ffffff;
 }
+
+.service-card img {
+    width: 40px;
+    /* Mantém os ícones em um tamanho proporcional */
+    height: auto;
+    margin-bottom: auto;
+    /* Mantém o ícone centralizado no topo */
+}
+
+.service-card h4 {
+    font-size: 16px;
+    font-weight: 700;
+    color: #000000;
+    margin: 15px 0 12px 0;
+}
+
 .card-button {
-    background-color: #ffc107;
+    background-color: #ffca28;
+    /* Cor amarela vibrante */
     border: none;
-    padding: 8px 16px;
-    border-radius: 4px;
-    margin-bottom: 10px;
-    font-weight: bold;
+    padding: 10px 24px;
+    border-radius: 8px;
+        /* Cantos arredondados do botão */
     cursor: pointer;
-    margin-top: 10px;
+    width: fit-content;
 }
-.a-card{
 
+.a-card {
     color: #000000;
     text-decoration: none;
-
+    font-weight: 700;
+    font-size: 13px;
+    text-transform: capitalize;
+    /* Garante inicial maiúscula */
 }
 .ad-banner {
     display: flex;
@@ -188,20 +221,40 @@ button[type="submit"] {
     color: #000000;
     font-weight: bold;
 }
+/* Container para posicionar o ícone em cima do botão */
+.ad-button-wrapper {
+    position: relative;
+    display: inline-block;
+    margin-top: -50px;
+}
+
 .ad-button {
-    margin-top: -70px;
-    display: flex;
-    justify-content: left;
-    align-items: left;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
     background-color: #ffffff;
     color: #000000;
-    border: none;
-    margin-left: 0px;
-    padding: 10px 20px;
-    border-radius: 4px;
-    font-weight: bold;
-    cursor: pointer;
-    max-width: 300px;
+    text-decoration: none;
+    font-weight: 800;
+    font-size: 15px;
+    padding: 14px 28px 14px 48px;
+    border-radius: 12px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.05);
+    transition: transform 0.2s ease;
+}
+
+.ad-button:hover {
+    transform: translateY(-2px);
+}
+
+.button-icon {
+    position: absolute;
+    left: -12px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 45px;
+    height: auto;
+    z-index: 2;
 }
 
 .testimonials-container {
@@ -232,38 +285,68 @@ button[type="submit"] {
     max-height: 50px;
     border-radius: 50%;
 }
-.h1-center{
+.h1-center {
     text-align: center;
-    color: #000000;
-    font-weight: bold;
+    color: #1a1a1a;
+    font-weight: 700;
+    font-size: 28px;
+    margin-bottom: 20px;
 }
-.p-center{
+
+.p-center {
+    text-align: center;
+    max-width: 750px;
+    margin: 0 auto 40px auto;
+    color: #4a4a4a;
+    font-size: 16px;
+    line-height: 1.5;
+}
+
+.conteiner-card-esp {
     display: flex;
     justify-content: center;
-   margin-right: 15%;
-   margin-left: 15%;
-    color: #7c7c7c;
-    text-decoration: none;
-    font-weight: normal;
+    gap: 30px;
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 0 20px;
 }
-.conteiner-card-esp{
-    align-items: center;
-    margin-top: 20px;
-    display: grid;
-    grid-template-columns: repeat(3, 3fr);
-    width: 80%;
-    height: 50%;
-   margin-left: 150px;
-   gap: 10px;
-}
-.card-esp{
+
+.card-esp {
+    flex: 1;
     display: flex;
     flex-direction: column;
     align-items: center;
     text-align: center;
-    border: 1px solid #888888;
-    border-radius: 8px;
-    max-width: 400px;
-    max-height: 400px;
+    background-color: #eaf4ff;
+    border: none;
+    border-radius: 24px;
+    padding: 40px 20px;
+    box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.25);
+    
+}
 
+.card-icon {
+    width: 60px;
+    height: 60px;
+    margin-bottom: 20px;
+}
+
+.card-esp h4 {
+    font-size: 22px;
+    font-weight: 800;
+    color: #111111;
+    margin-bottom: 15px;
+}
+
+.card-esp p {
+    color: #333333;
+    font-size: 14px;
+    line-height: 1.4;
+    margin: 4px 0;
+}
+
+.card-esp p strong {
+    color: #000000;
+    font-weight: 700;
+   
 }
