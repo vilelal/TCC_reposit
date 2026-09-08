@@ -11,6 +11,40 @@
 </head>
 <body>
     <div class="div-lado">
+    <header class="header">
+        <img class="logo" src="app/css/img/logo.png" alt="logo.png">
+        <h1 class="h1-header">Fast Service</h1>
+        <a class="a-header" href="">Funcionamento</a>
+        <a class="a1" href="?route=solicitar-servico">Serviços</a>
+
+        <?php if (isset($_SESSION["id"])): ?>
+  
+            <span class="user-greeting">Olá, <?= htmlspecialchars($_SESSION['nome'], ENT_QUOTES, 'UTF-8') ?></span>
+
+            <?php if ($_SESSION["tipo"] !== "prestador"): ?>
+                <button class="p-btn-header">
+                    <a class="a-btn-header" href="?route=prestador-form">Seja um profissional</a>
+                </button>
+            <?php endif; ?>
+
+            <button class="btn-header">
+                <a class="a-btn-header" href="?route=logout">Sair</a>
+            </button>
+
+        <?php else: ?>
+
+            <button class="p-btn-header">
+                <a class="a-btn-header" href="?route=prestador-form">Seja um profissional</a>
+            </button>
+            <button class="btn-header">
+                <a class="a-btn-header" href="?route=login-form">Login</a>
+            </button>
+        <?php endif; ?>
+    </header>
+    <br><br><br>
+
+    <div class="div-lado">
+
     <section class="hero-section">
     
     <div class="conteiner">
@@ -50,6 +84,8 @@
     </div>
         <section class="categories-section">
         <h3>Profissionais Por Categoria</h3>
+        <!-- div com categorias  card-->
+             <!--teste-->
         <div class="categories-grid">
             <div class="category-card">
                 <img src="app/css/img/icone-raio.png" alt="Assistência técnica">
@@ -136,7 +172,7 @@
             </div>
              <div class="ad-button-wrapper">
                     <img src="app/css/img/logo.png" alt="" class="button-icon">
-                    <a class="ad-button" href="#">Virar Profissional do Fast Service</a>
+                    <a class="ad-button" href="?route=prestador-form">Virar Profissional do Fast Service</a>
                 </div>
                 <div class="testimonial-card"><h4><img class="user" src="app/css/img/icone-user.png" alt="">Cléber Santos <img class ="star" src="app/css/img/icone-estrela.png"  alt=""> 4.7</h4> <p class="comentario">Além de ser uma plataforma que de muita visibilidade, é
             interessante como ajuda muito com dados, ela apresenta números de serviços, estatísticas em geral e outras funcões</p></div>
@@ -159,7 +195,7 @@
     <p>Prestadores avaliados e organizados em um catálogo acessível</p>
   </div>
   <div class="card-esp">
-    <img src="app/css/img/icone-estrela-azul.png" alt="" class="card-icon">
+    <img class="card-icon" src="app/css/img/icone-estrela-azul.png" alt="">
     <h4>Qualidade</h4>
     <p><strong>Avaliações reais</strong></p>
     <p>Consulte feedbacks antes de contratar</p>
