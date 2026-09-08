@@ -92,7 +92,7 @@ button[type="submit"] {
 
 .categories-section {
     padding: 20px 8%;
-    margin-top: -80px;
+    margin-top: -140px;
 }
 
 .categories-section h3 {
@@ -142,38 +142,41 @@ button[type="submit"] {
     padding: 20px;
 }
 
+/* Remove a limitação rígida de altura do card */
 .service-card {
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: flex-end;
-    /* Empurra o conteúdo para a parte inferior */
+    justify-content: space-between;
+    /* Distribui os elementos verticalmente */
     text-align: center;
     border: 1px solid #7c7c7c;
-    /* Borda fina escura */
     border-radius: 12px;
-    /* Cantos levemente arredondados */
-    padding: 30px 20px 20px 20px;
-    /* Espaço interno amplo */
-    height: 240px;
-    /* Altura fixa proporcional à imagem */
+    padding: 20px;
+    min-height: 280px;
+    /* Usa min-height em vez de height fixa */
     background-color: #ffffff;
 }
 
-.service-card img {
-    width: 40px;
-    /* Mantém os ícones em um tamanho proporcional */
-    height: auto;
-    margin-bottom: auto;
-    /* Mantém o ícone centralizado no topo */
+/* Alvo direto usando a classe da imagem */
+.service-card .img-serv {
+    width: 100%;
+    max-width: 400px;
+    /* Ajuste a largura máxima desejada */
+    height: 220px;
+    /* Aumenta a altura visual da imagem */
+    object-fit: cover;
+    border-radius: 8px;
+    /* Opcional: arredonda as bordas da foto */
 }
-
 .service-card h4 {
     font-size: 16px;
     font-weight: 700;
     color: #000000;
     margin: 15px 0 12px 0;
+
 }
+
 
 .card-button {
     background-color: #ffca28;
@@ -349,4 +352,94 @@ button[type="submit"] {
     color: #000000;
     font-weight: 700;
    
+}
+
+.footer {
+    background-color: #FCBA52;
+    color: #ffffff;
+    font-family: Arial, sans-serif;
+    width: 100%;
+}
+
+.footer-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 40px 20px;
+    gap: 30px;
+    color: #ffffff;
+}
+
+.footer-logo img {
+    max-width: 140px;
+    height: auto;
+    display: block;
+}
+
+/* Bordas verticais amarelas claras nas seções */
+.footer-section {
+    border-left: 4px solid #FECE3B;
+    padding-left: 20px;
+}
+.footer-section info-section{
+    color: #ffffff;
+}
+
+.footer-p{
+    color: #ffffff;
+}
+.links-section {
+    flex: 1;
+}
+
+.links-section h3 {
+    font-size: 22px;
+    font-weight: bold;
+    margin: 0 0 15px 0;
+}
+
+.links-section ul {
+    list-style: none;
+    margin: 0;
+}
+
+.links-section li {
+    margin-bottom: 12px;
+}
+
+.links-section a {
+    color: #ffffff;
+    text-decoration: none;
+    font-size: 15px;
+}
+
+.links-section a:hover {
+    text-decoration: underline;
+}
+
+.info-section {
+    flex: 1.5;
+}
+
+.info-section p {
+    margin: 0;
+    font-size: 15px;
+    line-height: 1.5;
+    font-weight: 500;
+}
+
+.footer-bottom {
+    border-top: 1px solid #fce3a6;
+    text-align: center;
+    padding: 15px 20px;
+}
+
+.footer-bottom p {
+    margin: 0;
+    font-size: 14px;
+    font-weight: bold;
+    text-align: center;
+    color: #ffffff;
 }

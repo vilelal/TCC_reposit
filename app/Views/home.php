@@ -67,6 +67,7 @@
     </section>
 
     </section>
+<br><br><br>
 <br><br>
 <h1 class="sub-h1">Nossos Serviços Populares</h1>
 <br>
@@ -75,37 +76,37 @@
 <div class="popular-services">
     
     <div class="service-card">
-        <img src="app/css/img/icone-raio.png" alt="Serviço 1">
+        <img class="img-serv" src="app/css/img_servico/jardinagem.png" alt="Serviço 1">
         <h4>Serviços de jardinagem</h4>
         <button class="card-button"><a class="a-card" href="">fazer orçamento</a></button>
     </div>
     <div class="service-card">
-        <img src="app/css/img/icone_ferramentas.png" alt="Serviço 2">
+        <img class="img-serv" src="app/css/img_servico/eletrodomestico.png" alt="Serviço 2">
         <h4>Serviços de eletrodomésticos</h4>
         <button class="card-button"><a class="a-card" href="">fazer orçamento</a></button>
     </div>
     <div class="service-card">
-        <img src="app/css/img/icone-rolo.png" alt="Serviço 3">
+        <img class="img-serv" src="app/css/img_servico/pintura.png" alt="Serviço 3">
         <h4>Serviços de pintura</h4>
         <button class="card-button"><a class="a-card" href="">fazer orçamento</a></button>
     </div>
      <div class="service-card">
-        <img src="app/css/img/icone-raio.png" alt="Serviço 1">
+        <img class="img-serv" src="app/css/img_servico/pedreiro.png" alt="Serviço 1">
         <h4>Serviços de pedreiros</h4>
         <button class="card-button"><a class="a-card" href="">fazer orçamento</a></button>
     </div>
     <div class="service-card">
-        <img src="app/css/img/icone_ferramentas.png" alt="Serviço 2">
+        <img class="img-serv" src="app/css/img_servico/cuidador.png" alt="Serviço 2">
         <h4>Serviços de cuidadores</h4>
         <button class="card-button"><a class="a-card" href="">fazer orçamento</a></button>
     </div>
     <div class="service-card">
-        <img src="app/css/img/icone-rolo.png" alt="Serviço 3">
+        <img class="img-serv" src="app/css/img_servico/garcons.png" alt="Serviço 3">
         <h4>Serviços de garçons</h4>
         <button class="card-button"><a class="a-card" href="">fazer orçamento</a></button>
     </div>
 </div>
-
+<br><br>
     <br>
     <!--faixa de propaganda-->
     <div class="ad-banner">
@@ -132,12 +133,12 @@
       
  </div>
  </div>
-
+<br>
  <br>
  <br>
  <h1 class="h1-center"><img src="app/css/img/icone-treco.png" alt=""></h1>
  <p class="p-center">Fast Service é a melhor plataforma de contratação de pequenos serviços do Brasil.Fazemos a conexão de trabalhadores com clientes mais próximos, que solicitam e recebem atendimento de qualidade, rapidez e com segurança.</p>
- 
+ <br><br>
  <div class="conteiner-card-esp">
   <div class="card-esp">
     <img src="app/css/img/icone-escudo.png" alt="" class="card-icon">
@@ -158,6 +159,35 @@
     <p>Pesquise, compare e encontre serviços rapidamente</p>
   </div>
 </div>
+<br><br><br><br><br><br><br>
+<footer class="footer">
+  <div class="footer-content">
+    <!-- 1 seção -->
+    <section class="footer-logo">
+      <img src="app/css/img/logo.png" alt="FastService Logo">
+    </section>
+
+    <!-- 2 seção -->
+    <section class="footer-section links-section">
+      <h3>Acesso rápido</h3>
+      <ul>
+        <li><a href="#">Categorias</a></li>
+        <li><a href="#">Sobre nós</a></li>
+        <li><a href="#">Central de ajuda</a></li>
+      </ul>
+    </section>
+
+    <!-- 3 seção-->
+    <section class="footer-section info-section">
+      <p class="footer-p">
+        Somos a solução para o mercado digital, disponibilizando uma plataforma moderna que permite que o cliente receba o serviço e que o prestador receba pelo seu serviço. Tudo isso com praticidade e segurança.
+      </p>
+    </section>
+  </div>
+  <div class="footer-bottom">
+    <p>&copy;2026, FastService LTDA</p>
+  </div>
+</footer>
 
 </body>
 </html>

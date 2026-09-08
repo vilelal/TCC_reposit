@@ -5,13 +5,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cadastro</title>
-    <link rel="stylesheet" href="app/css/styleCad.css">
+    <link rel="stylesheet" href="app/css/styleCad_prest.css">
 </head>
 
 <body>
     <div class="container">
         <div class="lado-laranja">
-            <h1>Bem vindo!</h1>
+            <h1 class="h1">Bem vindo!</h1>
             <p>Já tem uma conta?
                 Faça o login! </p>
             <button class="btnLogar">Logar</button>
@@ -20,6 +20,7 @@
         <div class="cadastro">
             <h1>Cadastro</h1>
             <form action="?route=cadastro-prestador" method="post">
+                <img class="logo" src="app/css/img/logo.png" alt="">
                 <?php
                 if (isset($_SESSION["id"])) {
                     $user = UserModel::getClientById($_SESSION["id"]);
