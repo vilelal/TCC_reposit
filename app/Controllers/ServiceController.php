@@ -1,52 +1,74 @@
 <?php
 require_once __DIR__ . "/../Models/UserModel.php";
+
 require_once __DIR__ . "/CriptoController.php";
 
-
 class ServiceController {
-    
-public function salvarPedido() {
-    // Garante que o cliente está logado e o ID existe na sessão
-    if (!isset($_SESSION["id_cliente"])) {
-        header("Location: ?route=login-form");
-        exit;
+
+    // 1. Exibe o formulário Wizard
+    public function exibirWizard() {
+        if (!isset($_SESSION["id"])) {
+            header("Location: ?route=login-form");
+            exit;
+        }
+
+        // Busca as categorias e serviços cadastrados
+        $categorias = solicitacaoModel::buscarTodasCategorias();
+        $todosServicos = solicitacaoModel::buscarTodosServicos();
+
+        require_once "app/Views/servicos/wizard-servico.php";
     }
 
-    $data = $_POST;
-    $data["FK_id_TB_cliente"] = $_SESSION["id_cliente"]; 
+    // 2. Processa o Wizard e busca prestadores próximos
+    public function buscarPrestadoresProximos() {
+        if (!isset($_SESSION["id"])) {
+            header("Location: ?route=login-form");
+            exit;
+        }
 
-    $sucesso = ServiceModel::criarSolicitacao($data);
+        $clienteId = $_SESSION["id"];
+        $dados = $_POST;
 
-    if (!$sucesso) {
-        echo "Erro ao realizar o pedido. Tente novamente.";
-        return;
+        // Guarda os detalhes temporariamente na sessão
+        $_SESSION['proposta_temporaria'] = [
+            'servico_id'          => $dados['FK_id_TB_servico'],
+            'urgencia'            => $dados['urgencia'],
+            'data_agendamento'    => $dados['data_agendamento'],
+            'solicitar_orcamento' => isset($dados['solicitar_orcamento']) ? 1 : 0,
+            'descricao'           => $dados['descricao']
+        ];
+
+        // Alterado de ServiceModel para solicitacaoModel
+        $prestadoresEncontrados = solicitacaoModel::buscarPrestadoresProximos($clienteId, $dados['FK_id_TB_servico']);
+
+        require_once "app/Views/servicos/lista-prestadores-match.php";
     }
 
-    header("Location: ?route=meus-pedidos");
-    exit;
-}
-public function filtrarPrestadores() {
-    // Verifica se o cliente está logado para saber a cidade dele
-    if (!isset($_SESSION["id_cliente"])) {
-        header("Location: ?route=login-form");
-        exit;
+    // 3. Chamado quando a solicitação é aceita
+    public function confirmarEAceitarSolicitacao() {
+        if (!isset($_SESSION["id"]) || !isset($_SESSION['proposta_temporaria'])) {
+            header("Location: ?route=home");
+            exit;
+        }
+
+        $clienteId = $_SESSION["id"];
+        $proposta = $_SESSION['proposta_temporaria'];
+        $prestadorServicoId = $_POST['FK_id_TB_prestadorServico'];
+        $valorCombinado = $_POST['valor_total'];
+
+        // Alterado de ServiceModel para solicitacaoModel
+        $criado = solicitacaoModel::criarSolicitacaoFinal(
+            $clienteId, 
+            $prestadorServicoId, 
+            $proposta['data_agendamento'], 
+            $valorCombinado
+        );
+
+        if ($criado) {
+            unset($_SESSION['proposta_temporaria']);
+            header("Location: ?route=meus-pedidos");
+        } else {
+            echo "Erro ao registrar solicitação aceita.";
+        }
     }
-
-    // Pega a categoria selecionada no select do formulário HTML
-    $categoriaId = $_GET["FK_id_TB_categoria"] ?? null;
-    $clienteId = $_SESSION["id_cliente"];
-
-    // Busca as categorias para preencher o <select>
-    $string_categorias = ServiceModel::listarCategorias(); 
-
-    $prestadoresDisponiveis = [];
-    if ($categoriaId) {
-        // Busca os prestadores da mesma categoria e cidade do cliente (ou região)
-        $prestadoresDisponiveis = ServiceModel::buscarPrestadoresPorCategoriaEEspacos($categoriaId, $clienteId);
-    }
-
-    // Carrega a view passando os dados
-    require_once "app/Views/servicos/escolher-prestador.php";
-}
-
 }
