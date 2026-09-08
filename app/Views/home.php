@@ -25,7 +25,8 @@
         echo "<h3> Olá {$_SESSION['nome']} </h3>";
 
         if ($_SESSION["tipo"] != "prestador") {
-            echo '<a href="?route=prestador-form">cadastro prestador</a>';
+            echo '<a href="?route=prestador-form">Torne-se prestador</a>';
+            echo '<a href="?route=solicitar-servico">Solicite um serviço</a>';
         } 
     }
     else {
