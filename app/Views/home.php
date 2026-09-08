@@ -10,14 +10,35 @@
     <title>home</title>
 </head>
 <body>
-<<<<<<< HEAD
     <header class="header">
         <img class="logo" src="app/css/img/logo.png" alt="logo.png">
-         <h1 class="h1-header">Fast Service</h1>
-         <a class="a-header" href="">Funcionamento</a>
-            <a class="a1" href="">Serviços</a>
-            <button class="p-btn-header"><a class="a-btn-header" href="?route=prestador-form">Seja um profissional</a></button>
-            <button class="btn-header"><a class="a-btn-header" href="?route=login-form">Login</a></button>
+        <h1 class="h1-header">Fast Service</h1>
+        <a class="a-header" href="">Funcionamento</a>
+        <a class="a1" href="?route=solicitar-servico">Serviços</a>
+
+        <?php if (isset($_SESSION["id"])): ?>
+  
+            <span class="user-greeting">Olá, <?= htmlspecialchars($_SESSION['nome'], ENT_QUOTES, 'UTF-8') ?></span>
+
+            <?php if ($_SESSION["tipo"] !== "prestador"): ?>
+                <button class="p-btn-header">
+                    <a class="a-btn-header" href="?route=prestador-form">Seja um profissional</a>
+                </button>
+            <?php endif; ?>
+
+            <button class="btn-header">
+                <a class="a-btn-header" href="?route=logout">Sair</a>
+            </button>
+
+        <?php else: ?>
+
+            <button class="p-btn-header">
+                <a class="a-btn-header" href="?route=prestador-form">Seja um profissional</a>
+            </button>
+            <button class="btn-header">
+                <a class="a-btn-header" href="?route=login-form">Login</a>
+            </button>
+        <?php endif; ?>
     </header>
     <br><br><br>
 
@@ -32,25 +53,6 @@
     <br>
     <br>
     
-    <a href="?route=cadastro-servico">cadastro serivco</a>
-
-    <?php
-    if (isset($_SESSION["id"])) {
-        echo "<a href='?route=logout'>logout</a>";
-        echo "<h3> Olá {$_SESSION['nome']} </h3>";
-
-        if ($_SESSION["tipo"] != "prestador") {
-            echo '<a href="?route=prestador-form">Torne-se prestador</a>';
-            echo '<a href="?route=solicitar-servico">Solicite um serviço</a>';
-        } 
-    }
-    else {
-        echo "<a href='?route=login-form'>login</a>";
-        echo '<a href="?route=cadastro-form">cadastro</a>';
-        echo '<a href="?route=prestador-form">cadastro prestador</a>';
-    }
-
-    ?>
 
     <form action="" method="POST">
         <input type="text" name="nome" placeholder="Digite o nome do serviço">
