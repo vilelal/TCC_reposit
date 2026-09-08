@@ -92,7 +92,7 @@ class UserModel
         try {
             $conexao = Database::conectarBanco();
             $conexao->begin_transaction();
-            
+
             if (!isset($_SESSION["id"])) {
                 // 1. Inserção do Usuário
                 $sql = "INSERT INTO TB_usuario (email_TB_usuario, senha_TB_usuario, tipo_TB_usuario) VALUES (?, ?, 'prestador')";
@@ -129,7 +129,20 @@ class UserModel
                 $data["bio_user"]
             );
             $stmt->execute();
+            $prestadorId = $stmt->insert_id;
             $stmt->close();
+
+            if (isset($data["servicos"])) {
+                foreach ($data["servicos"] as $servicoId) {
+                    $sql = "INSERT INTO TB_prestadorServico
+                    (FK_id_TB_servico, FK_id_TB_prestadorPerfil)
+                    VALUES (?, ?)"; //talvez tenha preco customizado, por enquanto ignorado
+                    $stmt = $conexao->prepare($sql);
+                    $stmt->bind_param("ii", $servicoId, $prestadorId);
+                    $stmt->execute();
+                    $stmt->close();
+                }
+            }
             $conexao->commit();
             $conexao->close();
 
@@ -140,7 +153,6 @@ class UserModel
             ];
 
             return $user;
-
         } catch (Exception $err) {
             if (isset($conexao) && $conexao instanceof mysqli) {
                 $conexao->rollback();
@@ -149,7 +161,8 @@ class UserModel
             }
         }
     }
-    public static function getClientById($id) {
+    public static function getClientById($id)
+    {
         $conexao = Database::conectarBanco();
         $sql = "SELECT * FROM TB_clientePerfil
                 INNER JOIN TB_usuario ON FK_id_TB_usuario = PK_id_TB_usuario
@@ -164,5 +177,4 @@ class UserModel
         }
         return $user;
     }
-
 }
