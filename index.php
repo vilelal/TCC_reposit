@@ -1,6 +1,6 @@
 <?php
 
-$time = 7 * 24 * 60 * 60; // tempo da session (quanto tempo ele fica logado aofazer login)
+$time = 7 * 24 * 60 * 60; // tempo da session (quanto tempo ele fica logado ao fazer login)
 
 // config da session
 session_set_cookie_params([
@@ -41,7 +41,6 @@ switch ($route) {
     case "home": 
         $controller = new HomeController();
         $controller->home();
-
         break;
 
     case "cadastro-form":
@@ -58,7 +57,7 @@ switch ($route) {
         $controller = new UserController();
         $controller->formLogin();
         break;
-    
+
     case "login":
         $controller = new UserController();
         $controller->login();
@@ -67,5 +66,40 @@ switch ($route) {
     case "logout": 
         $controller = new UserController();
         $controller->logout();
+        break;
+    
+    case "prestador-form":
+        $controller = new UserController();
+        $controller->formPrestador();
+        break;
+
+    case "cadastro-prestador":
+        $controller = new UserController();
+        $controller->cadastroPrestador();
+        break;
+
+    // --- ROTAS DO FLUXO DE SOLICITAÇÃO DE SERVIÇO ---
+
+    // 1. Exibe o Formulário Wizard (Categorias, Serviços, Urgência)
+    case "solicitar-servico":
+        $controller = new ServiceController();
+        $controller->exibirWizard();
+        break;
+
+    // 2. Processa os dados do Wizard e lista os prestadores próximos (Salva na Sessão)
+    case "buscar-prestadores-proximos":
+        $controller = new ServiceController();
+        $controller->buscarPrestadoresProximos();
+        break;
+
+    // 3. Grava definitivamente na TB_SolicitacaoServico após o aceite
+    case "confirmar-solicitacao":
+        $controller = new ServiceController();
+        $controller->confirmarEAceitarSolicitacao();
+        break;
+
+    default:
+        $controller = new HomeController();
+        $controller->home();
         break;
 }
