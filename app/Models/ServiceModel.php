@@ -28,11 +28,11 @@ class ServiceModel
         try {
             $conexao = Database::conectarBanco();
 
-            $sql = "INSERT INTO TB_SolicitacaoServico (FK_id_TB_cliente, FK_id_TB_prestadorServico, data_agendamento_TB_SolicitacaoServico, valorTotal_TB_SolicitacaoServico) VALUES (?, ?, ?, ?)";
+            $sql = "INSERT INTO TB_SolicitacaoServico (FK_id_TB_cliente, FK_id_TB_prestadorServico, data_agendamento_TB_SolicitacaoServico, status_TB_SolicitacaoServico , valorTotal_TB_SolicitacaoServico) VALUES (?, ?, ?,'Pendente', ?)";
             $stmt = $conexao->prepare($sql);
 
             $stmt->bind_param(
-                "iids",
+                "iidss",
                 $data["FK_id_TB_cliente"],
                 $data["FK_id_TB_prestadorServico"],
                 $data["data_agendamento"],
@@ -90,6 +90,7 @@ class ServiceModel
         }
         return $servicos;
     }
+
 
     //Ver se vai utilizar isso depois
 

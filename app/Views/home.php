@@ -4,9 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="app/css/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;600;700;800&display=swap" rel="stylesheet">
     <title>home</title>
 </head>
 <body>
+<<<<<<< HEAD
     <header class="header">
         <img class="logo" src="app/css/img/logo.png" alt="logo.png">
          <h1 class="h1-header">Fast Service</h1>
@@ -16,7 +20,9 @@
             <button class="btn-header"><a class="a-btn-header" href="?route=login-form">Login</a></button>
     </header>
     <br><br><br>
+
     <div class="div-lado">
+
     <section class="hero-section">
     
     <div class="conteiner">
@@ -34,7 +40,8 @@
         echo "<h3> Olá {$_SESSION['nome']} </h3>";
 
         if ($_SESSION["tipo"] != "prestador") {
-            echo '<a href="?route=prestador-form">cadastro prestador</a>';
+            echo '<a href="?route=prestador-form">Torne-se prestador</a>';
+            echo '<a href="?route=solicitar-servico">Solicite um serviço</a>';
         } 
     }
     else {
