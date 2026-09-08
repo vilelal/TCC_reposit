@@ -63,6 +63,7 @@
     </div>
         <section class="categories-section">
         <h3>Profissionais Por Categoria</h3>
+        <!-- div com categorias -->
         <div class="categories-grid">
             <div class="category-card">
                 <img src="app/css/img/icone-raio.png" alt="Assistência técnica">
