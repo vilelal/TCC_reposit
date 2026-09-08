@@ -13,20 +13,20 @@
     <header class="header"> 
         
         <div class="logo_area">
-        <a href="/TCC_reposit/">
-            <img src="../../css/img/logo.png" alt="" class="logo">
+        <a href="?route=">
+            <img src="app/css/img/logo.png" alt="" class="logo">
         </a>
         <h2 class="nome_empresa">FastService</h2>
     </div>
         <nav class="cabecalho">
             <div class="separar">
-            <a href="" style="font-size: clamp(0.8rem, 1.07vw, 3.5rem); margin-left:" class="funciona,ento">Funcionamento</a>
+            <a href="" style="font-size: clamp(0.8rem, 1.07vw, 3.5rem);" class="funciona,ento">Funcionamento</a>
             <a href="" style="font-size: clamp(0.8rem, 1.07vw, 3.5rem);" class="servico">Serviços</a>
                 
             </div>
             <a href="" class="btn-profissional">Seja um Profissional</a>
             <a href="">
-            <img src="../../css/img/chat.png" alt="" class="chat">
+            <img src="app/css/img/chat.png" alt="" class="chat">
             </a>
             <a href="" class="btn-login">Login</a>
         </nav>
