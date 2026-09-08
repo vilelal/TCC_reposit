@@ -27,25 +27,48 @@ class ServiceController
         header("Location: ?route=meus-pedidos");
         exit;
     }
+
+
+    function buscarCoordenadasPorCep($cep) {
+    // Remove caracteres especiais do CEP (deixa só números)
+    $cepLimpo = preg_replace('/[^0-9]/', '', $cep);
+
+    // API pública da AwesomeAPI (retorna lat/lng direto do CEP)
+    $url = "https://cep.awesomeapi.com.br/json/{$cepLimpo}";
+
+    // Configuração de cabeçalho necessária para requisições em PHP
+    $opts = [
+        "http" => [
+            "method" => "GET",
+            "header" => "User-Agent: FastServiceApp/1.0\r\n"
+        ]
+    ];
+    $context = stream_context_create($opts);
+
+    $resposta = @file_get_contents($url, false, $context);
+
+    if ($resposta === false) {
+        return null; // Caso ocorra erro ou CEP não exista
+    }
+
+    $dados = json_decode($resposta, true);
+
+    // Retorna um array com lat e lng
+    if (isset($dados['lat']) && isset($dados['lng'])) {
+        return [
+            'latitude'  => (float) $dados['lat'],
+            'longitude' => (float) $dados['lng']
+        ];
+    }
+
+    return null;
+}
     public function filtrarPrestadores()
     {
         // Verifica se o cliente está logado para saber a cidade dele
         if (!isset($_SESSION["id"])) {
             header("Location: ?route=login-form");
             exit;
-        }
-
-        // Pega a categoria selecionada no select do formulário HTML
-        $categoriaId = $_GET["FK_id_TB_categoria"] ?? null;
-        $clienteId = $_SESSION["id"];
-
-        // Busca as categorias para preencher o <select>
-        $string_categorias = ServiceModel::listarCategorias();
-
-        $prestadoresDisponiveis = [];
-        if ($categoriaId) {
-            // Busca os prestadores da mesma categoria e cidade do cliente (ou região)
-            $prestadoresDisponiveis = ServiceModel::buscarPrestadoresPorCategoriaEEspacos($categoriaId, $clienteId);
         }
 
         // Carrega a view passando os dados
@@ -56,5 +79,6 @@ class ServiceController
     {
         require_once "app/Views/servicos/lista-prestador.php";
     }
+
 
 }
