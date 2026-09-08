@@ -28,7 +28,8 @@
                     $user["cpf_TB_cliente"] = $cripto::decrypt($user["cpf_TB_cliente"]);
                     $user["tel_TB_cliente"] = $cripto::decrypt($user["tel_TB_cliente"]);
                 } else {
-                    echo '<input type="email" name="email_user" placeholder="nome@exemplo.com" required>';
+
+                    echo '<input type="email" name="email_user" placeholder="Digite seu email" required>';
                     echo '<input type="text" name="senha_user" placeholder="Digite sua senha" required>';
                 }
                 ?>
