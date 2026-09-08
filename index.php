@@ -59,6 +59,16 @@ switch ($route) {
         $controller->formLogin();
         break;
     
+    case "prestador-form":
+        $controller = new UserController();
+        $controller->formPrestador();
+        break;
+
+    case "cadastro-prestador":
+        $controller = new UserController();
+        $controller->cadastroPrestador();
+        break;
+    
     case "login":
         $controller = new UserController();
         $controller->login();
@@ -67,5 +77,15 @@ switch ($route) {
     case "logout": 
         $controller = new UserController();
         $controller->logout();
+        break;
+    
+    case "lista-prestador":
+        $controller = new ServiceController();
+        $controller->listaPrestador();
+        break;
+    
+    case "cadastro-servico":
+        $controller = new ServiceController();
+        $controller->salvarPedido();
         break;
 }
