@@ -71,6 +71,8 @@ class UserController
     }
 
     public function formPrestador() {
+        $categorias = CategoriaModel::getCategorias();
+        $servicos = ServiceModel::getServices();
         require_once __DIR__ . "/../Views/user/form-prestador.php";
     }
 

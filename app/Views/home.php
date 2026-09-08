@@ -16,17 +16,24 @@
     <p>Segurança e rapidez em encontrar o profissional ideal para suas necessidades.</p>
     <br>
     <br>
-    <a href="?route=cadastro-form">cadastro</a>
+    
     <a href="?route=cadastro-servico">cadastro serivco</a>
-    <a href="?route=prestador-form">cadastro prestador</a>
-    <?php 
+
+    <?php
     if (isset($_SESSION["id"])) {
         echo "<a href='?route=logout'>logout</a>";
         echo "<h3> Olá {$_SESSION['nome']} </h3>";
+
+        if ($_SESSION["tipo"] != "prestador") {
+            echo '<a href="?route=prestador-form">cadastro prestador</a>';
+        } 
     }
     else {
         echo "<a href='?route=login-form'>login</a>";
+        echo '<a href="?route=cadastro-form">cadastro</a>';
+        echo '<a href="?route=prestador-form">cadastro prestador</a>';
     }
+
     ?>
 
     <form action="" method="POST">

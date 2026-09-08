@@ -92,7 +92,7 @@ class UserModel
         try {
             $conexao = Database::conectarBanco();
             $conexao->begin_transaction();
-            
+
             if (!isset($_SESSION["id"])) {
                 // 1. Inserção do Usuário
                 $sql = "INSERT INTO TB_usuario (email_TB_usuario, senha_TB_usuario, tipo_TB_usuario) VALUES (?, ?, 'prestador')";
@@ -129,7 +129,20 @@ class UserModel
                 $data["bio_user"]
             );
             $stmt->execute();
+            $prestadorId = $stmt->insert_id;
             $stmt->close();
+
+            if (isset($data["servicos"])) {
+                foreach ($data["servicos"] as $servicoId) {
+                    $sql = "INSERT INTO TB_prestadorServico
+                    (FK_id_TB_servico, FK_id_TB_prestadorPerfil)
+                    VALUES (?, ?)"; //talvez tenha preco customizado, por enquanto ignorado
+                    $stmt = $conexao->prepare($sql);
+                    $stmt->bind_param("ii", $servicoId, $prestadorId);
+                    $stmt->execute();
+                    $stmt->close();
+                }
+            }
             $conexao->commit();
             $conexao->close();
 
@@ -140,7 +153,6 @@ class UserModel
             ];
 
             return $user;
-
         } catch (Exception $err) {
             if (isset($conexao) && $conexao instanceof mysqli) {
                 $conexao->rollback();
@@ -149,7 +161,8 @@ class UserModel
             }
         }
     }
-    public static function getClientById($id) {
+    public static function getClientById($id)
+    {
         $conexao = Database::conectarBanco();
         $sql = "SELECT * FROM TB_clientePerfil
                 INNER JOIN TB_usuario ON FK_id_TB_usuario = PK_id_TB_usuario
@@ -164,46 +177,4 @@ class UserModel
         }
         return $user;
     }
-public static function AddService($data)
-{
-    // Ativa o disparo de exceções no mysqli para entrar no catch em caso de erro
-    mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
-
-    try {
-        $conexao = Database::conectarBanco();
-
-        // Inicia uma transação
-        $conexao->begin_transaction();
-
-        // Inserção do Serviço com a Chave Estrangeira
-        $sql = "INSERT INTO TB_servico (PK_id_TB_servico, FK_id_TB_categoria, nome_TB_servico, descricao_TB_servico, precoPadrao_TB_servico, orcamento_TB_servico) VALUES (?, ?, ?, ?, ?, ?)";
-        $stmt = $conexao->prepare($sql);
-        
-        // Ajustado para "iissdd" (6 parâmetros correspondentes aos 6 placeholders)
-        $stmt->bind_param("iissdd", 
-            $data["PK_id_TB_servico"], 
-            $data["id_categoria"], 
-            $data["nome_servico"], 
-            $data["descricao_servico"], 
-            $data["precoPadrao_servico"], 
-            $data["orcamento_servico"]
-        );
-        
-        $stmt->execute();
-        $stmt->close();
-
-        // Confirma a transação no banco
-        $conexao->commit();
-        $conexao->close();
-
-    } catch (Exception $err) {
-        // Desfaz alterações no banco caso algo falhe
-        if (isset($conexao) && $conexao instanceof mysqli) {
-            $conexao->rollback();
-            $conexao->close();
-        }
-
-        die("Erro no cadastro: " . $err->getMessage());
-    }
-}
 }
