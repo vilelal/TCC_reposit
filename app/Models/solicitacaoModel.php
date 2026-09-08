@@ -41,7 +41,7 @@ class solicitacaoModel
         $conexao = Database::conectarBanco();
 
         // 1. Pega a cidade do cliente cadastrado na TB_clientePerfil
-        $sqlCliente = "SELECT cidade_TB_clientePerfil FROM TB_clientePerfil WHERE PK_id_TB_cliente = ?";
+        $sqlCliente = "SELECT cidade_TB_cliente FROM TB_clientePerfil WHERE PK_id_TB_cliente = ?";
         $stmtC = $conexao->prepare($sqlCliente);
         $stmtC->bind_param("i", $clienteId);
         $stmtC->execute();

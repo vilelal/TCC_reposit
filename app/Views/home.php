@@ -10,7 +10,6 @@
     <title>home</title>
 </head>
 <body>
-<<<<<<< HEAD
     <header class="header">
         <img class="logo" src="app/css/img/logo.png" alt="logo.png">
          <h1 class="h1-header">Fast Service</h1>

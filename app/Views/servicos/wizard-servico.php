@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Solicitar Serviço</title>
-    <link rel="stylesheet" href="app/css/styleCad.css">
     <style>
         .etapa-wizard { display: none; }
         .etapa-wizard.ativa { display: block; }
