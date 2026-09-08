@@ -97,3 +97,14 @@ CREATE TABLE TB_avaliacao (
     data_avaliacao_TB_avaliacao DATETIME DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (FK_id_TB_SolicitacaoServico) REFERENCES TB_SolicitacaoServico(PK_id_TB_SolicitacaoServico)
 );
+
+-- 10. Notificacoes
+
+CREATE TABLE TB_notificacao (
+    PK_id_TB_notificacao INT AUTO_INCREMENT PRIMARY KEY,
+    FK_id_usuario INT NOT NULL,
+    titulo_TB_notificacao VARCHAR(100) NOT NULL,
+    mensagem_TB_notificacao TEXT NOT NULL,
+    lida_TB_notificacao BOOLEAN DEFAULT FALSE, -- 0 para não lida, 1 para lida
+    data_criacao_TB_notificacao TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);

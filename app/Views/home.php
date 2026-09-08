@@ -10,11 +10,7 @@
     <title>home</title>
 </head>
 <body>
-<<<<<<< HEAD
-    <?php require_once __DIR__ . '/header/header.php'; ?>
-=======
     <div class="div-lado">
->>>>>>> bf36bf7ac631c67f1acb8b9e02c5b4d414591979
     <section class="hero-section">
     
     <div class="conteiner">
@@ -25,6 +21,7 @@
     <br>
     
     <a href="?route=cadastro-servico">cadastro serivco</a>
+    <a href="?route=dashboard">perfil prestador</a>
 
     <?php
     if (isset($_SESSION["id"])) {
