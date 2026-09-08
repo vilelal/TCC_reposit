@@ -48,4 +48,15 @@ class ServiceController {
             echo "Erro ao registrar solicitação aceita.";
         }
     }
+
+    public function listaPrestador(){
+
+        require_once "app/views/servicos/lista-prestador.php";
+    }
+
+    public function filtroPrestadores(){
+    if (!isset($_SESSION["id"])) {
+        
+    }        
+    }
 }

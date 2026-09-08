@@ -6,6 +6,18 @@
     <title>Document</title>
 </head>
 <body>
+    <header>
+
+    </header>
+
+    <main>
+      
+    </main>
     
+    <?php
+    
+    
+    ?>
+
 </body>
 </html>
