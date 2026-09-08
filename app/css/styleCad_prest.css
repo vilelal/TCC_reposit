@@ -11,9 +11,20 @@ input[type="email"] {
     width: 80%;
     padding: 8px;
     margin-bottom: 12px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    background-color: #ededed;
+    border-radius: 15px;
+    border: 1px solid #000000;
+    background-color: #E7E5E5;
+    color: #000000;
+    font-size: 18px;
+}
+
+select {
+    width: 80%;
+    padding: 8px;
+    margin-bottom: 12px;
+    border-radius: 15px;
+    border: 1px solid #000000;
+    background-color: #E7E5E5;
     color: #000000;
     font-size: 18px;
 }

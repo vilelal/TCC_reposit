@@ -11,10 +11,18 @@
 </head>
 <body>
 <<<<<<< HEAD
-    <?php require_once __DIR__ . '/header/header.php'; ?>
-=======
+    <header class="header">
+        <img class="logo" src="app/css/img/logo.png" alt="logo.png">
+         <h1 class="h1-header">Fast Service</h1>
+         <a class="a-header" href="">Funcionamento</a>
+            <a class="a1" href="">Serviços</a>
+            <button class="p-btn-header"><a class="a-btn-header" href="?route=prestador-form">Seja um profissional</a></button>
+            <button class="btn-header"><a class="a-btn-header" href="?route=login-form">Login</a></button>
+    </header>
+    <br><br><br>
+
     <div class="div-lado">
->>>>>>> bf36bf7ac631c67f1acb8b9e02c5b4d414591979
+
     <section class="hero-section">
     
     <div class="conteiner">
@@ -139,7 +147,7 @@
             </div>
              <div class="ad-button-wrapper">
                     <img src="app/css/img/logo.png" alt="" class="button-icon">
-                    <a class="ad-button" href="#">Virar Profissional do Fast Service</a>
+                    <a class="ad-button" href="?route=prestador-form">Virar Profissional do Fast Service</a>
                 </div>
                 <div class="testimonial-card"><h4><img class="user" src="app/css/img/icone-user.png" alt="">Cléber Santos <img class ="star" src="app/css/img/icone-estrela.png"  alt=""> 4.7</h4> <p class="comentario">Além de ser uma plataforma que de muita visibilidade, é
             interessante como ajuda muito com dados, ela apresenta números de serviços, estatísticas em geral e outras funcões</p></div>
@@ -162,7 +170,7 @@
     <p>Prestadores avaliados e organizados em um catálogo acessível</p>
   </div>
   <div class="card-esp">
-    <img src="app/css/img/icone-estrela-azul.png" alt="" class="card-icon">
+    <img class="card-icon" src="app/css/img/icone-estrela-azul.png" alt="">
     <h4>Qualidade</h4>
     <p><strong>Avaliações reais</strong></p>
     <p>Consulte feedbacks antes de contratar</p>
