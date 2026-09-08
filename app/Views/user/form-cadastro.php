@@ -19,7 +19,7 @@
             <button class="btnLogar">Logar</button>
         </div>
 
-
+    <div class="img"><img src="app/css/img/logo.png" alt="Logo"></div>        
 
         <div class="lado-direito">
             <div class="cadastro">
