@@ -57,6 +57,10 @@ class UserController
             $_SESSION["nome"] = $user["nome_TB_cliente"];
             $_SESSION["tipo"] = $user["tipo_TB_usuario"];
 
+            if ($user["tipo_TB_usuario"] == "prestador") {
+                header("Location: ?route=dashboard");
+            }
+
             header("Location: ?route=home");
         } catch (Exception $err) {
             $_SESSION["success"] = false;
@@ -98,6 +102,6 @@ class UserController
         $_SESSION["nome"] = $user["nome"];
         $_SESSION["tipo"] = $user["tipo"];
 
-        header("Location: ?route=home");
+        header("Location: ?route=dashboard");
     }
 }

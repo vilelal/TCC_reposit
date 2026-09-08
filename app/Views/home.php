@@ -10,6 +10,7 @@
     <title>home</title>
 </head>
 <body>
+    <div class="div-lado">
     <header class="header">
         <img class="logo" src="app/css/img/logo.png" alt="logo.png">
         <h1 class="h1-header">Fast Service</h1>
@@ -53,6 +54,26 @@
     <br>
     <br>
     
+    <a href="?route=cadastro-servico">cadastro serivco</a>
+    <a href="?route=dashboard">perfil prestador</a>
+
+    <?php
+    if (isset($_SESSION["id"])) {
+        echo "<a href='?route=logout'>logout</a>";
+        echo "<h3> Olá {$_SESSION['nome']} </h3>";
+
+        if ($_SESSION["tipo"] != "prestador") {
+            echo '<a href="?route=prestador-form">Torne-se prestador</a>';
+            echo '<a href="?route=solicitar-servico">Solicite um serviço</a>';
+        } 
+    }
+    else {
+        echo "<a href='?route=login-form'>login</a>";
+        echo '<a href="?route=cadastro-form">cadastro</a>';
+        echo '<a href="?route=prestador-form">cadastro prestador</a>';
+    }
+
+    ?>
 
     <form action="" method="POST">
         <input type="text" name="nome" placeholder="Digite o nome do serviço">

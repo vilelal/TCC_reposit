@@ -98,6 +98,13 @@ switch ($route) {
         $controller->confirmarEAceitarSolicitacao();
         break;
 
+    // 4. Rotas de perfil do prestador
+    
+    case "dashboard":
+        $controller = new PrestadorController();
+        $controller->dashboard();
+        break;
+
     default:
         $controller = new HomeController();
         $controller->home();
