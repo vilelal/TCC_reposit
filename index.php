@@ -105,6 +105,16 @@ switch ($route) {
         $controller->dashboard();
         break;
 
+    case "lista-servicos":
+        $controller = new PrestadorController();
+        $controller->listaServicos();
+        break;
+    
+    case "perfil":
+        $controller = new PrestadorController();
+        $controller->perfil();
+        break;
+
     default:
         $controller = new HomeController();
         $controller->home();

@@ -4,44 +4,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
     <link rel="stylesheet" href="app/css/style.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;600;700;800&display=swap" rel="stylesheet">
-    <title>home</title>
 </head>
 
 <body>
-    <header class="header">
-        <img class="logo" src="app/css/img/logo.png" alt="logo.png">
-        <h1 class="h1-header">Fast Service</h1>
-        <a class="a-header" href="">Funcionamento</a>
-        <a class="a1" href="?route=solicitar-servico">Serviços</a>
-
-        <?php if (isset($_SESSION["id"])): ?>
-
-            <span class="user-greeting">Olá, <?= htmlspecialchars($_SESSION['nome'], ENT_QUOTES, 'UTF-8') ?></span>
-
-            <?php if ($_SESSION["tipo"] !== "prestador"): ?>
-                <button class="p-btn-header">
-                    <a class="a-btn-header" href="?route=prestador-form">Seja um profissional</a>
-                </button>
-            <?php endif; ?>
-
-            <button class="btn-header">
-                <a class="a-btn-header" href="?route=logout">Sair</a>
-            </button>
-
-        <?php else: ?>
-
-            <button class="p-btn-header">
-                <a class="a-btn-header" href="?route=prestador-form">Seja um profissional</a>
-            </button>
-            <button class="btn-header">
-                <a class="a-btn-header" href="?route=login-form">Login</a>
-            </button>
-        <?php endif; ?>
-    </header>
+    <?php require_once "app/Views/header/header.php";?>
     <div class="container">
         <br><br><br>
 

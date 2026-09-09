@@ -3,10 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard</title>
+    <title>Serviços</title>
 </head>
 <body>
-    <a href="?route=lista-servicos">serviços</a>
-    <a href="?route=perfil">perfil</a>
+    
 </body>
 </html>
