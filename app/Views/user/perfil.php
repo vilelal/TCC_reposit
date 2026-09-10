@@ -14,9 +14,9 @@
 
         </div>
         <h3> <?= $user["nome_TB_cliente"] ?? $user["nome_TB_prestador"] ?> </h3>
-        <a href="?route=edit-perfil">editar perfil</a>
-        <a href="">segurança</a>
-        <a href="">meus serviços</a>
+        <a href="?route=edit-perfil">dados pessoais</a>
+        <a href="?route=seguranca">segurança</a>
+        <a href="?route=meus-servicos">meus serviços</a>
         <a href="?route=logout">sair</a>
     </div>
 </body>

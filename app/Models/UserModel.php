@@ -148,6 +148,7 @@ class UserModel
 
             $user = [
                 "id" => $userId,
+                "prestadorId" => $prestadorId, 
                 "nome" => $data["nome_user"],
                 "tipo" => "prestador",
             ];
@@ -157,7 +158,6 @@ class UserModel
             if (isset($conexao) && $conexao instanceof mysqli) {
                 $conexao->rollback();
                 $conexao->close();
-                echo $err;
             }
         }
     }
@@ -194,6 +194,9 @@ class UserModel
 
     public static function editPerfil($data)
     {
+        $tel = CriptoController::encrypt($data["tel_user"]);
+        $cpf = CriptoController::encrypt($data["cpf_user"]);
+        
         $conexao = Database::conectarBanco();
         if ($_SESSION["tipo"] == "prestador") {
             $sql = "UPDATE TB_prestadorPerfil SET
@@ -210,8 +213,8 @@ class UserModel
             $stmt->bind_param(
                 "ssssssssi",
                 $data["nome_user"],
-                $data["tel_user"],
-                $data["cpf_user"],
+                $tel,
+                $cpf,
                 $data["bio_user"],
                 $data["rua_user"],
                 $data["cep_user"],
@@ -232,7 +235,7 @@ class UserModel
             cidade_TB_cliente = ?
             WHERE FK_id_TB_usuario = ?";
             $stmt = $conexao->prepare($sql);
-            $stmt->bind_param("sssssssi", $data["nome_user"], $data["tel_user"], $data["cpf_user"], $data["rua_user"], $data["cep_user"], $data["numero_user"], $data["cidade_user"], $_SESSION["id"]);
+            $stmt->bind_param("sssssssi", $data["nome_user"], $tel, $cpf, $data["rua_user"], $data["cep_user"], $data["numero_user"], $data["cidade_user"], $_SESSION["id"]);
             $stmt->execute();
         }
 
