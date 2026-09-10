@@ -7,10 +7,18 @@ class PrestadorController
         require_once "app/Views/prestador/dashboard.php";
     }
 
-    public function editPerfil() {}
+    public function editServicos() {
+        $data = $_POST;
+        PrestadorModel::editServicos($data);
+
+        header("Location: ?route=perfil");
+    }
 
     public function listaServicos() {
-        require_once "app/Views/prestador/servicos.php";
+        $categorias = CategoriaModel::getCategorias();
+        $servicos = ServiceModel::getServices();
+        $servicosSelecionados = ServiceModel::getServices($_SESSION["id_prestador"]);
+        require_once "app/Views/prestador/meus-servicos.php";
     }
 
 }

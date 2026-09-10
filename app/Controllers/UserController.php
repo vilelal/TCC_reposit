@@ -102,6 +102,7 @@ class UserController
 
         // cria as variaveis de sessão apos o cadastro
         $_SESSION["id"] = $user["id"];
+        $_SESSION["id_prestador"] = $user["prestadorId"];
         $_SESSION["nome"] = $user["nome"];
         $_SESSION["tipo"] = $user["tipo"];
 
@@ -143,5 +144,10 @@ class UserController
         $data = $_POST;
         UserModel::editPerfil($data);
         header("Location: ?route=perfil");
+    }
+
+    public function seguranca() 
+    {
+        require_once "app/Views/user/seguranca.php";
     }
 }

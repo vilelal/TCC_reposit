@@ -78,11 +78,22 @@ class ServiceModel
         return $prestadores;
     }
 
-    public static function getServices()
+    public static function getServices($id = null)
     {
         $conexao = Database::conectarBanco();
-        $sql = "SELECT * FROM TB_servico";
-        $result = $conexao->query($sql);
+        if ($id) {
+            $sql = "SELECT * FROM TB_prestadorServico INNER JOIN TB_servico
+            ON FK_id_TB_servico = PK_id_TB_servico
+            WHERE FK_id_TB_prestadorPerfil = ?";
+            $stmt = $conexao->prepare($sql);
+            $stmt->bind_param("i", $id);
+            $stmt->execute();
+            $result = $stmt->get_result();
+            $stmt->close();
+        } else {
+            $sql = "SELECT * FROM TB_servico";
+            $result = $conexao->query($sql);
+        }
         $conexao->close();
         $servicos = [];
         while ($row = $result->fetch_assoc()) {
@@ -90,6 +101,7 @@ class ServiceModel
         }
         return $servicos;
     }
+
 
 
     //Ver se vai utilizar isso depois

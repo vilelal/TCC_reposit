@@ -126,6 +126,21 @@ switch ($route) {
         break;
     }
 
+    case "seguranca": 
+        $controller = new UserController();
+        $controller->seguranca();
+        break;
+
+    case "meus-servicos": 
+        $controller = new PrestadorController();
+        $controller->listaServicos();
+        break;
+
+    case "edit-servicos":
+        $controller = new PrestadorController();
+        $controller->editServicos();
+        break;
+
     default:
         $controller = new HomeController();
         $controller->home();

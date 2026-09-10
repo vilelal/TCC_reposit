@@ -53,7 +53,7 @@
                     alert("CEP não encontrado!");
                 }
             })
-            .catch(() => alert("Erro ao buscar o CEP na API."));
+            .catch();
     });
 </script>
 
