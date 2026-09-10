@@ -44,7 +44,7 @@ class UserController
         try {
             $data = $_POST;
             $user = UserModel::login($data);
-            
+
             if (!$user) {
                 $_SESSION["success"] = false;
                 header("Location: ?route=login-form");
@@ -68,19 +68,22 @@ class UserController
         }
     }
 
-    public function logout() {
+    public function logout()
+    {
         session_destroy();
 
         header("Location: ?route=home");
     }
 
-    public function formPrestador() {
+    public function formPrestador()
+    {
         $categorias = CategoriaModel::getCategorias();
         $servicos = ServiceModel::getServices();
         require_once __DIR__ . "/../Views/user/form-prestador.php";
     }
 
-    public function cadastroPrestador() {
+    public function cadastroPrestador()
+    {
         $data = $_POST;
         $cripto = new CriptoController();
 
@@ -103,5 +106,42 @@ class UserController
         $_SESSION["tipo"] = $user["tipo"];
 
         header("Location: ?route=dashboard");
+    }
+
+    public function perfil()
+    {
+        if ($_SESSION["tipo"] == "prestador") {
+            $user = UserModel::getPrestadorById($_SESSION["id"]);
+            $user["tel_TB_prestador"] = CriptoController::decrypt($user["tel_TB_prestador"]);
+            $user["cpf_cnpj_TB_prestador"] = CriptoController::decrypt($user["cpf_cnpj_TB_prestador"]);
+        } else {
+            $user = UserModel::getClientById($_SESSION["id"]);
+            $user["tel_TB_cliente"] = CriptoController::decrypt($user["tel_TB_cliente"]);
+            $user["cpf_TB_cliente"] = CriptoController::decrypt($user["cpf_TB_cliente"]);
+        }
+        require_once "app/Views/user/perfil.php";
+    }
+
+    public function edit()
+    {
+        $cripto = new CriptoController();
+        if ($_SESSION["tipo"] == "prestador") {
+            $user = UserModel::getPrestadorById($_SESSION["id"]);
+            $user["cpf_cnpj_TB_prestador"] = $cripto::decrypt($user["cpf_cnpj_TB_prestador"]);
+            $user["tel_TB_prestador"] = $cripto::decrypt($user["tel_TB_prestador"]);
+        } else {
+            $user = UserModel::getClientById($_SESSION["id"]);
+            $user["cpf_TB_cliente"] = $cripto::decrypt($user["cpf_TB_cliente"]);
+            $user["tel_TB_cliente"] = $cripto::decrypt($user["tel_TB_cliente"]);
+        }
+
+        require_once "app/Views/user/edit-perfil.php";
+    }
+
+    public function editPerfil()
+    {
+        $data = $_POST;
+        UserModel::editPerfil($data);
+        header("Location: ?route=perfil");
     }
 }

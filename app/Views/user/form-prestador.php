@@ -41,7 +41,7 @@
                 <input type="text" name="cpf_cnpj_user" placeholder="CPF ou CNPJ"
                     value="<?= htmlspecialchars($user["cpf_TB_cliente"] ?? "") ?>">
                 <!-- Preencher no formato de cpf automaticamente **FAZER   -->
-                <input type="text" name="bio_user" placeholder="Sobre mim">
+                <textarea type="text" name="bio_user" placeholder="Sobre mim" rows="5" cols="40"></textarea>
                 <h3> Endereço </h3>
                 <input type="text" id="cep" name="cep_user" placeholder="Digite seu CEP" maxlength="8" pattern="\d{8}"
                     value="<?= htmlspecialchars($user["cep_TB_cliente"] ?? "") ?>">
