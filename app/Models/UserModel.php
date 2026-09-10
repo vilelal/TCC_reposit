@@ -177,4 +177,68 @@ class UserModel
         }
         return $user;
     }
+
+    public static function getPrestadorById($id)
+    {
+        $conexao = Database::conectarBanco();
+        $sql = "SELECT * FROM TB_prestadorPerfil
+        INNER JOIN TB_usuario ON FK_id_TB_usuario = PK_id_TB_usuario
+        WHERE FK_id_TB_usuario = ?";
+        $stmt = $conexao->prepare($sql);
+        $stmt->bind_param("i", $id);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $prestador = $result->fetch_assoc();
+        return $prestador;
+    }
+
+    public static function editPerfil($data)
+    {
+        $conexao = Database::conectarBanco();
+        if ($_SESSION["tipo"] == "prestador") {
+            $sql = "UPDATE TB_prestadorPerfil SET
+            nome_TB_prestador = ?,
+            tel_TB_prestador = ?,
+            cpf_cnpj_TB_prestador = ?,
+            bio_TB_prestador = ?,
+            rua_TB_prestadorPerfil = ?,
+            cep_TB_prestadorPerfil = ?,
+            numeroCasa_TB_prestadorPerfil = ?,
+            cidade_TB_prestadorPerfil = ?
+            WHERE FK_id_TB_usuario = ?";
+            $stmt = $conexao->prepare($sql);
+            $stmt->bind_param(
+                "ssssssssi",
+                $data["nome_user"],
+                $data["tel_user"],
+                $data["cpf_user"],
+                $data["bio_user"],
+                $data["rua_user"],
+                $data["cep_user"],
+                $data["numero_user"],
+                $data["cidade_user"],
+                $_SESSION["id"]
+            );
+            $stmt->execute();
+
+        } else {
+            $sql = "UPDATE TB_clientePerfil SET
+            nome_TB_cliente = ?,
+            tel_TB_cliente = ?,
+            cpf_TB_cliente = ?,
+            rua_TB_cliente = ?,
+            cep_TB_cliente = ?,
+            numeroCasa_TB_cliente = ?,
+            cidade_TB_cliente = ?
+            WHERE FK_id_TB_usuario = ?";
+            $stmt = $conexao->prepare($sql);
+            $stmt->bind_param("sssssssi", $data["nome_user"], $data["tel_user"], $data["cpf_user"], $data["rua_user"], $data["cep_user"], $data["numero_user"], $data["cidade_user"], $_SESSION["id"]);
+            $stmt->execute();
+        }
+
+        $conexao->close();
+        $stmt->close();
+
+        $_SESSION["nome"] = $data["nome_user"];
+    }
 }

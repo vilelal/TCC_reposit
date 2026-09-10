@@ -1,7 +1,19 @@
-body {
-    background-color: #F8F9FA;
+* {
     margin: 0;
     padding: 0;
+    box-sizing: border-box;
+}
+
+.container {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    padding: 5%;
+}
+
+body {
+    background-color: #F8F9FA;
     font-family: 'Montserrat', sans-serif;
 }
 
@@ -29,12 +41,6 @@ select {
     font-size: 18px;
 }
 
-.container {
-    display: flex;
-    width: 100%;
-    min-height: 100vh;
-}
-
 .lado-laranja {
     width: 33%;
     background-color: #ffbd59;
@@ -46,7 +52,6 @@ select {
 }
 
 .cadastro {
-    margin-left: 10%;
     padding: 40px 50px;
     background-color: #F8F9FA;
     border-radius: 15px;
@@ -168,7 +173,8 @@ button[type="submit"] {
     color: #ffffff;
     border: none;
     padding: 12px;
-    border-radius: 20px;
+    padding-inline: 30px;
+    border-radius: 15px;
     font-weight: bold;
     cursor: pointer;
     margin: 15px auto 0 auto;
@@ -177,6 +183,7 @@ button[type="submit"] {
     align-items: center;
     gap: 8px;
 }
+
 .logo{
     width: 150px;
     height: auto;

@@ -111,9 +111,20 @@ switch ($route) {
         break;
     
     case "perfil":
-        $controller = new PrestadorController();
+        $controller = new UserController();
         $controller->perfil();
         break;
+
+    case "edit-perfil":
+        $controller = new UserController();
+        $controller->edit();
+        break;
+
+    case "editPerfil": {
+        $controller = new UserController();
+        $controller->editPerfil();
+        break;
+    }
 
     default:
         $controller = new HomeController();
