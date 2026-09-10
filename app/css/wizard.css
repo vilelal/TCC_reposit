@@ -1,0 +1,240 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+body {
+    min-height: 100vh;
+    background: #fff;
+    color: #333;
+    font-family: Arial, sans-serif;
+    margin: 0;
+}
+:root {
+    --main-color: #ffc107;
+    --dark-color: #dd992b;
+    --step-color: #FCBA52;
+    --step-size: 32px;
+    --error-color: #d9534f;
+    --steps: 3;
+}
+
+h1 {
+    text-align: center;
+    margin-bottom: 16px;
+}
+
+button {
+    cursor: pointer;
+    border: none;
+    border-radius: 16px;
+    padding: 8px 16px;
+    background-color: var(--main-color);
+    color: #fff;
+    font-size: 14px;
+    transition: 0.3s;
+}
+
+button:active,
+button:hover {
+    background-color: var(--dark-color);
+}
+
+button:disabled {
+    opacity: 0.8;
+}
+
+button:focus {
+    outline-color: #333;
+}
+
+button[type="submit"] {
+    background-color: #333;
+}
+
+button[type="submit"]:hover,
+button[type="submit"]:active {
+    background-color: #444;
+}
+
+.container {
+    width: 100%;
+    min-height: 100vh;
+
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+
+    padding-top: 80px;
+}
+
+#form-wizard {
+    background-color: #fff;
+    padding: 32px;
+    border-radius: 8px;
+    width: 100%;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+}
+
+/* ETAPAS */
+
+
+.etapa-wizard.ativa {
+    display: block;
+}
+
+/* PROGRESSO */
+
+.progress-conteiner {
+    position: relative;
+    margin-bottom: 40px;
+}
+
+/* Linha cinza */
+
+.progress-conteiner::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: calc(var(--step-size) / 2);
+    height: 4px;
+    background-color: #ddd;
+    transform: translateY(-50%);
+}
+
+/* Linha azul */
+
+.progress-conteiner .progress {
+    height: 4px;
+    background-color: var(--main-color);
+    position: absolute;
+    top: calc(var(--step-size) / 2);
+    left: 0;
+    transform: translateY(-50%) scaleX(0);
+    transform-origin: left;
+    transition: 0.3s;
+    width: 100%;
+    z-index: 2;
+}
+
+/* CÍRCULOS */
+
+.progress-conteiner ol {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    list-style-type: none;
+    counter-reset: step-number;
+    position: relative;
+    z-index: 3;
+}
+
+.progress-conteiner li {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    color: #777;
+    transition: 0.3s;
+    font-size: 14px;
+}
+
+/* Número dentro do círculo */
+
+/* CÍRCULOS (Estado Padrão - Inativo / Futuro) */
+.progress-conteiner li::before {
+    counter-increment: step-number;
+    content: counter(step-number);
+    width: var(--step-size);
+    height: var(--step-size);
+    background-color: #ccc;
+    /* Cor cinza para passos que ainda não foram alcançados */
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    transition: 0.3s;
+}
+
+/* PASSO ATUAL (Azul) */
+.progress-conteiner li.current {
+    color: #333;
+    font-weight: bold;
+}
+
+.progress-conteiner li.current::before {
+    background-color: var(--main-color) !important;
+    /* Azul */
+    box-shadow: 0 0 0 4px rgba(0, 123, 255, 0.2);
+}
+
+/* PASSOS CONCLUÍDOS (Verde ou Azul dependendo da sua preferência) */
+.progress-conteiner li.done {
+    color: #333;
+    font-weight: 500;
+}
+
+.progress-conteiner li.done::before {
+    background-color: var(--step-color) !important;
+    /* Verde para concluídos */
+}
+
+/* CONTEÚDO */
+
+.step {
+    display: none;
+    padding: 24px 8px;
+}
+
+.step.ativa {
+    display: block;
+}
+
+.step label {
+    display: block;
+    margin-top: 15px;
+    margin-bottom: 5px;
+}
+
+.step select,
+.step input,
+.step textarea {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+}
+
+/* BOTÕES */
+
+.controls {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    margin-top: 16px;
+    padding-inline: 8px;
+}
+
+.controls button {
+    flex: 1;
+}
+
+.btn-voltar {
+    background-color: var(--dark-color);
+    color: white;
+    margin-right: 10px;
+}
+
+/* ERRO */
+
+.erro-mensagem {
+    color: var(--error-color);
+    font-size: 0.9rem;
+    margin-top: 5px;
+    display: none;
+}

@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Home</title>
     <link rel="stylesheet" href="app/css/style.css">
+    <link rel="stylesheet" href="app/css/detalhe.css">
 </head>
 
 <body>
@@ -15,7 +16,17 @@
 
         <div class="div-lado">
 
-            <section class="hero-section">
+      <section class="hero-section">
+
+        <div class="circulos-laranja">
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
 
                 <div class="conteiner">
                     <br><br><br><br><br><br>
@@ -160,24 +171,24 @@
         <br>
         <br>
         <br>
-        <h1 class="h1-center"><img src="app/css/img/icone-treco.png" alt=""></h1>
+        <h1 class="h1-center"><img  src="app/css/img/icone-treco.png" alt=""></h1>
         <p class="p-center">Fast Service é a melhor plataforma de contratação de pequenos serviços do Brasil.Fazemos a conexão de trabalhadores com clientes mais próximos, que solicitam e recebem atendimento de qualidade, rapidez e com segurança.</p>
         <br><br>
         <div class="conteiner-card-esp">
             <div class="card-esp">
-                <img src="app/css/img/icone-escudo.png" alt="" class="card-icon">
+                <img class="treco" src="app/css/img/icone-escudo.png" alt="" class="card-icon">
                 <h4>Confiabilidade</h4>
                 <p><strong>Profissionais confiáveis</strong></p>
                 <p>Prestadores avaliados e organizados em um catálogo acessível</p>
             </div>
             <div class="card-esp">
-                <img class="card-icon" src="app/css/img/icone-estrela-azul.png" alt="">
+                <img  class="treco" src="app/css/img/icone-estrela-azul.png" alt="">
                 <h4>Qualidade</h4>
                 <p><strong>Avaliações reais</strong></p>
                 <p>Consulte feedbacks antes de contratar</p>
             </div>
             <div class="card-esp">
-                <img src="app/css/img/icone-raio-azul.png" alt="" class="card-icon">
+                <img class="treco" src="app/css/img/icone-raio-azul.png" alt="" class="card-icon">
                 <h4>Rapidez</h4>
                 <p><strong>Contratação simplificada</strong></p>
                 <p>Pesquise, compare e encontre serviços rapidamente</p>

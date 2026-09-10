@@ -4,13 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Solicitar Serviço</title>
-    <link rel="stylesheet" href="app/css/styleCad.css">
-    <style>
-        .etapa-wizard { display: none; }
-        .etapa-wizard.ativa { display: block; }
-        .btn-voltar { background-color: #6c757d; color: white; margin-right: 10px; }
-        .erro-mensagem { color: #d9534f; font-size: 0.9rem; margin-top: 5px; display: none; }
-    </style>
+      <?php require_once "app/Views/header/header.php";?>
+    <link rel="stylesheet" href="app/css/wizard.css">
+    
+    <link rel="stylesheet" href="app/css/detalhe.css">
+    
 </head>
 <body>
 
@@ -18,12 +16,22 @@
     <div class="cadastro-etapa">
         <h1>Qual serviço você precisa?</h1>
 
+
         <form id="form-wizard" action="?route=buscar-prestadores-proximos" method="POST">
-            
+            <div class="progress-conteiner">
+                    <div class="progress"></div>
+                <ol>
+                    <li class="current">Step</li>
+                    <li>Step</li>
+                    <li>Step</li>
+                </ol>
+                </div>
             <!-- PASSO 1: Seleção de Categoria -->
-            <div id="passo-1" class="etapa-wizard ativa">
+        <div class="steps-conteiner">
+            <div id="passo-1" class="step ativa">
                 <h2>1. Escolha a Categoria</h2>
                 
+
                 <label for="select-categoria">Categoria do Serviço:</label>
                 <select id="select-categoria" name="FK_id_TB_categoria" onchange="filtrarServicos()" required>
                     <option value="" disabled selected>Selecione uma categoria...</option>
@@ -37,13 +45,15 @@
                 </select>
 
                 <p id="erro-passo-1" class="erro-mensagem">Por favor, selecione uma categoria antes de prosseguir.</p>
-
+                <div class= "controls">
                 <br><br>
-                <button type="button" onclick="avancarPasso(1, 2)">Próximo</button>
+                <button class="next-btn" type="button" onclick="avancarPasso(1, 2)">Próximo</button>
+                </div>
             </div>
+           
 
             <!-- PASSO 2: Especificar Serviço, Urgência e Orçamento -->
-            <div id="passo-2" class="etapa-wizard">
+            <div id="passo-2" class="step">
                 <h2>2. Detalhes e Urgência</h2>
                 
                 <label for="select-servico">Serviço Específico:</label>
@@ -80,48 +90,76 @@
                 <p id="erro-passo-2" class="erro-mensagem">Por favor, preencha o serviço e a data desejada.</p>
 
                 <br><br>
-                <button type="button" class="btn-voltar" onclick="mudarPasso(2, 1)">Voltar</button>
-                <button type="button" onclick="avancarPasso(2, 3)">Próximo</button>
+                   <div class= "controls">
+                        <button type="button" class="prev-btn" onclick="mudarPasso(2, 1)">Voltar</button>
+                        <button type="button" class="next-btn"onclick="avancarPasso(2, 3)">Próximo</button>
+                    </div>
             </div>
 
             <!-- PASSO 3: Confirmação da Busca -->
-            <div id="passo-3" class="etapa-wizard">
+            <div id="passo-3" class="step">
                 <h2>3. Localizar Prestadores Próximos</h2>
                 <p>Usaremos a cidade cadastrada no seu perfil para encontrar os prestadores mais próximos de você.</p>
                 
                 <br>
-                <button type="button" class="btn-voltar" onclick="mudarPasso(3, 2)">Voltar</button>
-                <button type="submit" class="btn-solicitar">Ver Prestadores Próximos</button>
+                 <div class= "controls">
+                <button type="button" class="prev-btn" onclick="mudarPasso(3, 2)">Voltar</button>
+                <button type="submit" class="submit-btn">Ver Prestadores Próximos</button>
+                   </div>
             </div>
+        </div>
 
         </form>
     </div>
 </div>
 
-<script>
-    // Filtra as opções de serviço dinamicamente com base na categoria selecionada no Passo 1
-    function filtrarServicos() {
-        const categoriaId = document.getElementById('select-categoria').value;
-        const selectServico = document.getElementById('select-servico');
-        const options = selectServico.querySelectorAll('option');
+ <script>
+    // 1. Função que recalcula a posição da barra e as cores dos círculos
+    function atualizarProgresso() {
+        const progress = document.querySelector(".progress");
+        const stepIndicators = document.querySelectorAll('.progress-conteiner li');
+        const steps = document.querySelectorAll('.step');
 
-        // Reseta a seleção do serviço
-        selectServico.value = "";
+        let currentStep = 0;
 
-        options.forEach(option => {
-            const catOption = option.getAttribute('data-categoria');
-            if (catOption === categoriaId) {
-                option.style.display = 'block';
-            } else if (catOption) {
-                option.style.display = 'none';
+        // Identifica qual passo tem a classe 'ativa'
+        steps.forEach((step, index) => {
+            if (step.classList.contains('ativa')) {
+                currentStep = index;
             }
         });
 
-        // Oculta mensagem de erro se houver
-        document.getElementById('erro-passo-1').style.display = 'none';
+        // Atualiza a largura da barra azul
+        const width = currentStep / (stepIndicators.length - 1);
+        if (progress) {
+            progress.style.transform = `translateY(-50%) scaleX(${width})`;
+        }
+
+        // Atualiza as classes 'current' e 'done' nos <li> do indicador
+        stepIndicators.forEach((indicator, index) => {
+            indicator.classList.remove('current', 'done');
+
+            if (index === currentStep) {
+                indicator.classList.add('current');
+            } else if (index < currentStep) {
+                indicator.classList.add('done');
+            }
+        });
     }
 
-    // Valida os campos obrigatórios antes de avançar de etapa
+    // 2. Transição entre as etapas
+    function mudarPasso(de, para) {
+        const passoAtual = document.getElementById('passo-' + de);
+        const proximoPasso = document.getElementById('passo-' + para);
+
+        if (passoAtual) passoAtual.classList.remove('ativa');
+        if (proximoPasso) proximoPasso.classList.add('ativa');
+
+        // Dispara a atualização visual dos círculos na mesma hora
+        atualizarProgresso();
+    }
+
+    // 3. Validação dos campos
     function avancarPasso(atual, proximo) {
         let valido = true;
 
@@ -147,12 +185,30 @@
         }
     }
 
-    // Alterna visualmente os passos do formulário
-    function mudarPasso(de, para) {
-        document.getElementById('passo-' + de).classList.remove('ativa');
-        document.getElementById('passo-' + para).classList.add('ativa');
-    }
-</script>
+    // 4. Filtro de serviços
+    function filtrarServicos() {
+        const categoriaId = document.getElementById('select-categoria').value;
+        const selectServico = document.getElementById('select-servico');
+        const options = selectServico.querySelectorAll('option');
 
+        selectServico.value = "";
+
+        options.forEach(option => {
+            const catOption = option.getAttribute('data-categoria');
+            if (catOption === categoriaId) {
+                option.style.display = 'block';
+            } else if (catOption) {
+                option.style.display = 'none';
+            }
+        });
+
+        document.getElementById('erro-passo-1').style.display = 'none';
+    }
+
+    // Garante a execução assim que o HTML carregar
+    document.addEventListener('DOMContentLoaded', () => {
+        atualizarProgresso();
+    });
+</script>
 </body>
 </html>
