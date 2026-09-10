@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
-    <link rel="stylesheet" href="app/css/styleLogin.css">
+    <link rel="stylesheet" href="app/css/stylelog.css">
 </head>
 
 
@@ -16,10 +16,16 @@
             <div class="bemvindo">Bem vindo <br> de volta!</div>
 
             <p>Não tem uma conta? </p>
-            <p>cadastra-se agora </p>
-            <button class="btnLogar">Cadastrar-se</button>
+            <p>cadastre-se agora </p>
+
+    <div class="botoes">
+    <a href="?route=cadastro-form" class="btnLogar">Cadastrar</a>
+    </div>
         </div>
 
+
+    <div class="img"><img src="app/css/img/logo.png" alt="Logo"></div>
+        
 
         <div class="lado-direito">
             <div class="cadastro">
@@ -28,14 +34,19 @@
 
 
                     <form action="?route=login" method="post">
-                        Digite seu E-mail
-                        <input type="email" name="email_user" placeholder="nome@exemplo.com" required>
-                        Digite sua Senha
-                        <input type="password" name="senha_user" placeholder="Digite sua senha" required>
-
-                        <div class="">
-                            <button type="submit"> Login </button>
+                        <div class="campo-login">
+                            <label for="email_user">Digite seu E-mail</label>
+                            <input id="email_user" type="email" name="email_user" placeholder="" required>
                         </div>
+                        <div class="campo-login">
+                            <label for="senha_user">Digite sua Senha</label>
+                            <input id="senha_user" type="password" name="senha_user" placeholder="" required>
+                        </div>
+
+                            <div class="botoes">
+                            <button type="submit" class="btnYellow"> Logar </button>
+    <a href="?route=home" class="btnWhite">Voltar</a>
+</div>
                     </form>
                 </div>
             </div>

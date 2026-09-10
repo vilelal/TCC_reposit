@@ -1,0 +1,201 @@
+body {
+    background-color: #F8F9FA;
+    margin: 0;
+    padding: 0;
+    font-family: 'Montserrat', sans-serif;
+}
+
+input {
+    display: block;
+    margin-bottom: 10px;
+    box-sizing: border-box;
+    height: 48px;
+    font-size: 24px;
+    border-radius: 15px;
+    border: 1px solid #000000;
+    background-color: #E7E5E5;
+    font-weight: 400;
+    width: 600px;             /* Preenche a largura até o limite do padding */
+    max-width: 100%;        /* Define o tamanho exato da largura do campo */
+    margin-left: auto;       /* Centraliza na esquerda */
+    margin-right: auto;      /* Centraliza na direita */
+    margin-bottom: 20px;     /* Espaço entre os campos */
+
+}
+
+.container {
+    display: flex;
+    width: 100%;
+    min-height: 100vh;
+}
+
+.lado-laranja {
+    width: 33%;
+    background-color: #ffbd59;
+    text-align: center;
+}
+
+.cadastro {
+    
+    padding: 40px 50px;
+    background-color: #F8F9FA;
+    border-radius: 15px;
+    box-shadow: 0px 10px 25px rgba(0, 0, 0, 0.08);
+    box-sizing: border-box;
+    background-color: #FFFFFF;
+    box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.12);
+    width: 800px;           
+    text-align: center;
+
+}
+
+/* Título */
+h1 {
+    font-size: 64px;
+    color: #FBD34F;
+    font-weight: 800;
+}
+
+/* Botão */
+.btnLogar {
+    margin-top: 5%;
+    background-color: #FFFFFF;
+    color: #000000;
+    padding: 12px 0;
+    width: 70%;
+    display: inline-block;
+    font-size: 36px;
+    font-weight: 800;
+    border-style: none;
+    border-radius: 15px;
+    cursor: pointer;
+    text-decoration: none;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.btnLogar:hover {
+    background-color: #000000;
+    color: #ffffff;
+}
+
+
+/* Textos */
+p {
+    font-size: 24px;
+    line-height: 0.1;
+    color: #FFFFFF;
+    font-weight: 800;
+    margin-bottom: 30px;
+}
+
+.bemvindo {
+    margin-top: 45%;
+    font-size: 64px;
+    color: #FFFFFF;
+    font-weight: 800;
+}
+
+.dados{
+    font-size: 28px;
+
+}
+
+.campo-login {
+    width: 600px;
+    max-width: 100%;
+    margin: 0 auto 20px;
+    text-align: left;
+}
+
+.campo-login label {
+    display: block;
+    margin-bottom: 6px;
+}
+
+.campo-login input {
+    box-sizing: border-box;
+    margin: 0;
+}
+
+.lado-direito{
+    width: 75%; /* Ganhou mais espaço lateral */
+    display: flex;
+    justify-content: center; /* Mantém o card centralizado no espaço extra */
+    align-items: center;
+}
+
+
+
+img{
+    height: auto;
+    width: 350px;
+    position: absolute;
+  /* Gruda a imagem no lado direito, deixando 20px de margem */
+     top: 20%;     /* Opcional: centraliza verticalmente se quiser */
+  transform: translateY(-50%);
+  left: 850px;
+}
+
+.img{
+  height: auto;  
+  width: 10px;
+  position: relative; /* Ativa o controle de empilhamento */
+  z-index: 10;        /* Um número maior que o do formulário coloca a imagem na frente */
+
+
+}
+
+.botoes {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 60px;
+    padding: 6px 16px;
+    font-size: 14px;
+    width: auto;
+}
+
+
+.btnYellow{
+    
+    background-color: #FBD34F;
+    color: #ffffff;
+    padding: 8px 0;
+    width: 70%;
+    display: inline-block;
+    font-size: 30px;
+    font-weight: 1000;
+    border-style: none;
+    border-radius: 15px;
+    width: 250px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.btnYellow:hover {
+    background-color: #ffbf00;
+    color: #ffffff;
+}
+
+.btnWhite{
+    
+    background-color: #F8F9FA;
+    color: #000000;
+    padding: 5px 0;
+    width: 70%;
+    display: inline-block;
+    font-size: 30px;
+    font-weight: 800;
+    border: 1px solid #000000;
+    border-radius: 15px;
+    box-shadow: 0 1px 0 #000000;
+    width: 250px;
+    cursor: pointer;
+    text-decoration: none; 
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.btnWhite:hover {
+    background-color: #000000;
+    color: #ffffff;
+}
