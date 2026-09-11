@@ -24,7 +24,7 @@
 
              <form action="?route=cadastro" method="post">
         <input type="email" name="email_user" placeholder="nome@exemplo.com" required>
-        <input type="text" name="senha_user" placeholder="Digite sua senha" required>
+        <input type="password" name="senha_user" placeholder="Digite sua senha" required>
         <input type="text" name="nome_user" placeholder="Digite seu nome" required>
         <input type="tel" name="telefone_user" placeholder="Digite seu telefone"> <!-- Preencher no formato de telefone automaticamente **FAZER   -->
         <input type="text" name="cpf_user" placeholder="Digite seu CPF"> <!-- Preencher no formato de cpf automaticamente **FAZER   -->
