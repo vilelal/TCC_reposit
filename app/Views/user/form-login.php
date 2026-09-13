@@ -18,14 +18,14 @@
             <p>Não tem uma conta? </p>
             <p>cadastre-se agora </p>
 
-    <div class="botoes">
-    <a href="?route=cadastro-form" class="btnLogar">Cadastrar</a>
-    </div>
+            <div class="botoes">
+                <a href="?route=cadastro-form" class="btnLogar">Cadastrar</a>
+            </div>
         </div>
 
 
-    <div class="img"><img src="app/css/img/logo.png" alt="Logo"></div>
-        
+        <div class="img"><img src="app/css/img/logo.png" alt="Logo"></div>
+
 
         <div class="lado-direito">
             <div class="cadastro">
@@ -43,10 +43,10 @@
                             <input id="senha_user" type="password" name="senha_user" placeholder="" required>
                         </div>
 
-                            <div class="botoes">
+                        <div class="botoes">
                             <button type="submit" class="btnYellow"> Logar </button>
-    <a href="?route=home" class="btnWhite">Voltar</a>
-</div>
+                            <a href="?route=home" class="btnWhite">Voltar</a>
+                        </div>
                     </form>
                 </div>
             </div>
