@@ -141,6 +141,13 @@ switch ($route) {
         $controller->editServicos();
         break;
 
+    // notificacoes
+
+    case "notificacoes":
+        $controller = new NotificacaoController();
+        $controller->notificacoes();
+        break;
+
     default:
         $controller = new HomeController();
         $controller->home();

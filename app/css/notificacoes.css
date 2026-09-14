@@ -1,0 +1,23 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.card-notificacao {
+    margin-bottom: 15px;
+    padding: 15px;
+    border: 1px solid #f0ec1d;
+    border-left: 4px solid #f0ec1d;
+    border-radius: 10px;
+}
+
+.container {
+    padding: 10px;
+}
+
+.card-notificacao.nova-notificacao {
+    background-color: #e8f4fd;
+    border-left: 4px solid #1d9bf0;
+    border: 1px solid #1d9bf0;
+}
