@@ -35,6 +35,7 @@
                     <br>
                     <br>
 
+                    <a href="?route=cadastro-servico">cadastro serivco</a>
                     <a href="?route=dashboard">perfil</a>
 
                     <?php

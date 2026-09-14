@@ -106,14 +106,6 @@ class UserController
         $_SESSION["nome"] = $user["nome"];
         $_SESSION["tipo"] = $user["tipo"];
 
-        // Parametros de envio de notificacao
-        $notificacao = [
-            "titulo" => "Bem Vindo!",
-            "mensagem" => "A tua conta foi ativada com sucesso. Explore o nosso painel de controle.",
-            "user_id" => $_SESSION["id"]
-        ];
-
-        NotificacaoModel::enviarNotificacao($notificacao);
         header("Location: ?route=dashboard");
     }
 

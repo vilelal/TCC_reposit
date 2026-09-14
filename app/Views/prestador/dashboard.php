@@ -8,6 +8,5 @@
 <body>
     <a href="?route=lista-servicos">serviços</a>
     <a href="?route=perfil">perfil</a>
-    <a href="?route=notificacoes">notificacoes</a>
 </body>
 </html>
