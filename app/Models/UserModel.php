@@ -158,7 +158,6 @@ class UserModel
             if (isset($conexao) && $conexao instanceof mysqli) {
                 $conexao->rollback();
                 $conexao->close();
-                die($err);
             }
         }
     }
