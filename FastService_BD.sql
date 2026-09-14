@@ -88,18 +88,16 @@ CREATE TABLE TB_pagamento (
     FOREIGN KEY (FK_id_TB_SolicitacaoServico) REFERENCES TB_SolicitacaoServico(PK_id_TB_SolicitacaoServico)
 );
 
--- 9. Avaliação do Serviço
+-- 9. Avaliação do usuario
 CREATE TABLE TB_avaliacao (
     PK_id_TB_avaliacao INT AUTO_INCREMENT PRIMARY KEY,
-    FK_id_TB_SolicitacaoServico INT NOT NULL UNIQUE,
+    FK_id_TB_usuario INT NOT NULL UNIQUE,
     nota_TB_avaliacao INT NOT NULL CHECK (nota_TB_avaliacao BETWEEN 1 AND 5),
-    comentario_TB_avaliacao TEXT,
     data_avaliacao_TB_avaliacao DATETIME DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (FK_id_TB_SolicitacaoServico) REFERENCES TB_SolicitacaoServico(PK_id_TB_SolicitacaoServico)
+    FOREIGN KEY (FK_id_TB_usuario) REFERENCES TB_usuario(PK_id_TB_usuario)
 );
 
 -- 10. Notificacoes
-
 CREATE TABLE TB_notificacao (
     PK_id_TB_notificacao INT AUTO_INCREMENT PRIMARY KEY,
     FK_id_usuario INT NOT NULL,
