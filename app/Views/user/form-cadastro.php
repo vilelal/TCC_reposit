@@ -297,11 +297,6 @@ btnVoltar.addEventListener("click", function () {
                 })
 
                 .catch(erro => {
-
-                    console.error(erro);
-
-                    alert("Erro ao consultar o CEP.");
-
                 });
 
         });
