@@ -263,12 +263,6 @@ btnVoltar.addEventListener("click", function () {
 
 
             // Verifica se o CEP possui 8 números
-            if (cep.length !== 8) {
-
-                alert("Digite um CEP válido!");
-
-                return;
-            }
 
 
             // Consulta o ViaCEP
