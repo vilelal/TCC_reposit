@@ -4,28 +4,79 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="app/css/dashboard.css">
+        <link rel="stylesheet" href="app/css/meus-servicos.css">
     <title>Serviços</title>
 </head>
 
 <body>
-    <form action="?route=edit-servicos" method="post">
-        <h3>Serviços</h3>
-        <select name="categorias" id="categorias">
-            <option value=""> Tipo de serviço </option>
-            <?php
-            if (isset($categorias)) {
-                foreach ($categorias as $cat) {
-                    echo "<option value='{$cat["PK_id_TB_categoria"]}'>{$cat['nome_TB_categoria']}</option>";
-                }
-            }
-            ?>
-        </select>
-        <!-- div com servicos por categoria -->
-        <div class="container-servicos" id="container-servicos"></div> <br>
-        <!-- div com serviços selecionados -->
-        <div class="container-selecionados" id="container-selecionados"></div>
-        <button type="submit"> atualizar </button>
-    </form>
+
+
+<div class="menu">
+            <div class="conteudo">
+                <div class="titulo">
+              <a href="?route=">
+                <img src="app/css/img/logo.png" alt="" class="logo">
+                </a>
+        <h1 class="nome_empresa">FastService</h1> </div>
+       
+                 <a class="menu-a" href="?route=dashboard"><img class="casa" src="app/css/img_dashboard/icone-sino2.png" alt=""><h2>Inicio</h2></a>
+                  <a class="menu-a" href="?route=dashboard"><img src="app/css/img_dashboard/icone-traco.png"  alt=""><h2>Relatório</h2></a>
+                <a class="menu-a" href="?route=lista-servicos"><img src="app/css/img_dashboard/icone-traco2.png"  alt=""><h2>Serviços</h2></a>
+                <a class="menu-a" href="?route=perfil"><img src="" alt=""><h2>Perfil</h2></a>
+                </div>
+        </div>
+    <div class="area-direita">
+       <header class="header">
+        <!--d
+-->
+            <div class="header-right">
+                <a href="">
+                    <img src="app/css/img/chat.png" alt="" class="chat">
+                </a>
+                <a href="?route=notificacoes">
+                    <img src="app/css/img_dashboard/icone-sino.png" alt="" class="chat">
+                </a>
+                <img src="" alt="">
+                <?php
+                    if (isset($_SESSION["id"])) {
+                        echo "<h3 class='user-name'>{$_SESSION['nome']}</h3>";
+                    }
+                ?>
+            </div><img class="verificado"src="app/css/img_dashboard/icone-check.png" alt="">
+        </header>
+
+   
+        
+                <h4><form  class="form" action="?route=edit-servicos" method="post">
+                    <h2 class="h2-titulo">Editar meus serviços</h2>
+                    <br>
+                    <h4 class="h4-esq">Selecione o tipo de serviço que você quer prestar:</h4>
+                    <select name="categorias" id="categorias">
+                        <option value=""> Tipo de serviço </option>
+                        <?php
+                        if (isset($categorias)) {
+                            foreach ($categorias as $cat) {
+                                echo "<option value='{$cat["PK_id_TB_categoria"]}'>{$cat['nome_TB_categoria']}</option>";
+                            }
+                        }
+                        ?>
+                    </select>
+                    <br><br>
+                    <!-- div com servicos por categoria -->
+                     <h4 class="h4-esq">Marque os serviços que voce gostaria de prestar: </h4>
+                     <br>
+                    <div class="container-servicos" id="container-servicos"></div> <br><br>
+                    <!-- div com serviços selecionados -->
+                     <h4>Caso não queira mais prestar um serviço: (Desmarque)</h4><br>
+                    <div class="container-selecionados" id="container-selecionados"></div>
+                    <button type="submit" class="btn"><h3> Atualizar</h3> </button>
+                </form></h4>
+            </div>
+
+
+
+    
 </body>
 
 
