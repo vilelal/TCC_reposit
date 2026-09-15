@@ -25,26 +25,43 @@ class ChatController
         require_once "app/Views/servicos/painel-chat.php";
     }
 
-    public function enviarMensagem()
-    {
-        if (!isset($_SESSION["id"])) {
-            http_response_code(403);
-            echo json_encode(["status" => "error", "mensagem" => "Não autorizado"]);
-            exit;
-        }
+   public function enviarMensagem() {
+    if (!isset($_SESSION["id"])) return;
 
-        $solicitacaoId = $_POST["id_solicitacao"] ?? null;
-        $mensagem = trim($_POST["mensagem"] ?? "");
-        $remetenteId = $_SESSION["id"];
+    $usuarioId = $_SESSION["id"];
+    $solicitacaoId = $_POST["id_solicitacao"] ?? null;
+    $mensagem = $_POST["mensagem"] ?? ""; 
+    $caminhoImagem = null;
 
-        if ($solicitacaoId && !empty($mensagem)) {
-            ChatModel::salvarMensagem($solicitacaoId, $remetenteId, $mensagem);
-            echo json_encode(["status" => "success"]);
-        } else {
-            echo json_encode(["status" => "error", "mensagem" => "Dados inválidos"]);
+    if (!$solicitacaoId) return;
+
+    // Verifica se uma imagem foi enviada
+    if (isset($_FILES['imagem']) && $_FILES['imagem']['error'] === UPLOAD_ERR_OK) {
+        $diretorioDestino = 'app/uploads/chats/';
+        
+        // Cria a pasta se ela não existir
+        if (!is_dir($diretorioDestino)) {
+            mkdir($diretorioDestino, 0777, true);
         }
-        exit;
+        
+        // Cria um nome único para a imagem para não sobrepor outras
+        $nomeExtensao = pathinfo($_FILES['imagem']['name'], PATHINFO_EXTENSION);
+        $nomeArquivo = uniqid() . '_' . time() . '.' . $nomeExtensao;
+        $caminhoCompleto = $diretorioDestino . $nomeArquivo;
+        
+        // Move a imagem da pasta temporária do servidor para a nossa pasta
+        if (move_uploaded_file($_FILES['imagem']['tmp_name'], $caminhoCompleto)) {
+            $caminhoImagem = $caminhoCompleto;
+        }
     }
+
+    // Só salva se tiver texto OU imagem
+    if (!empty(trim($mensagem)) || $caminhoImagem !== null) {
+        ChatModel::salvarMensagem($solicitacaoId, $usuarioId, $mensagem, $caminhoImagem);
+    }
+    
+    echo json_encode(["status" => "sucesso"]);
+}
 
     public function carregarMensagensJSON()
     {

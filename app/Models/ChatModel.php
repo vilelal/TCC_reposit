@@ -3,30 +3,30 @@ require_once __DIR__ . "/../conexao.php";
 class ChatModel
 {
 
-    // Salva uma nova mensagem enviada no chat
-    public static function salvarMensagem($solicitacaoId, $remetenteId, $mensagem)
-    {
+
+// Salva uma nova mensagem enviada no chat (agora com suporte a imagem)
+public static function salvarMensagem($solicitacaoId, $remetenteId, $mensagem, $caminhoImagem = null) {
+    $conexao = Database::conectarBanco();
+    
+    // Adicionamos a nova coluna imagem_TB_mensagem no INSERT
+    $sql = "INSERT INTO TB_mensagem (FK_id_TB_SolicitacaoServico, FK_id_TB_remetente, mensagem_TB_mensagem, imagem_TB_mensagem) VALUES (?, ?, ?, ?)";
+    
+    $stmt = $conexao->prepare($sql);
+    // Mudou para "iiss" (Integer, Integer, String, String)
+    $stmt->bind_param("iiss", $solicitacaoId, $remetenteId, $mensagem, $caminhoImagem);
+    $sucesso = $stmt->execute();
+
+    $stmt->close();
+    $conexao->close();
+    return $sucesso;
+}
+
+    // Busca o histórico de mensagens de uma solicitação específica (para o JSON do JavaScript)
+    public static function buscarMensagens($solicitacaoId) {
         $conexao = Database::conectarBanco();
-        $sql = "INSERT INTO TB_Mensagem (FK_id_TB_solicitacao, FK_id_remetente, mensagem) VALUES (?, ?, ?)";
-
-        $stmt = $conexao->prepare($sql);
-        $stmt->bind_param("iis", $solicitacaoId, $remetenteId, $mensagem);
-        $sucesso = $stmt->execute();
-
-        $stmt->close();
-        $conexao->close();
-        return $sucesso;
-    }
-
-    // Busca o histórico de mensagens de uma solicitação específica
-    public static function buscarMensagens($solicitacaoId)
-    {
-        $conexao = Database::conectarBanco();
-        $sql = "SELECT m.*, p.nome_TB_pessoa AS nome_remetente 
-                FROM TB_Mensagem m
-                INNER JOIN TB_pessoa p ON m.FK_id_remetente = p.PK_id_TB_pessoa
-                WHERE m.FK_id_TB_solicitacao = ? 
-                ORDER BY m.data_envio ASC";
+        
+        // Busca todas as colunas reais da sua tabela de mensagens
+        $sql = "SELECT * FROM TB_mensagem WHERE FK_id_TB_SolicitacaoServico = ? ORDER BY data_envio_TB_mensagem ASC";
 
         $stmt = $conexao->prepare($sql);
         $stmt->bind_param("i", $solicitacaoId);
@@ -43,16 +43,21 @@ class ChatModel
         return $mensagens;
     }
 
+    
     // Busca todas as conversas do usuário (para preencher a barra lateral)
-    public static function buscarMeusChats($usuarioId)
+   public static function buscarMeusChats($usuarioId)
     {
         $conexao = Database::conectarBanco();
 
         $sql = "SELECT 
     s.PK_id_TB_SolicitacaoServico AS id_solicitacao,
     serv.nome_TB_servico,
-    -- Identifica o nome do contato de acordo com quem está logado (se for o cliente, traz o prestador; se for o prestador, traz o cliente)
+    
+    -- Identifica o nome do contato de acordo com quem está logado
     IF(c.FK_id_TB_usuario = ?, pp.nome_TB_prestador, c.nome_TB_cliente) AS nome_contato,
+    
+    -- NOVO: Identifica a ROLE do contato (traz a role do prestador se o logado for cliente, e vice-versa)
+    IF(c.FK_id_TB_usuario = ?, u_prestador.tipo_TB_usuario, u_cliente.tipo_TB_usuario) AS tipo_TB_usuario,
     
     -- Traz a última mensagem trocada na solicitação
     (
@@ -82,6 +87,12 @@ INNER JOIN TB_prestadorPerfil pp
 INNER JOIN TB_servico serv 
     ON ps.FK_id_TB_servico = serv.PK_id_TB_servico
 
+-- NOVOS JOINS: Puxa a tabela de usuários tanto do cliente quanto do prestador
+INNER JOIN tb_usuario u_cliente 
+    ON c.FK_id_TB_usuario = u_cliente.PK_id_TB_usuario
+INNER JOIN tb_usuario u_prestador 
+    ON pp.FK_id_TB_usuario = u_prestador.PK_id_TB_usuario
+
 -- Filtra os chats onde o usuário logado é o Cliente OU é o Prestador do serviço
 WHERE c.FK_id_TB_usuario = ? OR pp.FK_id_TB_usuario = ?
 
@@ -99,7 +110,9 @@ ORDER BY
     s.PK_id_TB_SolicitacaoServico DESC;";
 
         $stmt = $conexao->prepare($sql);
-        $stmt->bind_param("iiii", $idUsuarioLogado, $idUsuarioLogado, $idUsuarioLogado, $idUsuarioLogado);
+        
+        // IMPORTANTE: Agora usamos 5 letras 'i' e passamos a variável 5 vezes
+        $stmt->bind_param("iiiii", $usuarioId, $usuarioId, $usuarioId, $usuarioId, $usuarioId);
         $stmt->execute();
         $result = $stmt->get_result();
 
@@ -113,12 +126,13 @@ ORDER BY
         return $chats;
     }
 
-    // Marca as mensagens de uma conversa como lidas
-    public static function marcarMensagensComoLidas($solicitacaoId, $usuarioId)
-    {
+   // Marca as mensagens de uma conversa como lidas
+    public static function marcarMensagensComoLidas($solicitacaoId, $usuarioId) {
         $conexao = Database::conectarBanco();
-        $sql = "UPDATE TB_Mensagem SET lida = 1 WHERE FK_id_TB_solicitacao = ? AND FK_id_remetente != ?";
-
+        
+        // Ajustado para lida_TB_mensagem e FK_id_TB_remetente
+        $sql = "UPDATE TB_mensagem SET lida_TB_mensagem = 1 WHERE FK_id_TB_SolicitacaoServico = ? AND FK_id_TB_remetente != ?";
+        
         $stmt = $conexao->prepare($sql);
         $stmt->bind_param("ii", $solicitacaoId, $usuarioId);
         $sucesso = $stmt->execute();
