@@ -28,7 +28,7 @@ spl_autoload_register(function ($classe) {
         __DIR__ . "/app/Models/"
     ];
 
-    foreach($pastas as $pasta) {
+    foreach ($pastas as $pasta) {
         $arquivo = $pasta . $classe . ".php";
         if (file_exists($arquivo)) {
             require_once $arquivo;
@@ -38,7 +38,7 @@ spl_autoload_register(function ($classe) {
 });
 
 switch ($route) {
-    case "home": 
+    case "home":
         $controller = new HomeController();
         $controller->home();
         break;
@@ -48,11 +48,11 @@ switch ($route) {
         $controller->formCadastro();
         break;
 
-    case "cadastro": 
+    case "cadastro":
         $controller = new UserController();
         $controller->cadastro();
         break;
-    
+
     case "login-form":
         $controller = new UserController();
         $controller->formLogin();
@@ -63,11 +63,11 @@ switch ($route) {
         $controller->login();
         break;
 
-    case "logout": 
+    case "logout":
         $controller = new UserController();
         $controller->logout();
         break;
-    
+
     case "prestador-form":
         $controller = new UserController();
         $controller->formPrestador();
@@ -98,7 +98,7 @@ switch ($route) {
         $controller->confirmarEAceitarSolicitacao();
         break;
 
-        // --- ROTAS DO CHAT DE MENSAGENS ---
+    // --- ROTAS DO CHAT DE MENSAGENS ---
 
     // Carrega a tela dividida com a lista de conversas e o chat ativo
     case "chat":
@@ -119,7 +119,7 @@ switch ($route) {
         break;
 
     // 4. Rotas de perfil do prestador
-    
+
     case "dashboard":
         $controller = new PrestadorController();
         $controller->dashboard();
@@ -129,7 +129,7 @@ switch ($route) {
         $controller = new PrestadorController();
         $controller->listaServicos();
         break;
-    
+
     case "perfil":
         $controller = new UserController();
         $controller->perfil();
@@ -141,17 +141,17 @@ switch ($route) {
         break;
 
     case "editPerfil": {
-        $controller = new UserController();
-        $controller->editPerfil();
-        break;
-    }
+            $controller = new UserController();
+            $controller->editPerfil();
+            break;
+        }
 
-    case "seguranca": 
+    case "seguranca":
         $controller = new UserController();
         $controller->seguranca();
         break;
 
-    case "meus-servicos": 
+    case "meus-servicos":
         $controller = new PrestadorController();
         $controller->listaServicos();
         break;
@@ -167,11 +167,28 @@ switch ($route) {
         $controller = new NotificacaoController();
         $controller->notificacoes();
         break;
+    
+    case "painel-admin":
+        $controller = new AdminController(); // Ou a classe Controller que você preferir usar
+        $controller->exibirPainel();
+        break;
+
+    // Processa a criação de um novo serviço
+    case "admin-criar-servico":
+        $controller = new AdminController();
+        $controller->criarServico();
+        break;
+
+    // Processa o banimento/exclusão de um usuário
+    case "admin-banir-usuario":
+        $controller = new AdminController();
+        $controller->banirUsuario();
+        break;
 
     default:
         $controller = new HomeController();
         $controller->home();
         break;
 
-    
+
 }
