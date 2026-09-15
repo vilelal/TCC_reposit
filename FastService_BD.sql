@@ -70,11 +70,13 @@ CREATE TABLE TB_SolicitacaoServico (
     PK_id_TB_SolicitacaoServico INT AUTO_INCREMENT PRIMARY KEY,
     FK_id_TB_cliente INT NOT NULL,
     FK_id_TB_prestadorServico INT NOT NULL,
+    FK_id_TB_servico INT NOT NULL,
     data_agendamento_TB_SolicitacaoServico DATETIME NOT NULL,
     status_TB_SolicitacaoServico ENUM('pendente', 'aceito', 'em_andamento', 'concluido', 'cancelado') DEFAULT 'pendente',
     valorTotal_TB_SolicitacaoServico DECIMAL(10,2) NOT NULL,
     FOREIGN KEY (FK_id_TB_cliente) REFERENCES TB_clientePerfil(PK_id_TB_cliente),
-    FOREIGN KEY (FK_id_TB_prestadorServico) REFERENCES TB_prestadorServico(PK_id_TB_prestadorServico)
+    FOREIGN KEY (FK_id_TB_prestadorServico) REFERENCES TB_prestadorServico(PK_id_TB_prestadorServico),
+    FOREIGN KEY (FK_id_TB_servico) REFERENCES TB_servico(PK_id_TB_servico)
 );
 
 -- 8. Pagamento

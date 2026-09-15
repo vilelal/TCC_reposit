@@ -102,6 +102,21 @@ class ServiceModel
         return $servicos;
     }
 
+    public static function getSolicitacao($id) {
+        $conexao = Database::conectarBanco();
+        $sql = "SELECT * FROM TB_SolicitacaoServico INNER JOIN TB_servico ON FK_id_TB_servico = PK_id_TB_servico
+        WHERE FK_id_TB_prestadorServico = ?";
+        $stmt = $conexao->prepare($sql);
+        $stmt->bind_param("i", $id);
+        $stmt->execute();
+        $result = $stmt->get_result(); 
+        $stmt->close();
+        $conexao->close();
+        $solicitacoes = [];
+
+        while ($row = $result->fetch_assoc()) $solicitacoes[] = $row;
+        return $solicitacoes;
+    }
 
 
     //Ver se vai utilizar isso depois
