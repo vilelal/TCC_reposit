@@ -23,7 +23,8 @@
         </div>
     <div class="area-direita">
        <header class="header">
-        <!--hh!>
+        <!--d
+-->
             <div class="header-right">
                 <a href="">
                     <img src="app/css/img/chat.png" alt="" class="chat">
