@@ -120,3 +120,5 @@ CREATE TABLE TB_mensagem (
     FOREIGN KEY (FK_id_TB_remetente) REFERENCES TB_usuario(PK_id_TB_usuario)
 );
 ALTER TABLE TB_mensagem ADD COLUMN imagem_TB_mensagem VARCHAR(255) NULL;
+ALTER TABLE TB_clientePerfil ADD COLUMN foto_TB_cliente VARCHAR(255) NULL;
+ALTER TABLE TB_prestadorPerfil ADD COLUMN foto_TB_prestador VARCHAR(255) NULL;

@@ -243,7 +243,7 @@
                 </div>
 
                 <form id="form-msg" class="form-chat">
-                    <label for="imagem-mensagem" class="btn-imagem" title="Enviar imagem">📷</label>
+                    <label for="imagem-mensagem" class="btn-imagem" title="Enviar imagem">+</label>
                     <input type="file" id="imagem-mensagem" accept="image/*" style="display: none;">
 
                     <input type="text" id="texto-mensagem" placeholder="Digite sua mensagem..." autocomplete="off">
