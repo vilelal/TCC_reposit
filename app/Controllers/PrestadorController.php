@@ -15,8 +15,7 @@ class PrestadorController
     }
 
     public function listaServicos() {
-        $servicos = ServiceModel::getSolicitacao($_SESSION["id_prestador"]);
+        $servicos = solicitacaoModel::getSolicitacao($_SESSION["id_prestador"]);
         require_once "app/Views/prestador/servicos.php";
     }
-
 }

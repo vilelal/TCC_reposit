@@ -71,4 +71,13 @@ class ServiceController {
             echo "Erro ao registrar solicitação aceita.";
         }
     }
+
+    public function statusSolicitacao() {
+        $id = $_POST["servico_id"];
+        $status = $_POST["status"];
+
+        solicitacaoModel::statusSolicitacao($id, $status);
+
+        header("Location: ?route=dashboard");
+    }
 }
