@@ -19,6 +19,7 @@ class ServiceController {
         require_once "app/Views/servicos/wizard-servico.php";
     }
 
+
     // 2. Processa o Wizard e busca prestadores próximos
     public function buscarPrestadoresProximos() {
         if (!isset($_SESSION["id"])) {

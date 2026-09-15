@@ -162,6 +162,38 @@ class UserModel
             }
         }
     }
+
+    //   ----------------------         COORDENADAS CLIENTE 
+    public static function coordenadasCliente($id, $latitude, $longitude){    
+         $conexao = Database::conectarBanco();
+         $sql = "UPDATE tb_clientePerfil SET latitude_TB_clientePerfil =?,
+         longitude_TB_clientePerfil = ? where PK_id_TB_cliente=? ";
+
+         $stmt = $conexao->prepare($sql);
+         $stmt->bind_param("ddi", $latitude, $longitude, $id);
+         $stmt->execute();
+         $stmt->close();
+         $conexao->close();
+    }
+
+    //       ------------------        COORDENADAS PRESTADOR -------------------------------------
+    public static function coordenadasPrestador($id, $latitude, $longitude){
+         $conexao = Database::conectarBanco();
+         $sql = "UPDATE TB_prestadorPerfil SET latitude_TB_prestadorPerfil =?,
+         longitude_TB_prestadorPerfil = ? where PK_id_TB_prestadorPerfil=? ";
+
+         $stmt = $conexao->prepare($sql);
+         $stmt->bind_param("ddi", $latitude, $longitude, $id);
+         $stmt->execute();
+         $stmt->close();
+         $conexao->close();
+    }
+
+    public static function puxarCoordenadas($id, $distancia_maxima){    // aqui pego no banco latitude e longitude
+        $conexao = Database::conectarBanco();  
+        $sql = "";
+    }
+
     public static function getClientById($id)
     {
         $conexao = Database::conectarBanco();

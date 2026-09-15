@@ -31,6 +31,8 @@ class UserController
         $_SESSION["nome"] = $user["nome"];
         $_SESSION["tipo"] = $user["tipo"];
 
+        $this->salvarCoordenadas();
+
         header("Location: ?route=home");
     }
 
@@ -82,6 +84,55 @@ class UserController
         require_once __DIR__ . "/../Views/user/form-prestador.php";
     }
 
+    public function salvarCoordenadas(){                          //aqui serve para salvar as coordenadas no banco my sql, na verdade aqui extrai e manda para o model salvar
+       
+       if ($_SESSION["tipo"] == "cliente") {
+        $cliente = UserModel::getClienteById($_SESSION["id"]);   // passa todas as informações do cliente para essa variavel
+        $id = $cliente["PK_id_TB_cliente"];
+        $rua = $cliente["rua_tb_cliente"]; 
+        $cep = $cliente["cep_tb_cliente"];
+        $numero = $cliente["numeroCasa_TB_cliente"];
+        $cidade = $cliente["cidade_TB_cliente"];
+
+        $coordenadas = GeocodingService::buscarCoordenadasPorEndereco($rua,$numero, $cidade, $cep ); //ele pega o retorno da longi e lat do lugar, ele é tipo uma array
+
+        $latitude = $coordenadas['latitude'];
+        $longitude = $coordenadas['longitude'];
+
+        if ($latitude && $longitude) {
+        UserModel::coordenadasCliente($id, $latitude, $longitude);  // aqui passo para o model inserir no banco latitude e longitude 
+        }
+       }  elseif ($_SESSION["tipo"] == "prestador") {             // ------------------------------   CASO SEJA PRESTADOR né ----------------------------------------
+        
+        $prestador = UserModel::getPrestadorById($_SESSION["id"]);
+        $id = $prestador["PK_id_TB_prestadorPerfil"];
+        $rua = $prestador["rua_TB_prestadorPerfil"]; 
+        $cep = $prestador["cep_TB_prestadorPerfil"];
+        $numero = $prestador["numeroCasa_TB_prestadorPerfil"];
+        $cidade = $prestador["cidade_TB_prestadorPerfil"];
+
+        $localiza = GeocodingService::buscarCoordenadasPorEndereco($rua,$numero, $cidade, $cep ); //ele pega o retorno da longi e lat do lugar, ele é tipo uma array
+
+        $latitude = $localiza['latitude'];
+        $longitude = $localiza['longitude'];
+
+        if ($latitude && $longitude) {
+        UserModel::coordenadasPrestador($id, $latitude, $longitude);  // aqui passo para o model inserir no banco latitude e longitude , chama a função
+       
+        }
+       
+    }
+}
+
+    public function filtrandoPrestadores(){                 //----------------------- aqui passa o id da pessoa e a distancia padrão de busca para o model comparar. -----------
+         $cliente = UserModel::getClienteById($_SESSION["id"]);
+         $id = $cliente["PK_id_TB_cliente"];
+         $distancia_maxima = 35;
+         UserModel:: puxarCoordenadas($id, $distancia_maxima); 
+    } 
+
+
+
     public function cadastroPrestador()
     {
         $data = $_POST;
@@ -99,7 +150,7 @@ class UserController
         if (!$user) {
             return;
         }
-
+    
         // cria as variaveis de sessão apos o cadastro
         $_SESSION["id"] = $user["id"];
         $_SESSION["id_prestador"] = $user["prestadorId"];
@@ -114,6 +165,10 @@ class UserController
         ];
 
         NotificacaoModel::enviarNotificacao($notificacao);
+        
+        $this->salvarCoordenadas();              //chamando coordenada para salvar no banco
+
+
         header("Location: ?route=dashboard");
     }
 
