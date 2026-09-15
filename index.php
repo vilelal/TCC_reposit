@@ -98,6 +98,26 @@ switch ($route) {
         $controller->confirmarEAceitarSolicitacao();
         break;
 
+        // --- ROTAS DO CHAT DE MENSAGENS ---
+
+    // Carrega a tela dividida com a lista de conversas e o chat ativo
+    case "chat":
+        $controller = new ChatController();
+        $controller->exibirChat();
+        break;
+
+    // Endpoint AJAX enviado pelo formulário JS
+    case "enviar-mensagem":
+        $controller = new ChatController();
+        $controller->enviarMensagem();
+        break;
+
+    // Endpoint AJAX para atualização em tempo real
+    case "carregar-mensagens-json":
+        $controller = new ChatController();
+        $controller->carregarMensagensJSON();
+        break;
+
     // 4. Rotas de perfil do prestador
     
     case "dashboard":
@@ -152,4 +172,6 @@ switch ($route) {
         $controller = new HomeController();
         $controller->home();
         break;
+
+    
 }
