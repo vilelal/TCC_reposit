@@ -15,12 +15,13 @@
                 </a>
         <h1 class="nome_empresa">FastService</h1> </div>
        
-                 <a class="menu-a" href="?route=dashboard"><img class="casa" src="app/css/img_dashboard/icone-casa.png" alt=""><h2>Inicio</h2></a>
-                  <a class="menu-a" href="?route=dashboard"><img src="" alt=""><h2>Relatório</h2></a>
-                <a class="menu-a" href="?route=lista-servicos"><img src="" alt=""><h2>Serviços</h2></a>
+                 <a class="menu-a" href="?route=dashboard"><img class="casa" src="app/css/img_dashboard/icone-sino2.png" alt=""><h2>Inicio</h2></a>
+                  <a class="menu-a" href="?route=dashboard"><img src="app/css/img_dashboard/icone-traco.png"  alt=""><h2>Relatório</h2></a>
+                <a class="menu-a" href="?route=lista-servicos"><img src="app/css/img_dashboard/icone-traco2.png"  alt=""><h2>Serviços</h2></a>
                 <a class="menu-a" href="?route=perfil"><img src="" alt=""><h2>Perfil</h2></a>
                 </div>
         </div>
+    <div class="area-direita">
        <header class="header">
             <div class="header-right">
                 <a href="">
@@ -35,11 +36,22 @@
                         echo "<h3 class='user-name'>{$_SESSION['nome']}</h3>";
                     }
                 ?>
-            </div>
+            </div><img class="verificado"src="app/css/img_dashboard/icone-check.png" alt="">
         </header>
-        <div class="conteiner">
-            
+        <div class="cards">
+            <div class="card">
+                <h4>Faturamento</h4>
+            </div>
+            <div class="card">
+                <h4>Serviços prestados</h4>
+            </div>
+            <div class="card">
+                <h4>média das avaliações</h4>
+            </div>
         </div>
+    </div>
+</body>
 
+</html>
 </body>
 </html>
