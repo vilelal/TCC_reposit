@@ -31,7 +31,7 @@ class UserController
         $_SESSION["nome"] = $user["nome"];
         $_SESSION["tipo"] = $user["tipo"];
 
-        $this->salvarCoordenadas();
+        $this->salvarCoordenadas();            // ---------------------------------  CHAMO ELA PARA SALVAR NO BANCO A LONGI E LAT
 
         header("Location: ?route=home");
     }
@@ -127,8 +127,8 @@ class UserController
     public function filtrandoPrestadores(){                 //----------------------- aqui passa o id da pessoa e a distancia padrão de busca para o model comparar. -----------
          $cliente = UserModel::getClienteById($_SESSION["id"]);
          $id = $cliente["PK_id_TB_cliente"];
-         $distancia_maxima = 35;
-         UserModel:: puxarCoordenadas($id, $distancia_maxima); 
+         UserModel:: puxarCoordenadas($id); 
+         
     } 
 
 
@@ -213,4 +213,54 @@ class UserController
     {
         require_once "app/Views/user/seguranca.php";
     }
+
+    public function buscarPrestadoresProximos()
+{
+    if (!isset($_SESSION["id"])) {
+        header("Location: ?route=login-form");
+        exit;
+    }
+
+    if ($_SESSION["tipo"] !== "cliente") {
+        header("Location: ?route=home");
+        exit;
+    }
+
+    $cliente = UserModel::getClientById($_SESSION["id"]);
+
+    if (!$cliente) {
+        header("Location: ?route=home");
+        exit;
+    }
+
+    $idCliente = $cliente["PK_id_TB_cliente"];
+
+    $idServico = isset($_POST["FK_id_TB_servico"])
+        ? (int) $_POST["FK_id_TB_servico"]
+        : 0;
+
+    if ($idServico <= 0) {
+        header("Location: ?route=home");
+        exit;
+    }
+
+    $prestadores = UserModel::puxarCoordenadas(
+        $idCliente,
+        $idServico,
+        35,
+        10
+    );
+
+    // Guarda os dados da solicitação na sessão
+    $_SESSION["solicitacao_servico"] = [
+        "FK_id_TB_categoria" => $_POST["FK_id_TB_categoria"] ?? null,
+        "FK_id_TB_servico" => $idServico,
+        "urgencia" => $_POST["urgencia"] ?? null,
+        "data_agendamento" => $_POST["data_agendamento"] ?? null,
+        "solicitar_orcamento" => isset($_POST["solicitar_orcamento"]) ? 1 : 0,
+        "descricao" => $_POST["descricao"] ?? ""
+    ];
+
+    require_once __DIR__ . "/../Views/user/wizard-form.php";
+}
 }

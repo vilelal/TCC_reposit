@@ -163,6 +163,9 @@ class UserModel
         }
     }
 
+
+    
+
     //   ----------------------         COORDENADAS CLIENTE 
     public static function coordenadasCliente($id, $latitude, $longitude){    
          $conexao = Database::conectarBanco();
@@ -189,9 +192,39 @@ class UserModel
          $conexao->close();
     }
 
-    public static function puxarCoordenadas($id, $distancia_maxima){    // aqui pego no banco latitude e longitude
+    public static function puxarCoordenadas($idcliente, $distanciaMaximaKm = 35, $limite = 10){    // aqui pego no banco latitude e longitude
         $conexao = Database::conectarBanco();  
-        $sql = "";
+        $sql = "SELECT                   -- quero pegar só o nome, latitude  e longitude do prestador
+                p.nome_TB_prestadorPerfil,
+                p.latitude_TB_prestadorPerfil,
+                p.longitude_TB_prestadorPerfil,
+                ROUND(                                        -- Cálculo matemático de Haversine:    o ROUND serve para definir as casas decimais depois do ponto 
+                    6371 * acos(
+                        cos(radians(c.latitude_TB_clientePerfil)) 
+                        * cos(radians(p.latitude_TB_prestadorPerfil)) 
+                        * cos(radians(p.longitude_TB_prestadorPerfil) - radians(c.longitude_TB_clientePerfil)) 
+                        + sin(radians(c.latitude_TB_clientePerfil)) 
+                        * sin(radians(p.latitude_TB_prestadorPerfil))
+                    ), 2                 --2 casas decimais nesse calculo
+                ) AS distancia_km -- serve para manipular esse calculo, o resultado, se não der apelido ficaria calculo todo como nome
+            FROM TB_prestadorPerfil p      -- onde quero pegar os campos do select
+            JOIN tb_clientePerfil c ON c.PK_id_TB_cliente = ?   -- para extrai lat e loong do cliente logado
+            WHERE p.latitude_TB_prestadorPerfil IS NOT NULL 
+              AND p.longitude_TB_prestadorPerfil IS NOT NULL
+            HAVING distancia_km <= ?
+            ORDER BY distancia_km ASC
+            LIMIT ?";
+
+     $stmt = $conexao->prepare($sql);
+    $stmt->bind_param("iii",$idcliente, $distanciaMaximaKm, $limite);
+    $stmt->execute();
+    $resultado = $stmt->get_result();
+    $prestadores = $resultado->fetch_all(MYSQLI_ASSOC);
+
+    $stmt->close();
+    $conexao->close();
+
+    return $prestadores;
     }
 
     public static function getClientById($id)
