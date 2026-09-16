@@ -20,8 +20,8 @@
 
     <div class="container">
 
-        <div class="img">
-            <img src="app/css/img/logo.png" alt="Logo">
+        <div >
+            <img class="img" src="app/css/img/logo.png" alt="Logo">
         </div>
 
         <div class="txt">
@@ -35,7 +35,17 @@
         <a href="?route=edit-perfil">Dados pessoais</a>
         <a href="?route=seguranca">Segurança</a>
         <a href="?route=meus-servicos">Meus serviços</a>
-        <a href="?route=logout">Sair</a>
+
+        <?php
+            if ($_SESSION["tipo"]=="prestador" ) {
+                echo "<a href='?route=dashboard'>Voltar</a>";
+            }        
+            else {
+                echo "<a href='?route=home'>Voltar</a>";
+            }
+            ?>
+
+        <a href="?route=logout">Sair da conta</a>
     </div>
 </body>
 
