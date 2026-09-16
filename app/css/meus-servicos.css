@@ -1,0 +1,89 @@
+body {
+
+    margin: 0;
+    padding: 0;
+    font-family: 'Montserrat', sans-serif;
+}
+.form {
+    background-color: #fff;
+    padding: 32px;
+    border-radius: 8px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 5%;
+    width: 60%;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+#categorias {
+    width: 80%;
+    padding: 8px;
+    margin-left: 10%;
+       margin-right: 10%;
+    margin-top: 2%;
+    margin-bottom: 12px;
+    border-radius: 15px;
+    border: 1px solid #000000;
+    background-color: #E7E5E5;
+    color: #000000;
+    font-size: 18px;
+}
+.container-selecionados{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin-left: 15%;
+    min-width: 80%;
+    gap: 8px; /* Espaço entre cada item da lista */
+    margin-bottom: 15px;
+}
+.h4-esq{
+    display: flex;
+    margin-left: 60px;
+    text-align: left;
+}
+.container-selecionados button {
+  text-decoration: none;
+    color: #fff;
+    background-color: #FDB441;
+    border: #d19533 solid 1px;
+    transition: opacity 0.2s;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    margin-top: -20px;
+    margin-left: -40px;    
+    /* Ajustes para aumentar o tamanho */
+    font-size: 16px;       /* Aumenta o tamanho da letra X */
+    padding: 2px 8px;     /* Aumenta a área interna (vertical e horizontal) */
+    font-weight: bold;     /* Deixa o X mais encorpado */
+    cursor: pointer;
+}
+
+button:hover {
+    opacity: 0.8;
+    background-color: #f8c065;
+}
+
+.btn{
+   max-width: 200px;
+    background-color: #f8c065;
+    color: #ffffff;
+    border: none;
+    padding: 12px;
+    border-radius: 20px;
+    font-weight: bold;
+    cursor: pointer;
+    margin: 15px auto 0 auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+}
+
+h4{
+      display: flex;
+    margin-left: 60px;
+    text-align: left;
+    color: #000000;
+}

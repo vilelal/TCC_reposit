@@ -1,0 +1,168 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    min-height: 100vh;
+    font-family: 'Montserrat', sans-serif;
+    display: flex;
+    background-color: #F5F5F5;
+}
+
+/* MENU */
+.menu {
+    width: 20%;
+    min-height: 100vh;
+    background-color: #FCBA52;
+    color: #fff;
+
+}
+
+/* CONTEÚDO */
+.conteudo {
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+    margin-left: 5%;
+    padding: 30px;
+}
+
+/* TÍTULO */
+.titulo {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    color: #fff;
+}
+
+.logo {
+    width: 50px;
+    height: clamp(40px, 6.7vh, 60px);
+    object-fit: contain;
+}
+
+
+.nome_empresa {
+    margin-right: 20%;
+    font-size: 1.4rem;
+    font-family: 'Archivo', sans-serif;
+    font-weight: bold;
+}
+
+
+.nav-links {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.menu-a {
+    text-decoration: none;
+    color: #fff;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    transition: opacity 0.2s;
+}
+
+.menu-a:hover {
+    opacity: 0.8;
+    border-bottom: #fff solid 2px;
+}
+
+.header {
+    width: 100%;
+    height: 70px;
+    background-color: #FFF;
+    border-bottom: 2px solid #F0D49C;
+
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+
+    padding: 0 40px;
+}
+
+.header-right {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.chat {
+    width: 115%;
+    opacity: 110%;
+    margin-top: 2%;
+
+    padding-bottom: 6px;
+    /* Borda invisível para não dar o "pulo" no layout */
+    border-bottom: 2px solid transparent;
+    transition: border-color 0.2s ease, color 0.2s ease;
+}
+
+.chat:hover {
+    border-bottom: 5px solid #FDB441;
+    border-radius: 2%;
+    transition: all 0.2s ease;
+}
+
+.icon-btn {
+    background: none;
+    border: none;
+    font-size: 1.2rem;
+    cursor: pointer;
+}
+
+.user-profile {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+img {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.user-name {
+    font-weight: bold;
+    color: #333;
+}
+
+.area-direita {
+    width: 80%;
+    min-height: 100vh;
+}
+
+.cards {
+    width: 80%;
+    display: flex;
+    gap: 45px;
+    padding: 30px;
+    margin-left: 10%;
+}
+
+.card {
+    flex: 1;
+    height: 200px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    background-color: #fff;
+    border: none;
+    border-radius: 24px;
+    padding: 40px 20px;
+    box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.25);
+}
+
+.verificado {
+    height: 10px;
+    width: 10px;
+    margin-top: -5px;
+}

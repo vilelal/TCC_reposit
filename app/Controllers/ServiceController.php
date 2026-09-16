@@ -72,4 +72,5 @@ class ServiceController {
             echo "Erro ao registrar solicitação aceita.";
         }
     }
+    
 }
