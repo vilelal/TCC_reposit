@@ -4,189 +4,27 @@
     <meta charset="UTF-8">
     <title>Central de Mensagens</title>
     <link rel="stylesheet" href="app/css/styleCad.css">
-    <style>
-        /* Layout Principal Dividido */
-        .painel-chat-container {
-            display: flex;
-            height: 80vh;
-            max-height: 800px;
-            background: #fff;
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            overflow: hidden;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
-            margin-top: 20px;
-        }
-
-        /* LADO ESQUERDO: Lista de Chats */
-        .sidebar-chats {
-            width: 35%;
-            border-right: 1px solid #ddd;
-            background: #f8f9fa;
-            overflow-y: auto;
-            display: flex;
-            flex-direction: column;
-        }
-        .sidebar-header {
-            padding: 15px;
-            background: #fff;
-            border-bottom: 1px solid #ddd;
-            font-weight: bold;
-            font-size: 1.1rem;
-        }
-        .item-chat {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 15px;
-            border-bottom: 1px solid #eee;
-            text-decoration: none;
-            color: inherit;
-            transition: background 0.2s;
-        }
-        .item-chat:hover { background: #e9ecef; }
-        .item-chat.ativo { background: #e2e6ea; border-left: 4px solid #007bff; }
-        
-        .info-chat-lista { display: flex; align-items: center; gap: 10px; width: 100%; }
-        .foto-chat { width: 45px; height: 45px; border-radius: 50%; object-fit: cover; }
-        .texto-chat { flex: 1; overflow: hidden; }
-        
-        /* NOVO: Estilo para alinhar o nome e a role */
-        .nome-e-role {
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            margin-bottom: 3px;
-        }
-        .texto-chat strong { font-size: 0.95rem; }
-        
-        /* NOVO: Estilo da Role (Tipo de Usuário) */
-        .badge-role {
-            background-color: #6c757d; /* Cor cinza neutra */
-            color: white;
-            font-size: 0.65rem;
-            padding: 2px 6px;
-            border-radius: 4px;
-            font-weight: normal;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
-        .texto-chat p { margin: 0; font-size: 0.8rem; color: #666; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-        
-        /* Indicador de Mensagem Não Lida */
-        .badge-nao-lida {
-            background-color: #28a745;
-            color: white;
-            font-size: 0.75rem;
-            font-weight: bold;
-            padding: 2px 7px;
-            border-radius: 12px;
-            min-width: 20px;
-            text-align: center;
-        }
-
-        /* LADO DIREITO: Área do Chat Ativo */
-        .area-chat-ativo {
-            width: 65%;
-            display: flex;
-            flex-direction: column;
-            background: #fff;
-        }
-        .header-chat-ativo {
-            padding: 15px;
-            border-bottom: 1px solid #ddd;
-            background: #f1f1f1;
-            font-weight: bold;
-        }
-        .chat-box {
-            flex: 1;
-            padding: 20px;
-            overflow-y: auto;
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-            background: #fafafa;
-        }
-        .chat-placeholder {
-            flex: 1;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #888;
-            background: #fdfdfd;
-        }
-        .msg { max-width: 70%; padding: 10px 15px; border-radius: 12px; font-size: 0.95rem; }
-        .msg.minha { align-self: flex-end; background-color: #007bff; color: white; border-bottom-right-radius: 2px; }
-        .msg.outra { align-self: flex-start; background-color: #e9ecef; color: #333; border-bottom-left-radius: 2px; }
-        .msg-info { font-size: 0.7rem; opacity: 0.8; margin-top: 5px; text-align: right; }
-        
-        /* Formulário e Botões */
-        .form-chat {
-            display: flex;
-            padding: 15px;
-            background: #fff;
-            border-top: 1px solid #ddd;
-            gap: 10px;
-        }
-        .form-chat input[type="text"] { flex: 1; padding: 12px; border: 1px solid #ccc; border-radius: 5px; }
-        .btn-enviar { background: #007bff; color: white; border: none; padding: 0 20px; border-radius: 5px; cursor: pointer; font-weight: bold; }
-        
-        .btn-imagem {
-            cursor: pointer;
-            padding: 0 15px;
-            background: #e9ecef;
-            border-radius: 5px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.2rem;
-            transition: 0.2s;
-        }
-        .btn-imagem:hover { background: #d3d9df; }
-
-        /* Estilos do Preview da Imagem */
-        .area-preview {
-            display: none;
-            padding: 10px 15px;
-            background: #f8f9fa;
-            border-top: 1px solid #ddd;
-        }
-        .preview-container {
-            position: relative;
-            display: inline-block;
-        }
-        .preview-container img {
-            max-height: 70px;
-            border-radius: 8px;
-            border: 2px solid #007bff;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-        }
-        .btn-remover-preview {
-            position: absolute;
-            top: -8px;
-            right: -8px;
-            background: #dc3545;
-            color: white;
-            border: none;
-            border-radius: 50%;
-            width: 22px;
-            height: 22px;
-            cursor: pointer;
-            font-size: 14px;
-            font-weight: bold;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
-        }
-        .btn-remover-preview:hover { background: #c82333; }
-    </style>
+     <link rel="stylesheet" href="app/css/chat.css">
 </head>
 <body>
 
 <div class="container">
-    <h2>Central de Mensagens</h2>
+    <header class="header">
+        
+        <h2>Central de mensagens</h2>
+              
+                <a href="?route=notificacoes" class="sino">
+                    <img src="app/css/img_dashboard/icone-sino.png" alt="" class="chat">
+                </a>
+                <img src="" alt="">
+                <?php
+                    if (isset($_SESSION["id"])) {
+                        echo "<h3 class='user-name'>{$_SESSION['nome']}</h3>";
+                    }
+                ?>
+          <img class="verificado"src="app/css/img_dashboard/icone-check.png" alt="">
+        </header>
+        </div>
 
     <div class="painel-chat-container">
         
