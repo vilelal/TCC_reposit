@@ -108,3 +108,19 @@ CREATE TABLE TB_notificacao (
     lida_TB_notificacao BOOLEAN DEFAULT FALSE, -- 0 para não lida, 1 para lida
     data_criacao_TB_notificacao TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
+
+--11. Mensagem
+
+CREATE TABLE TB_mensagem (
+    PK_id_TB_mensagem INT AUTO_INCREMENT PRIMARY KEY,
+    FK_id_TB_SolicitacaoServico INT NOT NULL,
+    FK_id_TB_remetente INT NOT NULL,
+    mensagem_TB_mensagem TEXT NOT NULL,
+    data_envio_TB_mensagem TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    lida_TB_mensagem BOOLEAN DEFAULT FALSE,
+    FOREIGN KEY (FK_id_TB_SolicitacaoServico) REFERENCES TB_SolicitacaoServico(PK_id_TB_SolicitacaoServico),
+    FOREIGN KEY (FK_id_TB_remetente) REFERENCES TB_usuario(PK_id_TB_usuario)
+);
+ALTER TABLE TB_mensagem ADD COLUMN imagem_TB_mensagem VARCHAR(255) NULL;
+ALTER TABLE TB_clientePerfil ADD COLUMN foto_TB_cliente VARCHAR(255) NULL;
+ALTER TABLE TB_prestadorPerfil ADD COLUMN foto_TB_prestador VARCHAR(255) NULL;

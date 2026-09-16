@@ -10,23 +10,23 @@
 </head>
 
 <body>
-    <?php require_once "app/Views/header/header.php";?>
+    <?php require_once "app/Views/header/header.php"; ?>
     <div class="container">
         <br><br><br>
 
         <div class="div-lado">
 
-      <section class="hero-section">
+            <section class="hero-section">
 
-        <div class="circulos-laranja">
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-        </div>
+                <div class="circulos-laranja">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
 
                 <div class="conteiner">
                     <br><br><br><br><br><br>
@@ -41,17 +41,22 @@
                     if (isset($_SESSION["id"])) {
                         echo "<a href='?route=logout'>logout</a>";
                         echo "<h3> Olá {$_SESSION['nome']} </h3>";
+                        echo "<a href='?route=chat'>Chat</a>";
 
                         if ($_SESSION["tipo"] != "prestador") {
                             echo '<a href="?route=prestador-form">Torne-se prestador</a>';
                             echo '<a href="?route=solicitar-servico">Solicite um serviço</a>';
+                        }
+
+                        
+                        if (isset($_SESSION["tipo"]) && $_SESSION["tipo"] == "Admin") {
+                            echo '<a href="?route=painel-admin">Painel Administrativo</a>';
                         }
                     } else {
                         echo "<a href='?route=login-form'>login</a>";
                         echo '<a href="?route=cadastro-form">cadastro</a>';
                         echo '<a href="?route=prestador-form">cadastro prestador</a>';
                     }
-
                     ?>
 
                     <form action="" method="POST">
@@ -170,7 +175,7 @@
         <br>
         <br>
         <br>
-        <h1 class="h1-center"><img  src="app/css/img/icone-treco.png" alt=""></h1>
+        <h1 class="h1-center"><img src="app/css/img/icone-treco.png" alt=""></h1>
         <p class="p-center">Fast Service é a melhor plataforma de contratação de pequenos serviços do Brasil.Fazemos a conexão de trabalhadores com clientes mais próximos, que solicitam e recebem atendimento de qualidade, rapidez e com segurança.</p>
         <br><br>
         <div class="conteiner-card-esp">
@@ -181,7 +186,7 @@
                 <p>Prestadores avaliados e organizados em um catálogo acessível</p>
             </div>
             <div class="card-esp">
-                <img  class="treco" src="app/css/img/icone-estrela-azul.png" alt="">
+                <img class="treco" src="app/css/img/icone-estrela-azul.png" alt="">
                 <h4>Qualidade</h4>
                 <p><strong>Avaliações reais</strong></p>
                 <p>Consulte feedbacks antes de contratar</p>

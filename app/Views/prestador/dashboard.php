@@ -29,8 +29,8 @@
                 <a href="">
                     <img src="app/css/img/chat.png" alt="" class="chat">
                 </a>
-                <a href="">
-                    <img src="app/css/img/icone-sino.png" alt="" class="chat">
+                <a href="?route=notificacoes">
+                    <img src="app/css/img_dashboard/icone-sino.png" alt="" class="chat">
                 </a>
                 <img src="" alt="">
                 <?php
