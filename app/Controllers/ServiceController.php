@@ -71,7 +71,6 @@ class ServiceController {
             echo "Erro ao registrar solicitação aceita.";
         }
     }
-<<<<<<< HEAD
 
     public function statusSolicitacao() {
         $id = $_POST["servico_id"];
@@ -81,7 +80,4 @@ class ServiceController {
 
         header("Location: ?route=dashboard");
     }
-=======
-    
->>>>>>> 029f02b05c9857721f40ab722ad02bd6eae2d7d9
 }

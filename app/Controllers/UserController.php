@@ -109,7 +109,7 @@ class UserController
         // Parametros de envio de notificacao
         $notificacao = [
             "titulo" => "Bem Vindo!",
-            "mensagem" => "A tua conta foi ativada com sucesso. Explore o nosso painel de controle.",
+            "mensagem" => "A sua conta foi ativada com sucesso. Explore o nosso painel de controle.",
             "user_id" => $_SESSION["id"]
         ];
 
