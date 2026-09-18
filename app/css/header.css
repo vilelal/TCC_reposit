@@ -124,7 +124,16 @@ display: flex;
     border-bottom: 5px solid #FDB441;
 }
 
-
+.perfil{
+    width:8% ;
+    opacity: 110%;
+    margin-top: 2%;
+    
+    padding-bottom: 6px;
+    /* Borda invisível para não dar o "pulo" no layout */
+    border-bottom: 2px solid transparent; 
+    transition: border-color 0.2s ease, color 0.2s ease;
+}
 
 
 

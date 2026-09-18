@@ -20,15 +20,28 @@
     </div>
         <nav class="cabecalho">
             <div class="separar">
-            <a href="" style="font-size: clamp(0.8rem, 1.07vw, 3.5rem);" class="funciona,ento">Funcionamento</a>
+            <a href="" style="font-size: clamp(0.8rem, 1.07vw, 3.5rem);" class="funcionamento">Funcionamento</a>
             <a href="" style="font-size: clamp(0.8rem, 1.07vw, 3.5rem);" class="servico">Serviços</a>
                 
             </div>
             <a href="" class="btn-profissional">Seja um Profissional</a>
+            
+            <?php if(isset($_SESSION["id"])):?>
+
             <a href="">
             <img src="app/css/img/chat.png" alt="" class="chat">
             </a>
-            <a href="" class="btn-login">Login</a>
+
+            <a href="">
+                <img src="" class="perfil" alt="">
+            </a>
+
+            <a href="" class="btn-login">S</a>
+
+            <?php else:?>
+            <a href="?route=login" class="btn-login">Login</a>
+            
+            <?php endif;?>
         </nav>
     </header>
 </body>

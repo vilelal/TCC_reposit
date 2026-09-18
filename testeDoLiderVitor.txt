@@ -1,1 +1,7 @@
-aaaaaaaaaaaaaaaaaa
+- Avaliação do prestador e do cliente
+- Notificação para ver a data e aceitar/recusar
+- Tela do ADM (CSS pra ficar bonito)
+- Lista do prestadores
+- Pesquisa dos prestadores
+- O slide e as pesquisas
+- Treinar as falas e fazer o vídeo
