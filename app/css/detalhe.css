@@ -1,15 +1,22 @@
+/* Defina a hero-section sem margens negativas que sobem o layout */
 .hero-section {
     position: relative;
+    min-height: 800px;
+    margin-top: 0;
+    /* Removido o -100px */
     overflow: hidden;
 }
 
+/* Force os círculos a irem para o fundo e ajuste a distância do topo */
 .circulos-laranja {
     position: absolute;
-    top: 30px;
+    top: 150px;
+    /* Aumente este número para descer mais os círculos */
     right: -80px;
     width: 650px;
     height: 750px;
-    z-index: 0;
+    z-index: -1;
+    /* -1 coloca o elemento atrás de todo o texto/conteúdo */
 }
 
 .circulos-laranja span {

@@ -1,36 +1,81 @@
    /* Layout Principal Dividido */
+   /* Importação de fonte moderna */
+   @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap');
+
+   body {
+       font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+       background-color: #fff;
+       color: #1e293b;
+   }
         .painel-chat-container {
             display: flex;
             height: 80vh;
             max-height: 800px;
             background: #fff;
-            border: 1px solid #ddd;
+            border: 1px solid #ffd685;
             border-radius: 8px;
             overflow: hidden;
             box-shadow: 0 4px 10px rgba(0,0,0,0.05);
-            margin-top: 20px;
+            margin-top: 10px;
         }
+        /* Header Principal */
         .header {
             width: 100%;
-            height: 70px;
+            height: 90px;
             background-color: #FFF;
             border-bottom: 2px solid #F0D49C;
-
             display: flex;
-
             align-items: center;
-            gap: 20px;
+            justify-content: space-between;
+            /* Esquerda: Título | Direita: Ações */
             padding: 0 40px;
-              
+            box-sizing: border-box;
         }
-        
+        .logo {
+            width: 105%;
+            height: clamp(10px, 6.7vh, 500px);
+            margin-top: 2%;
+        }
+        /* Título */
+        .header h2 {
+            margin: 0;
+            font-size: 1.5rem;
+            color: #ffcf6f;
+            margin-left: -70%;
+        }
+    
+        /* Agrupamento do Lado Direito */
+        .header-acoes {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            /* Espaçamento entre os elementos da direita */
+        }
+    
+        /* Ajuste dos Ícones */
+     
+        .verificado {
+            width: 10px;
+            height: 10px;
+            object-fit: contain;
+            margin-right: 15px;
+            margin-top: -10px;
+        }
+    
+        /* Nome do Usuário */
+        .user-name {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #333;
+            margin: 0;
+        }
        
-        .chat {
+        .icone-sino {
               
             width: 55%;
             opacity: 110%;
             
-            margin-top: 2%;
+            margin-top: 20%;
 
             padding-bottom: 6px;
             /* Borda invisível para não dar o "pulo" no layout */
@@ -38,7 +83,7 @@
             transition: border-color 0.2s ease, color 0.2s ease;
         }
 
-        .chat:hover {
+        .icone-sino:hover {
             border-bottom: 5px solid #FDB441;
             border-radius: 2%;
             transition: all 0.2s ease;
@@ -48,8 +93,8 @@
         /* LADO ESQUERDO: Lista de Chats */
         .sidebar-chats {
             width: 35%;
-            border-right: 1px solid #ddd;
-            background: #f8f9fa;
+            border-right: 1px solid #ffcc6c;
+            background: #fff;
             overflow-y: auto;
             display: flex;
             flex-direction: column;
@@ -57,7 +102,7 @@
         .sidebar-header {
             padding: 15px;
             background: #fff;
-            border-bottom: 1px solid #ddd;
+            border: 1px solid #ffd685;
             font-weight: bold;
             font-size: 1.1rem;
         }
@@ -71,8 +116,8 @@
             color: inherit;
             transition: background 0.2s;
         }
-        .item-chat:hover { background: #e9ecef; }
-        .item-chat.ativo { background: #e2e6ea; border-left: 4px solid #ffc107; }
+        .item-chat:hover { background: #ffe699; border-left: solid 5px #ffd685;}
+        .item-chat.ativo { background: #fff; border-right: 1px solid #ffc107; }
         
         .info-chat-lista { display: flex; align-items: center; gap: 10px; width: 100%; }
         .foto-chat { width: 45px; height: 45px; border-radius: 50%; object-fit: cover; }
@@ -89,7 +134,7 @@
         
         /* NOVO: Estilo da Role (Tipo de Usuário) */
         .badge-role {
-            background-color: #6c757d; /* Cor cinza neutra */
+            background-color: #ffc44e; /* Cor cinza neutra */
             color: white;
             font-size: 0.65rem;
             padding: 2px 6px;
@@ -122,8 +167,8 @@
         }
         .header-chat-ativo {
             padding: 15px;
-            border-bottom: 1px solid #ddd;
-            background: #f1f1f1;
+            border: 2px solid #ffe699;
+            background: #fff;
             font-weight: bold;
         }
         .chat-box {
@@ -133,7 +178,7 @@
             display: flex;
             flex-direction: column;
             gap: 10px;
-            background: #fafafa;
+            background: #f9f9f9;
         }
         .chat-placeholder {
             flex: 1;
@@ -144,8 +189,8 @@
             background: #fdfdfd;
         }
         .msg { max-width: 70%; padding: 10px 15px; border-radius: 12px; font-size: 0.95rem; }
-        .msg.minha { align-self: flex-end; background-color: #ffc107; color: white; border-bottom-right-radius: 2px; }
-        .msg.outra { align-self: flex-start; background-color: #e9ecef; color: #333; border-bottom-left-radius: 2px; }
+        .msg.minha { align-self: flex-end; background-color: #ffe699; color: rgb(0, 0, 0); border-bottom-right-radius: 2px; }
+        .msg.outra { align-self: flex-start; background-color: #f0f0f0; color: #333; border-bottom-left-radius: 2px; }
         .msg-info { font-size: 0.7rem; opacity: 0.8; margin-top: 5px; text-align: right; }
         
         /* Formulário e Botões */
@@ -153,7 +198,7 @@
             display: flex;
             padding: 15px;
             background: #fff;
-            border-top: 1px solid #ddd;
+            border-top: 1px solid #ffcc6c;
             gap: 10px;
         }
         .form-chat input[type="text"] { flex: 1; padding: 12px; border: 1px solid #ccc; border-radius: 5px; }
@@ -176,8 +221,8 @@
         .area-preview {
             display: none;
             padding: 10px 15px;
-            background: #f8f9fa;
-            border-top: 1px solid #ddd;
+            background: #dfe0e0;
+            border-top: 1px solid #ffcc6c;
         }
         .preview-container {
             position: relative;
