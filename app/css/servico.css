@@ -1,0 +1,111 @@
+/* Container das seções e títulos */
+.container {
+    padding: 20px 40px;
+}
+
+.container h3 {
+    font-size: 1.2rem;
+    font-style: italic;
+    font-weight: bold;
+    color: #2c3e50;
+    margin-top: 25px;
+    margin-bottom: 15px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+/* --- ESTILO DOS CARDS --- */
+.servicos-pendentes,
+.servicos-aceitos {
+    display: flex;
+    align-items: center;
+    background-color: #ffffff;
+    padding: 16px 25px;
+    margin-bottom: 15px;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    border-left: 6px solid #f39c12;
+    /* Cor padrão da barra (Laranja) */
+}
+
+/* Cor da barra verde para os serviços aceitos */
+.servicos-aceitos {
+    border-left-color: #2ecc71;
+}
+
+/* Organização e espaçamento dos textos (span e br) */
+.servicos-pendentes br,
+.servicos-aceitos br {
+    display: none;
+    /* Remove a quebra de linha do HTML */
+}
+
+.servicos-pendentes span,
+.servicos-aceitos span {
+    font-style: italic;
+    font-size: 0.95rem;
+    color: #555;
+}
+
+/* Título do Serviço (Primeiro Span) */
+.servicos-pendentes span:nth-of-type(1),
+.servicos-aceitos span:nth-of-type(1) {
+    font-weight: bold;
+    color: #2c3e50;
+    font-size: 1.05rem;
+    min-width: 200px;
+}
+
+/* Data do Serviço (Segundo Span) */
+.servicos-pendentes span:nth-of-type(2),
+.servicos-aceitos span:nth-of-type(2) {
+    min-width: 220px;
+}
+
+/* Valor do Serviço (Terceiro Span) */
+.servicos-pendentes span:nth-of-type(3),
+.servicos-aceitos span:nth-of-type(3) {
+    margin-right: auto;
+    /* Empurra os botões para o canto direito */
+}
+
+/* --- ESTILO DOS FORMULÁRIOS E BOTÕES --- */
+.servicos-pendentes form,
+.servicos-aceitos form {
+    display: inline-block;
+    margin-left: 10px;
+}
+
+.servicos-pendentes button,
+.servicos-aceitos button {
+    border: none;
+    padding: 8px 22px;
+    border-radius: 6px;
+    font-weight: bold;
+    font-size: 0.85rem;
+    cursor: pointer;
+    transition: opacity 0.2s ease;
+}
+
+.servicos-pendentes button:hover,
+.servicos-aceitos button:hover {
+    opacity: 0.85;
+}
+
+/* Botão Aceitar (Cinza claro com texto escuro) */
+.servicos-pendentes form:nth-of-type(1) button {
+    background-color: #e8ecef;
+    color: #2c3e50;
+}
+
+/* Botão Recusar (Verde) */
+.servicos-pendentes form:nth-of-type(2) button {
+    background-color: #2ecc71;
+    color: #ffffff;
+}
+
+/* Botão Cancelar (Vermelho) */
+.servicos-aceitos form button {
+    background-color: #e74c3c;
+    color: #ffffff;
+}
