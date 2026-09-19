@@ -75,8 +75,26 @@ class ServiceController {
     public function statusSolicitacao() {
         $id = $_POST["servico_id"];
         $status = $_POST["status"];
+        $servico = $_POST["servico"];
+        $cliente = $_POST["cliente"];
 
         solicitacaoModel::statusSolicitacao($id, $status);
+
+        if ($status == "cancelado") {
+            NotificacaoModel::enviarNotificacao([
+                "titulo" => " Serviço {$servico} agendado",
+                "mensagem" => "O serviço {$servico} foi cancelado pelo prestador!",
+                "user_id" => $cliente
+            ]);
+        }
+
+        else {
+            NotificacaoModel::enviarNotificacao([
+                "titulo" => " Solicitação do serviço {$servico}",
+                "mensagem" => "O serviço {$servico} foi aceitado pelo prestador!",
+                "user_id" => $cliente
+            ]);
+        }
 
         header("Location: ?route=dashboard");
     }

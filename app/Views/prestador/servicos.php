@@ -37,12 +37,16 @@
                 <form action="?route=solicitacao" method="post">
                     <input type="hidden" name="servico_id" id="" value="<?= $servico["PK_id_TB_SolicitacaoServico"] ?>">
                     <input type="hidden" name="status" value="aceito">
+                    <input type="hidden" name="cliente" value="<?= $servico["FK_id_TB_cliente"] ?>">
+                    <input type="hidden" name="servico" value="<?= $servico["nome_TB_servico"] ?>">
                     <button type=" submit"> Aceitar </button>
                 </form>
 
                 <form action="?route=solicitacao" method="post">
                     <input type="hidden" name="servico_id" id="" value="<?= $servico["PK_id_TB_SolicitacaoServico"] ?>">
                     <input type="hidden" name="status" value="cancelado">
+                    <input type="hidden" name="cliente" value="<?= $servico["FK_id_TB_cliente"] ?>">
+                    <input type="hidden" name="servico" value="<?= $servico["nome_TB_servico"] ?>">
                     <button type="submit"> Recusar </button>
                 </form>
             </div>
@@ -62,6 +66,8 @@
                 <form action="?route=solicitacao" method="post">
                     <input type="hidden" name="servico_id" id="" value="<?= $servico["PK_id_TB_SolicitacaoServico"] ?>">
                     <input type="hidden" name="status" value="cancelado">
+                    <input type="hidden" name="cliente" value="<?= $servico["FK_id_TB_cliente"] ?>">
+                    <input type="hidden" name="servico" value="<?= $servico["nome_TB_servico"] ?>">
                     <button type="submit"> Cancelar </button>
                 </form>
             </div>
