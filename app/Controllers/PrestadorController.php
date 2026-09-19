@@ -15,10 +15,7 @@ class PrestadorController
     }
 
     public function listaServicos() {
-        $categorias = CategoriaModel::getCategorias();
-        $servicos = ServiceModel::getServices();
-        $servicosSelecionados = ServiceModel::getServices($_SESSION["id_prestador"]);
-        require_once "app/Views/prestador/meus-servicos.php";
+        $servicos = solicitacaoModel::getSolicitacao($_SESSION["id_prestador"]);
+        require_once "app/Views/prestador/servicos.php";
     }
-
 }

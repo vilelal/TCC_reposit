@@ -185,6 +185,11 @@ switch ($route) {
         $controller->banirUsuario();
         break;
 
+    case "solicitacao":
+        $controller = new ServiceController();
+        $controller->statusSolicitacao();
+        break;
+
     default:
         $controller = new HomeController();
         $controller->home();
