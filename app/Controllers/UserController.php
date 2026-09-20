@@ -214,7 +214,7 @@ class UserController
 
     public function listaServicos()
     {
-        $solicitacoes = solicitacaoModel::getSolicitacaoCliente($_SESSION["id_cliente"]);
+        $servicos = solicitacaoModel::getSolicitacaoCliente($_SESSION["id_cliente"]);
         require_once "app/Views/user/servicos.php";
     }
 }

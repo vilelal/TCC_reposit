@@ -97,7 +97,9 @@ class solicitacaoModel
     public static function getSolicitacao($id)
     {
         $conexao = Database::conectarBanco();
-        $sql = "SELECT * FROM TB_SolicitacaoServico INNER JOIN TB_servico ON FK_id_TB_servico = PK_id_TB_servico
+        $sql = "SELECT * FROM TB_SolicitacaoServico 
+        INNER JOIN TB_servico ON FK_id_TB_servico = PK_id_TB_servico
+        INNER JOIN TB_clientePerfil ON TB_SolicitacaoServico.FK_id_TB_cliente = PK_id_TB_cliente
         WHERE FK_id_TB_prestadorServico = ?";
         $stmt = $conexao->prepare($sql);
         $stmt->bind_param("i", $id);
@@ -114,7 +116,9 @@ class solicitacaoModel
     public static function getSolicitacaoCliente($id)
     {
         $conexao = Database::conectarBanco();
-        $sql = "SELECT * FROM TB_SolicitacaoServico INNER JOIN TB_servico ON FK_id_TB_servico = PK_id_TB_servico
+        $sql = "SELECT * FROM TB_SolicitacaoServico 
+        INNER JOIN TB_servico ON FK_id_TB_servico = PK_id_TB_servico
+        INNER JOIN TB_prestadorPerfil ON TB_SolicitacaoServico.FK_id_TB_prestadorServico = PK_id_TB_prestadorPerfil
         WHERE FK_id_TB_cliente = ?";
         $stmt = $conexao->prepare($sql);
         $stmt->bind_param("i", $id);

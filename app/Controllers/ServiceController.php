@@ -108,7 +108,7 @@ class ServiceController
                     "mensagem" => "O serviço {$servico} foi cancelado pelo prestador!",
                     "user_id" => $user_cliente["PK_id_TB_usuario"]
                 ]);
-                header("Location: ?route=dashboard");
+                header("Location: ?route=lista-servicos");
                 return;
             }
         }
@@ -121,7 +121,7 @@ class ServiceController
                     "mensagem" => "O serviço {$servico} foi cancelado pelo cliente!",
                     "user_id" => $user_prestador["PK_id_TB_usuario"]
                 ]);
-                header("Location: ?route=home");
+                header("Location: ?route=lista-servicos-cliente");
                 return;
             }
         }
@@ -143,11 +143,11 @@ class ServiceController
         ]);
 
         if ($prestador) {
-            header("Location: ?route=home");
+            header("Location: ?route=lista-servicos-cliente");
             return;
         }
 
-        header("Location: ?route=dashboard");
+        header("Location: ?route=lista-servicos");
         return;
     }
 }
