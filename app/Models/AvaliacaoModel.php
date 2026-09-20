@@ -21,7 +21,7 @@ class AvaliacaoModel {
 
     public static function getMediaAvaliacoes($id) {
         $conexao = Database::conectarBanco();
-        $sql = "SELECT ROUND(AVG(nota_TB_avaliacao), 2) FROM TB_avaliacao
+        $sql = "SELECT ROUND(AVG(nota_TB_avaliacao), 2) AS media_avaliacoes FROM TB_avaliacao
         WHERE FK_id_TB_usuario = ?";
         $stmt = $conexao->prepare($sql);
         $stmt->bind_param("i", $id);
@@ -29,8 +29,7 @@ class AvaliacaoModel {
         $result = $stmt->get_result();
         $stmt->close();
         $conexao->close();
-        $avaliacoes = [];
-        if ($line = $result->fetch_assoc()) $avaliacoes[] = $line;
+        $avaliacoes = $result->fetch_assoc();
         return $avaliacoes;
     }
 }

@@ -20,9 +20,12 @@
     </div>
         <nav class="cabecalho">
             <div class="separar">
-            <a href="" style="font-size: clamp(0.8rem, 1.07vw, 3.5rem);" class="funciona,ento">Funcionamento</a>
+            <a href="" style="font-size: clamp(0.8rem, 1.07vw, 3.5rem);" class="funcionamento">Funcionamento</a>
             <a href="" style="font-size: clamp(0.8rem, 1.07vw, 3.5rem);" class="servico">Serviços</a>
-                
+            <!-- links para cliente logado -->
+            <?php if (isset($_SESSION["id_cliente"])): ?>
+            <a href="?route=lista-servicos-cliente" style="font-size: clamp(0.8rem, 1.07vw, 3.5rem);" class="servico">Minhas Solicitações</a>
+            <?php endif; ?>
             </div>
             <a href="" class="btn-profissional">Seja um Profissional</a>
             <a href="">

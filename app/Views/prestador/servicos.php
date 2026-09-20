@@ -154,5 +154,11 @@
         })();
     </script>
 </body>
+<script>
+    function concluirServico() {
+        const form = document.getElementById("concluir")
+        form.style.display = "block"
+    }
+</script>
 
 </html>

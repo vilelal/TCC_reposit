@@ -4,6 +4,8 @@ class PrestadorController
 {
     public function dashboard()
     {
+        $user = UserModel::getPrestadorById($_SESSION["id"]);
+        $avaliacoes = AvaliacaoModel::getMediaAvaliacoes($_SESSION["id"]);
         require_once "app/Views/prestador/dashboard.php";
     }
 
@@ -31,5 +33,17 @@ class PrestadorController
     public function listaServicos() {
         $servicos = solicitacaoModel::getSolicitacao($_SESSION["id_prestador"]);
         require_once "app/Views/prestador/servicos.php";
+    }
+
+    public function concluirServico() {
+        $solicitacaoId = $_POST["servico_id"];
+        $pin = $_POST["pin"];
+
+        if (solicitacaoModel::concluirServico($solicitacaoId, $pin)) {
+            header("Location: ?route=dashboard");
+            return;
+        }
+
+        header("Location: ?route=lista-servicos");
     }
 }

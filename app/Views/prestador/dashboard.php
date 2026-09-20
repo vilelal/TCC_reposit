@@ -17,11 +17,12 @@
     $paginaAtiva = 'inicio';
     $paginaTitulo = 'Início';
     require __DIR__ . '/partials/menu.php';
+    if (!isset($user)) $user = [];
 
     // Valores ainda não vêm do back-end; quando vierem, basta o controller defini-los.
     $faturamento = isset($faturamento) ? 'R$ ' . number_format((float) $faturamento, 2, ',', '.') : 'R$ 0,00';
-    $servicosPrestados = $servicosPrestados ?? 0;
-    $mediaAvaliacoes = isset($mediaAvaliacoes) ? number_format((float) $mediaAvaliacoes, 1, ',', '') : '—';
+    $servicosPrestados = $user["total_servicos"] ?? 0;
+    $mediaAvaliacoes = isset($avaliacoes["media_avaliacoes"]) ? $avaliacoes["media_avaliacoes"] : '—';
 
     $primeiroNome = trim(explode(' ', trim($_SESSION['nome'] ?? ''))[0]);
     ?>
@@ -70,26 +71,30 @@
                     <li>
                         <a href="?route=lista-servicos">
                             <span>Ver solicitações<small>Aceite ou recuse novos pedidos</small></span>
-                            <svg class="icone" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg>
+                            <svg class="icone" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                <path d="m9 6 6 6-6 6" />
+                            </svg>
                         </a>
                     </li>
                     <li>
                         <a href="?route=relatorio">
                             <span>Abrir relatório<small>Faturamento e desempenho</small></span>
-                            <svg class="icone" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg>
+                            <svg class="icone" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                <path d="m9 6 6 6-6 6" />
+                            </svg>
                         </a>
                     </li>
                     <li>
                         <a href="?route=chat">
                             <span>Conversas<small>Fale com seus clientes</small></span>
-                            <svg class="icone" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg>
+                            <svg class="icone" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                <path d="m9 6 6 6-6 6" />
+                            </svg>
                         </a>
                     </li>
                 </ul>
             </section>
         </div>
-    </main>
-    </div>
 </body>
 
 </html>
