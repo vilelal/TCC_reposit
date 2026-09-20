@@ -66,6 +66,7 @@ class UserController
             }
             if ($user["tipo_TB_usuario"] == "admin") {
                 header("Location: ?route=painel-admin");
+                return;
             }
 
 
