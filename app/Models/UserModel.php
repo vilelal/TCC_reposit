@@ -68,8 +68,8 @@ class UserModel
     {
         $conexao = Database::conectarBanco();
         $sql = "SELECT * FROM TB_usuario
-        INNER JOIN TB_clientePerfil ON TB_clientePerfil.FK_id_TB_usuario = PK_id_TB_usuario
-        INNER JOIN TB_prestadorPerfil ON TB_prestadorPerfil.FK_id_TB_usuario = PK_id_TB_usuario
+        LEFT JOIN TB_clientePerfil ON TB_clientePerfil.FK_id_TB_usuario = PK_id_TB_usuario
+        LEFT JOIN TB_prestadorPerfil ON TB_prestadorPerfil.FK_id_TB_usuario = PK_id_TB_usuario
         WHERE email_TB_usuario = ?";
 
         $stmt = $conexao->prepare($sql);

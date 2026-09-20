@@ -55,15 +55,17 @@ class UserController
             $_SESSION["success"] = true; // status da requisicao
             // dados da sessão do usuario apos login
             $_SESSION["id"] = $user["PK_id_TB_usuario"];
-            $_SESSION["nome"] = $user["nome_TB_cliente"];
             $_SESSION["tipo"] = $user["tipo_TB_usuario"];
 
             if ($user["tipo_TB_usuario"] == "prestador") {
-                $_SESSiON["id_prestador"] = $user["PK_id_prestadorPerfil"];
+                $_SESSION["id_prestador"] = $user["PK_id_TB_prestadorPerfil"];
+                $_SESSION["nome"] = $user["nome_TB_prestador"];
                 header("Location: ?route=dashboard");
+                return;
             }
 
-            $_SESSiON["id_prestador"] = $user["PK_id_clientePerfil"];
+            $_SESSION["nome"] = $user["nome_TB_cliente"];
+            $_SESSiON["id_cliente"] = $user["PK_id_TB_cliente"];
             header("Location: ?route=home");
         } catch (Exception $err) {
             $_SESSION["success"] = false;
@@ -157,13 +159,14 @@ class UserController
         header("Location: ?route=perfil");
     }
 
-    public function seguranca() 
+    public function seguranca()
     {
         require_once "app/Views/user/seguranca.php";
     }
 
 
-    public function atualizarFotoPerfil() {
+    public function atualizarFotoPerfil()
+    {
         // Define o header como JSON já que a requisição é feita via fetch
         header('Content-Type: application/json');
 
@@ -178,7 +181,7 @@ class UserController
                 }
 
                 $idUsuario = $_SESSION['id'];
-                
+
                 // Nome FIXO por usuário para SOBRESCREVER o arquivo antigo automaticamente
                 $nomeArquivo = 'perfil_' . $idUsuario . '.jpg';
                 $caminhoFisico = $pastaDestino . $nomeArquivo;
@@ -186,7 +189,7 @@ class UserController
 
                 // Move e sobrescreve o arquivo
                 if (move_uploaded_file($arquivo['tmp_name'], $caminhoFisico)) {
-                    
+
                     // Atualiza o banco de dados
                     UserModel::atualizarFoto($idUsuario, $caminhoBanco);
 
@@ -209,7 +212,8 @@ class UserController
         exit;
     }
 
-    public function listaServicos() {
+    public function listaServicos()
+    {
         $solicitacoes = solicitacaoModel::getSolicitacaoCliente($_SESSION["id_cliente"]);
         require_once "app/Views/user/servicos.php";
     }
