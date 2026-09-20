@@ -55,11 +55,15 @@ class UserController
             // dados da sessão do usuario apos login
             $_SESSION["id"] = $user["PK_id_TB_usuario"];
             $_SESSION["nome"] = $user["nome_TB_cliente"];
-            $_SESSION["tipo"] = $user["tipo_TB_usuario"];
+            $_SESSION["tipo"] = strtolower($user["tipo_TB_usuario"]);
 
             if ($user["tipo_TB_usuario"] == "prestador") {
                 header("Location: ?route=dashboard");
             }
+            if ($user["tipo_TB_usuario"] == "admin") {
+                header("Location: ?route=painel-admin");
+            }
+
 
             header("Location: ?route=home");
         } catch (Exception $err) {

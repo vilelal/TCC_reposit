@@ -3,20 +3,21 @@
 class AdminController
 {
 
-    public function exibirPainel()
-    {
-        if (!isset($_SESSION['tipo']) || $_SESSION['tipo'] !== 'Admin') {
-            header('Location: ?route=home');
-            exit;
-        }
+public function exibirPainel()
+{
 
-        $listaUsuarios = AdminModel::listarTodosUsuarios();
-
-        // NOVO: Busca também as categorias para preencher o select
-        $listaCategorias = AdminModel::listarTodasCategorias();
-
-        include __DIR__ . '/../Views/painel-admin.php';
+    // Valida em minúsculo para evitar falhas por causa de 'Admin' vs 'admin'
+    if (!isset($_SESSION['tipo']) || strtolower($_SESSION['tipo']) !== 'admin') {
+        header('Location: ?route=home');
+        exit;
     }
+
+
+    $listaUsuarios = AdminModel::listarTodosUsuarios();
+    $listaCategorias = AdminModel::listarTodasCategorias();
+
+    include __DIR__ . '/../Views/ADM/painel-admin.php';
+}
 
     // Cria o novo serviço
     public function criarServico()
