@@ -38,6 +38,7 @@ $ehAdmin = $tipo === "Admin";
             <div class="nav-actions">
                 <?php if ($logado): ?>
                     <span class="saudacao">Olá, <?= $nome ?></span>
+                    <a href="?route=lista-servicos-cliente" class="btn btn-ghost btn-sm hide-sm">Minhas Solicitações</a>
                     <a href="?route=chat" class="btn btn-ghost btn-sm hide-sm">Chat</a>
                     <?php if ($ehAdmin): ?>
                         <a href="?route=painel-admin" class="btn btn-ghost btn-sm hide-sm">Painel</a>
