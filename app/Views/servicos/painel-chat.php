@@ -8,28 +8,30 @@
 </head>
 <body>
 
-    <div class="container">
-        <header class="header">
-            <a href="?route=">
-                <img src="app/css/img/logo.png" alt="" class="logo">
-            </a>
-            <!-- Lado Esquerdo -->
-            <h2>Central de mensagens</h2>
-            
-            <!-- Lado Direito (Agrupado em uma div) -->
-            <div class="header-acoes">
-                <a href="?route=notificacoes" class="sino-link" title="Notificações">
-                    <img src="app/css/img_dashboard/icone-sino.png" alt="Sino" class="icone-sino">
-                </a>
+     <div class="container">     
+      <header class="header">
+    <div class="header-esquerda">
+        <a href="?route=">
+            <img src="app/css/img/logo.png"    alt=""class="logo">
+        </a>
+        <h2>Central de mensagens</h2>
+</div>
+    <div class="header-acoes">
+        <a href="?route=notificacoes" class="sino-link" title="Notificações">
+            <img src="app/css/img_dashboard/icone-sino.png"    alt="Sino" class="icone-sino">
+        </a>
+        <?php if (isset($_SESSION["id"])): ?>
+            <span class="user-name">
+                <?= htmlspecialchars($_SESSION['nome']) ?>
+            </span>
+        <?php endif; ?>
 
-                <?php if (isset($_SESSION["id"])): ?>
-                    <span class="user-name"><?= htmlspecialchars($_SESSION['nome']) ?></span>
-                <?php endif; ?>
-
-                <img class="verificado" src="app/css/img_dashboard/icone-check.png" alt="Verificado">
-            </div>
-        </header>
+        <img class="verificado"        src="app/css/img_dashboard/icone-check.png"        alt="Verificado">
     </div>
+</header>
+    </div>
+
+
 
     <div class="painel-chat-container">
         
