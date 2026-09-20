@@ -1,0 +1,186 @@
+/* Página de serviços do prestador (Solicitações e Serviços aceitos)
+   Carregar depois de painel.css */
+
+/* ABAS */
+.abas {
+    display: flex;
+    gap: 4px;
+    margin-bottom: 20px;
+    border-bottom: 1px solid var(--amber-line);
+}
+
+.aba {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 11px 18px;
+    margin-bottom: -1px;
+    background: none;
+    border: none;
+    border-bottom: 3px solid transparent;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.92rem;
+    font-weight: 600;
+    color: var(--muted);
+    cursor: pointer;
+    transition: color 0.15s ease, border-color 0.15s ease;
+}
+
+.aba:hover {
+    color: var(--ink);
+}
+
+.aba.ativa {
+    color: var(--ink);
+    font-weight: 700;
+    border-bottom-color: var(--amber);
+}
+
+.contador {
+    min-width: 22px;
+    padding: 1px 8px;
+    border-radius: var(--radius-pill);
+    background-color: var(--line);
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-align: center;
+    color: var(--muted);
+}
+
+.aba.ativa .contador {
+    background-color: var(--amber);
+    color: var(--ink);
+}
+
+/* PAINÉIS: só o ativo aparece */
+.painel {
+    display: none;
+}
+
+.painel.ativo {
+    display: block;
+}
+
+/* LISTA VAZIA */
+.vazio {
+    padding: 40px 20px;
+    background-color: var(--surface);
+    border: 1px dashed var(--amber-line);
+    border-radius: var(--radius-md);
+    text-align: center;
+    font-size: 0.92rem;
+    color: var(--muted);
+}
+
+/* CARDS */
+.servico-card {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    margin-bottom: 10px;
+    padding: 18px 22px;
+    background-color: var(--surface);
+    border: 1px solid var(--line);
+    border-left: 4px solid var(--amber);
+    border-radius: var(--radius-md);
+    transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.servico-card:hover {
+    border-color: var(--amber-line);
+    border-left-color: var(--amber);
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.06);
+}
+
+.servico-card.aceito {
+    border-left-color: var(--ok);
+}
+
+.servico-info {
+    min-width: 0;
+}
+
+.servico-info h3 {
+    font-family: 'Archivo', sans-serif;
+    font-size: 1.05rem;
+    font-weight: 700;
+}
+
+.servico-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px 20px;
+    margin-top: 6px;
+    list-style: none;
+}
+
+.servico-meta li {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.86rem;
+    color: var(--muted);
+}
+
+.servico-meta .icone {
+    width: 16px;
+    height: 16px;
+}
+
+/* AÇÕES */
+.servico-acoes {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-shrink: 0;
+}
+
+.servico-acoes button {
+    padding: 9px 20px;
+    border: 1.5px solid transparent;
+    border-radius: var(--radius-pill);
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background-color 0.15s ease, border-color 0.15s ease;
+}
+
+.btn-aceitar {
+    background-color: var(--amber);
+    color: var(--ink);
+}
+
+.btn-aceitar:hover {
+    background-color: #f8c065;
+}
+
+.btn-recusar {
+    background-color: transparent;
+    color: var(--danger);
+    border-color: var(--line);
+}
+
+.btn-recusar:hover {
+    background-color: var(--danger-soft);
+    border-color: var(--danger);
+}
+
+@media (max-width: 800px) {
+    .aba {
+        padding: 10px 12px;
+        font-size: 0.85rem;
+    }
+
+    .servico-card {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 14px;
+        padding: 16px;
+    }
+
+    .servico-acoes {
+        justify-content: flex-end;
+    }
+}
