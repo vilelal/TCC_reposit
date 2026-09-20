@@ -125,6 +125,11 @@ switch ($route) {
         $controller->dashboard();
         break;
 
+    case "relatorio":
+        $controller = new PrestadorController();
+        $controller->relatorio();
+        break;
+
     case "lista-servicos":
         $controller = new PrestadorController();
         $controller->listaServicos();
@@ -158,7 +163,7 @@ switch ($route) {
 
     case "meus-servicos":
         $controller = new PrestadorController();
-        $controller->listaServicos();
+        $controller->meusServicos();
         break;
 
     case "edit-servicos":
@@ -174,7 +179,7 @@ switch ($route) {
         break;
 
     case "painel-admin":
-        $controller = new AdminController(); // Ou a classe Controller que você preferir usar
+        $controller = new AdminController(); 
         $controller->exibirPainel();
         break;
 

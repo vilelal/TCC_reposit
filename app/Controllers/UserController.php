@@ -55,7 +55,8 @@ class UserController
             $_SESSION["success"] = true; // status da requisicao
             // dados da sessão do usuario apos login
             $_SESSION["id"] = $user["PK_id_TB_usuario"];
-            $_SESSION["tipo"] = $user["tipo_TB_usuario"];
+            $_SESSION["nome"] = $user["nome_TB_cliente"];
+            $_SESSION["tipo"] = strtolower($user["tipo_TB_usuario"]);
 
             if ($user["tipo_TB_usuario"] == "prestador") {
                 $_SESSION["id_prestador"] = $user["PK_id_TB_prestadorPerfil"];
@@ -63,6 +64,10 @@ class UserController
                 header("Location: ?route=dashboard");
                 return;
             }
+            if ($user["tipo_TB_usuario"] == "admin") {
+                header("Location: ?route=painel-admin");
+            }
+
 
             $_SESSION["nome"] = $user["nome_TB_cliente"];
             $_SESSION["id_cliente"] = $user["PK_id_TB_cliente"];
