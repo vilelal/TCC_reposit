@@ -25,10 +25,27 @@
                 
             </div>
             <a href="" class="btn-profissional">Seja um Profissional</a>
-            <a href="">
-            <img src="app/css/img/chat.png" alt="" class="chat">
-            </a>
-            <a href="" class="btn-login">Login</a>
+            
+            
+        <?php if (isset($_SESSION['id'])): ?>
+    <a href="?route=chat">
+        <img src="app/css/img/chat.png" alt="Chat" class="chat">
+    </a>
+
+    <a href="?route=perfil">
+        perfil
+    </a>
+
+        <?php else: ?>
+
+        <!-- Login -->
+        <a href="?route=login-form" class="btn-login">
+        Login
+        </a>
+
+        <?php endif;?>
+            
+
         </nav>
     </header>
 </body>
