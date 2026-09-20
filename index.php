@@ -174,7 +174,7 @@ switch ($route) {
         break;
     
     case "painel-admin":
-        $controller = new AdminController(); // Ou a classe Controller que você preferir usar
+        $controller = new AdminController(); 
         $controller->exibirPainel();
         break;
 
