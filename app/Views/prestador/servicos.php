@@ -44,7 +44,18 @@
     $iconeValor = '<svg class="icone" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M14.5 9.5c-.5-.9-1.4-1.3-2.5-1.3-1.4 0-2.4.7-2.4 1.8 0 2.6 5 1.2 5 3.8 0 1.1-1.1 1.8-2.6 1.8-1.2 0-2.2-.5-2.7-1.4"/><path d="M12 6.5v1.7"/><path d="M12 15.8v1.7"/></svg>';
     ?>
 
+    <dialog id="modal" closedby="any">
+        <h3> Digite o codigo passado pelo cliente! </h3>
+        <form action="?route=concluir-servico" method="post">
+            <input type="text" placeholder="0000" maxlength="4" name="pin"
+                inputmode="numeric" oninput="this.value = this.value.replace(/[^0-9]/g, '')">
+            <input type="hidden" name="servico_id" id="" value="<?= $servico["PK_id_TB_SolicitacaoServico"] ?? "" ?>">
+            <button type="submit" class=""> Concluir Serviço </button>
+        </form>
+    </dialog>
+
     <main class="conteudo">
+
         <div class="pagina-cab">
             <h2>Serviços</h2>
             <p>Responda às solicitações e acompanhe os serviços que você aceitou.</p>
@@ -100,7 +111,11 @@
                 <p class="vazio">Você ainda não tem serviços aceitos.</p>
             <?php endif; ?>
 
-            <?php foreach ($servicosAceitos as $servico): ?>
+            <?php foreach ($servicosAceitos as $servico):
+                $agendamento = new DateTime($servico["data_agendamento_TB_SolicitacaoServico"]);
+                $dataAtual = new DateTime();
+                $passouPrazo = $dataAtual > $agendamento ? true : false;
+            ?>
                 <article class="servico-card aceito">
                     <div class="servico-info">
                         <h3><?= htmlspecialchars($servico["nome_TB_servico"]) ?></h3>
@@ -110,7 +125,13 @@
                         </ul>
                     </div>
 
+
                     <div class="servico-acoes">
+                        <?php if ($passouPrazo): ?>
+                            <button commandFor="modal" command="show-modal"> Concluir Serviço </button>
+                        <?php endif; ?>
+
+
                         <form action="?route=solicitacao" method="post">
                             <input type="hidden" name="servico_id" value="<?= $servico["PK_id_TB_SolicitacaoServico"] ?>">
                             <input type="hidden" name="status" value="cancelado">
@@ -126,31 +147,35 @@
     </div>
 
     <script>
-        (function () {
+        (function() {
             var abas = document.querySelectorAll('.aba');
             var paineis = document.querySelectorAll('.painel');
 
             function mostrar(alvo) {
-                abas.forEach(function (aba) {
+                abas.forEach(function(aba) {
                     var ativa = aba.dataset.alvo === alvo;
                     aba.classList.toggle('ativa', ativa);
                     aba.setAttribute('aria-selected', ativa);
                 });
-                paineis.forEach(function (painel) {
+                paineis.forEach(function(painel) {
                     painel.classList.toggle('ativo', painel.id === alvo);
                 });
-                try { sessionStorage.setItem('abaServicos', alvo); } catch (e) { }
+                try {
+                    sessionStorage.setItem('abaServicos', alvo);
+                } catch (e) {}
             }
 
-            abas.forEach(function (aba) {
-                aba.addEventListener('click', function () { mostrar(aba.dataset.alvo); });
+            abas.forEach(function(aba) {
+                aba.addEventListener('click', function() {
+                    mostrar(aba.dataset.alvo);
+                });
             });
 
             // Mantém a aba escolhida após aceitar/recusar (a página recarrega)
             try {
                 var salva = sessionStorage.getItem('abaServicos');
                 if (salva && document.getElementById(salva)) mostrar(salva);
-            } catch (e) { }
+            } catch (e) {}
         })();
     </script>
 </body>
