@@ -65,7 +65,7 @@ class UserController
             }
 
             $_SESSION["nome"] = $user["nome_TB_cliente"];
-            $_SESSiON["id_cliente"] = $user["PK_id_TB_cliente"];
+            $_SESSION["id_cliente"] = $user["PK_id_TB_cliente"];
             header("Location: ?route=home");
         } catch (Exception $err) {
             $_SESSION["success"] = false;
