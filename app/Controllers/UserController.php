@@ -28,6 +28,7 @@ class UserController
 
         // cria as variaveis de sessão apos o cadastro
         $_SESSION["id"] = $user["id"];
+        $_SESSION["id_cliente"] = $user["id_cliente"];
         $_SESSION["nome"] = $user["nome"];
         $_SESSION["tipo"] = $user["tipo"];
 
@@ -58,9 +59,11 @@ class UserController
             $_SESSION["tipo"] = $user["tipo_TB_usuario"];
 
             if ($user["tipo_TB_usuario"] == "prestador") {
+                $_SESSiON["id_prestador"] = $user["PK_id_prestadorPerfil"];
                 header("Location: ?route=dashboard");
             }
 
+            $_SESSiON["id_prestador"] = $user["PK_id_clientePerfil"];
             header("Location: ?route=home");
         } catch (Exception $err) {
             $_SESSION["success"] = false;
@@ -204,5 +207,10 @@ class UserController
             'message' => 'Erro ao processar e salvar a imagem.'
         ]);
         exit;
+    }
+
+    public function listaServicos() {
+        $solicitacoes = solicitacaoModel::getSolicitacaoCliente($_SESSION["id_cliente"]);
+        require_once "app/Views/user/servicos.php";
     }
 }

@@ -9,14 +9,16 @@
 </head>
 
 <body>
-    <?php
-    if (!isset($servicos)) $servicos = [];
+    <?php if (!isset($servicos))
+        $servicos = [];
     $servicosPendentes = array_filter($servicos, function ($servico) {
-        if ($servico["status_TB_SolicitacaoServico"] == "pendente") return true;
+        if ($servico["status_TB_SolicitacaoServico"] == "pendente")
+            return true;
     });
 
     $servicosAceitos = array_filter($servicos, function ($servico) {
-        if ($servico["status_TB_SolicitacaoServico"] == "aceito") return true;
+        if ($servico["status_TB_SolicitacaoServico"] == "aceito")
+            return true;
     });
     ?>
 
@@ -31,20 +33,13 @@
                 <span> <?= $servico["nome_TB_servico"] ?> </span><br>
                 <span> Data: <?= $servico["data_agendamento_TB_SolicitacaoServico"] ?> </span><br>
                 <span> Valor: <?= $servico["valorTotal_TB_SolicitacaoServico"] ?> </span>
-                <form action="?route=solicitacao" method="post">
-                    <input type="hidden" name="servico_id" id="" value="<?= $servico["PK_id_TB_SolicitacaoServico"] ?>">
-                    <input type="hidden" name="status" value="aceito">
-                    <input type="hidden" name="cliente" value="<?= $servico["FK_id_TB_cliente"] ?>">
-                    <input type="hidden" name="servico" value="<?= $servico["nome_TB_servico"] ?>">
-                    <button type=" submit"> Aceitar </button>
-                </form>
 
                 <form action="?route=solicitacao" method="post">
                     <input type="hidden" name="servico_id" id="" value="<?= $servico["PK_id_TB_SolicitacaoServico"] ?>">
                     <input type="hidden" name="status" value="cancelado">
-                    <input type="hidden" name="cliente" value="<?= $servico["FK_id_TB_cliente"] ?>">
+                    <input type="hidden" name="prestador" value="<?= $servico["FK_id_TB_prestadorServico"] ?>">
                     <input type="hidden" name="servico" value="<?= $servico["nome_TB_servico"] ?>">
-                    <button type="submit"> Recusar </button>
+                    <button type="submit"> Cancelar </button>
                 </form>
             </div>
         <?php endforeach; ?>
@@ -59,6 +54,7 @@
                 <span> <?= $servico["nome_TB_servico"] ?> </span><br>
                 <span> Data: <?= $servico["data_agendamento_TB_SolicitacaoServico"] ?> </span><br>
                 <span> Valor: <?= $servico["valorTotal_TB_SolicitacaoServico"] ?> </span>
+                <span> Codigo de Confirmação: <?= $servico["pin_TB_SolicitacaoServico"] ?> </span>
 
                 <form action="?route=solicitacao" method="post">
                     <input type="hidden" name="servico_id" id="" value="<?= $servico["PK_id_TB_SolicitacaoServico"] ?>">

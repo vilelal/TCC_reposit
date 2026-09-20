@@ -125,3 +125,4 @@ ALTER TABLE TB_mensagem ADD COLUMN imagem_TB_mensagem VARCHAR(255) NULL;
 ALTER TABLE TB_clientePerfil ADD COLUMN foto_TB_cliente VARCHAR(255) NULL;
 ALTER TABLE TB_prestadorPerfil ADD COLUMN foto_TB_prestador VARCHAR(255) NULL;
 ALTER TABLE tb_usuario ADD COLUMN foto_TB_usuario VARCHAR(255) NULL;
+ALTER TABLE TB_SolicitacaoServico ADD COLUMN pin_TB_SolicitacaoServico CHAR(4) NOT NULL; 

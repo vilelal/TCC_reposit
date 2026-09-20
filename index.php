@@ -130,6 +130,11 @@ switch ($route) {
         $controller->listaServicos();
         break;
 
+    case "lista-servicos-cliente":
+        $controller = new UserController();
+        $controller->listaServicos();
+        break;
+
     case "perfil":
         $controller = new UserController();
         $controller->perfil();

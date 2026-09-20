@@ -94,14 +94,15 @@ class solicitacaoModel
         return $sucesso;
     }
 
-       public static function getSolicitacao($id) {
+    public static function getSolicitacao($id)
+    {
         $conexao = Database::conectarBanco();
         $sql = "SELECT * FROM TB_SolicitacaoServico INNER JOIN TB_servico ON FK_id_TB_servico = PK_id_TB_servico
         WHERE FK_id_TB_prestadorServico = ?";
         $stmt = $conexao->prepare($sql);
         $stmt->bind_param("i", $id);
         $stmt->execute();
-        $result = $stmt->get_result(); 
+        $result = $stmt->get_result();
         $stmt->close();
         $conexao->close();
         $solicitacoes = [];
@@ -110,7 +111,25 @@ class solicitacaoModel
         return $solicitacoes;
     }
 
-    public static function statusSolicitacao($id, $status) {
+    public static function getSolicitacaoCliente($id)
+    {
+        $conexao = Database::conectarBanco();
+        $sql = "SELECT * FROM TB_SolicitacaoServico INNER JOIN TB_servico ON FK_id_TB_servico = PK_id_TB_servico
+        WHERE FK_id_TB_cliente = ?";
+        $stmt = $conexao->prepare($sql);
+        $stmt->bind_param("i", $id);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $stmt->close();
+        $conexao->close();
+        $solicitacoes = [];
+
+        while ($row = $result->fetch_assoc()) $solicitacoes[] = $row;
+        return $solicitacoes;
+    }
+
+    public static function statusSolicitacao($id, $status)
+    {
         $conexao = Database::conectarBanco();
         $sql = "UPDATE TB_solicitacaoServico SET status_TB_SolicitacaoServico = ?
         WHERE PK_id_TB_SolicitacaoServico = ?";
