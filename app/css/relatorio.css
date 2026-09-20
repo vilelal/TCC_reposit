@@ -1,0 +1,316 @@
+/* Relatório do prestador (dados de exemplo). Carregar depois de painel.css */
+
+.cab-relatorio {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 16px;
+    flex-wrap: wrap;
+    margin-bottom: 16px;
+}
+
+/* Seletor de período */
+.periodos {
+    display: inline-flex;
+    padding: 3px;
+    background-color: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-pill);
+}
+
+.periodo {
+    padding: 7px 16px;
+    border: none;
+    border-radius: var(--radius-pill);
+    background: none;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--muted);
+    cursor: pointer;
+    transition: background-color 0.15s ease, color 0.15s ease;
+}
+
+.periodo:hover {
+    color: var(--ink);
+}
+
+.periodo.ativo {
+    background-color: var(--amber);
+    color: var(--ink);
+    font-weight: 700;
+}
+
+.aviso-exemplo {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    width: fit-content;
+    margin-bottom: 20px;
+    padding: 7px 14px;
+    background-color: var(--amber-soft);
+    border: 1px solid var(--amber-line);
+    border-radius: var(--radius-pill);
+    font-size: 0.82rem;
+    font-weight: 500;
+    color: #6a4a10;
+}
+
+.aviso-exemplo .icone {
+    width: 16px;
+    height: 16px;
+}
+
+/* KPIs */
+.kpis {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 12px;
+    margin-bottom: 16px;
+}
+
+.kpi {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    padding: 18px 20px;
+    background-color: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-md);
+}
+
+.kpi-rotulo {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--muted);
+}
+
+.kpi-valor {
+    font-family: 'Archivo', sans-serif;
+    font-size: 1.55rem;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    line-height: 1.2;
+}
+
+.kpi-var {
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--muted);
+}
+
+.kpi-var.sobe {
+    color: var(--ok);
+}
+
+.kpi-var.desce {
+    color: var(--danger);
+}
+
+/* Painéis */
+.painel-rel {
+    padding: 22px 24px;
+    background-color: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-md);
+}
+
+.painel-rel-cab {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 18px;
+}
+
+.painel-rel-cab h3 {
+    font-family: 'Archivo', sans-serif;
+    font-size: 1.05rem;
+    font-weight: 700;
+}
+
+.painel-rel-total {
+    font-family: 'Archivo', sans-serif;
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--amber-dark);
+}
+
+/* Gráfico de barras */
+.barras {
+    display: flex;
+    align-items: stretch;
+    gap: 10px;
+    height: 240px;
+}
+
+.barra-col {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+}
+
+.barra-valor {
+    height: 16px;
+    font-size: 0.72rem;
+    font-weight: 600;
+    color: var(--muted);
+    white-space: nowrap;
+}
+
+.barra-trilho {
+    flex: 1;
+    width: 100%;
+    max-width: 56px;
+    display: flex;
+    align-items: flex-end;
+    border-bottom: 1px solid var(--line);
+}
+
+.barra {
+    width: 100%;
+    background-color: var(--amber-line);
+    border-radius: 6px 6px 0 0;
+    transition: height 0.35s ease, background-color 0.15s ease;
+}
+
+.barra.pico {
+    background-color: var(--amber);
+}
+
+.barra:hover {
+    background-color: var(--amber-dark);
+}
+
+.barra-rotulo {
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--muted);
+    white-space: nowrap;
+}
+
+/* Duas colunas */
+.duas-colunas {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-top: 16px;
+}
+
+/* Ranking */
+.ranking,
+.ultimos {
+    list-style: none;
+}
+
+.ranking li + li {
+    margin-top: 16px;
+}
+
+.ranking-linha {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 6px;
+    font-size: 0.9rem;
+}
+
+.ranking-trilho {
+    height: 6px;
+    background-color: var(--bg);
+    border-radius: var(--radius-pill);
+    overflow: hidden;
+}
+
+.ranking-barra {
+    height: 100%;
+    background-color: var(--amber);
+    border-radius: var(--radius-pill);
+}
+
+/* Últimos serviços */
+.ultimos li {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 12px 0;
+    border-bottom: 1px solid var(--line);
+}
+
+.ultimos li:first-child {
+    padding-top: 0;
+}
+
+.ultimos li:last-child {
+    padding-bottom: 0;
+    border-bottom: none;
+}
+
+.ultimo-nome,
+.ultimo-data {
+    display: block;
+}
+
+.ultimo-nome {
+    font-size: 0.9rem;
+    font-weight: 600;
+}
+
+.ultimo-data {
+    font-size: 0.78rem;
+    color: var(--muted);
+}
+
+.ultimo-dir {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 3px;
+    font-size: 0.9rem;
+}
+
+.selo {
+    padding: 1px 9px;
+    border-radius: var(--radius-pill);
+    font-size: 0.7rem;
+    font-weight: 700;
+}
+
+.selo-ok {
+    background-color: var(--ok-soft);
+    color: var(--ok);
+}
+
+.selo-cancelado {
+    background-color: var(--danger-soft);
+    color: var(--danger);
+}
+
+@media (max-width: 900px) {
+    .kpis {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .duas-colunas {
+        grid-template-columns: minmax(0, 1fr);
+    }
+}
+
+@media (max-width: 800px) {
+    .barras {
+        gap: 4px;
+        height: 200px;
+    }
+
+    .barra-valor {
+        display: none;
+    }
+
+    .painel-rel {
+        padding: 18px 16px;
+    }
+}
