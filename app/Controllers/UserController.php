@@ -158,4 +158,51 @@ class UserController
     {
         require_once "app/Views/user/seguranca.php";
     }
+
+
+    public function atualizarFotoPerfil() {
+        // Define o header como JSON já que a requisição é feita via fetch
+        header('Content-Type: application/json');
+
+        if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['nova_foto'])) {
+            $arquivo = $_FILES['nova_foto'];
+
+            if ($arquivo['error'] === UPLOAD_ERR_OK) {
+                $pastaDestino = __DIR__ . '/../Views/uploads/';
+
+                if (!is_dir($pastaDestino)) {
+                    mkdir($pastaDestino, 0777, true);
+                }
+
+                $idUsuario = $_SESSION['id'];
+                
+                // Nome FIXO por usuário para SOBRESCREVER o arquivo antigo automaticamente
+                $nomeArquivo = 'perfil_' . $idUsuario . '.jpg';
+                $caminhoFisico = $pastaDestino . $nomeArquivo;
+                $caminhoBanco = 'app/Views/uploads/' . $nomeArquivo;
+
+                // Move e sobrescreve o arquivo
+                if (move_uploaded_file($arquivo['tmp_name'], $caminhoFisico)) {
+                    
+                    // Atualiza o banco de dados
+                    UserModel::atualizarFoto($idUsuario, $caminhoBanco);
+
+                    // Atualiza a foto na sessão
+                    $_SESSION['foto'] = $caminhoBanco;
+
+                    echo json_encode([
+                        'success' => true,
+                        'caminho' => $caminhoBanco
+                    ]);
+                    exit;
+                }
+            }
+        }
+
+        echo json_encode([
+            'success' => false,
+            'message' => 'Erro ao processar e salvar a imagem.'
+        ]);
+        exit;
+    }
 }

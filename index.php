@@ -189,6 +189,11 @@ switch ($route) {
         $controller = new ServiceController();
         $controller->statusSolicitacao();
         break;
+    
+    case "atualizar-foto":
+    $controller = new UserController(); 
+    $controller->atualizarFotoPerfil();
+    break;
 
     default:
         $controller = new HomeController();

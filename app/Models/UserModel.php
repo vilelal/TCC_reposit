@@ -245,4 +245,18 @@ class UserModel
 
         $_SESSION["nome"] = $data["nome_user"];
     }
+    // Atualiza o caminho da foto na tabela principal de usuários
+    public static function atualizarFoto($idUsuario, $caminhoFoto) {
+        $conexao = Database::conectarBanco();
+        $sql = "UPDATE tb_usuario SET foto_TB_usuario = ? WHERE PK_id_TB_usuario = ?";
+        
+        $stmt = $conexao->prepare($sql);
+        $stmt->bind_param("si", $caminhoFoto, $idUsuario);
+        $sucesso = $stmt->execute();
+        
+        $stmt->close();
+        $conexao->close();
+        
+        return $sucesso;
+    }
 }

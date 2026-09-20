@@ -109,7 +109,7 @@ CREATE TABLE TB_notificacao (
     data_criacao_TB_notificacao TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
---11. Mensagem
+-- 11. Mensagem
 
 CREATE TABLE TB_mensagem (
     PK_id_TB_mensagem INT AUTO_INCREMENT PRIMARY KEY,
@@ -124,3 +124,4 @@ CREATE TABLE TB_mensagem (
 ALTER TABLE TB_mensagem ADD COLUMN imagem_TB_mensagem VARCHAR(255) NULL;
 ALTER TABLE TB_clientePerfil ADD COLUMN foto_TB_cliente VARCHAR(255) NULL;
 ALTER TABLE TB_prestadorPerfil ADD COLUMN foto_TB_prestador VARCHAR(255) NULL;
+ALTER TABLE tb_usuario ADD COLUMN foto_TB_usuario VARCHAR(255) NULL;

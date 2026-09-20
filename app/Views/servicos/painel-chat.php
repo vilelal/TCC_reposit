@@ -43,8 +43,7 @@
                     
                     <a href="?route=chat&id_solicitacao=<?= $chat['id_solicitacao'] ?>" class="item-chat <?= $isAtivo ? 'ativo' : '' ?>">
                         <div class="info-chat-lista">
-                            <img src="<?= !empty($chat['foto_contato']) ? htmlspecialchars($chat['foto_contato']) : 'app/images/default-avatar.png' ?>" class="foto-chat">
-                            <div class="texto-chat">
+<img src="<?= !empty($chat['foto_contato']) ? htmlspecialchars($chat['foto_contato']) . '?v=' . time() : 'app/css/img/default-user.png' ?>" class="foto-chat" alt="Foto de <?= htmlspecialchars($chat['nome_contato']) ?>">                            <div class="texto-chat">
                                 <!-- NOVO: Agrupamento do Nome e da Role -->
                                 <div class="nome-e-role">
                                     <strong><?= htmlspecialchars($chat['nome_contato']) ?></strong>
@@ -149,8 +148,22 @@
                             conteudoHTML += `<span>${msg.mensagem_TB_mensagem}</span>`;
                         }
                         
-                        div.innerHTML = `${conteudoHTML}<div class="msg-info">${dataFormatada}</div>`;
-                        chatBox.appendChild(div);
+// Obtém a foto do remetente e adiciona o parâmetro de versão para evitar cache antigo
+const timestamp = new Date().getTime();
+const fotoRemetente = (msg.foto_TB_usuario && msg.foto_TB_usuario.trim() !== "") 
+    ? `${msg.foto_TB_usuario}?v=${timestamp}` 
+    : 'app/css/img/default-user.png';
+
+
+// Insere a foto junto do conteúdo e do horário da mensagem
+div.innerHTML = `
+    <div class="msg-conteudo">
+        ${conteudoHTML}
+        <div class="msg-info">${dataFormatada}</div>
+    </div>
+`;
+
+chatBox.appendChild(div);
                     });
 
                     if (estavaNoFinal || mensagens.length > 0) {
