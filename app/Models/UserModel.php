@@ -185,8 +185,18 @@ class UserModel
     public static function getPrestadorById($id)
     {
         $conexao = Database::conectarBanco();
-        $sql = "SELECT * FROM TB_prestadorPerfil
-        INNER JOIN TB_usuario ON FK_id_TB_usuario = PK_id_TB_usuario
+        $sql = "SELECT p.*,
+        u.*,
+
+        (
+        SELECT COUNT(*)
+        FROM TB_SolicitacaoServico s
+        WHERE s.FK_id_TB_prestadorServico = p.PK_id_TB_prestadorPerfil 
+        AND s.status_TB_SolicitacaoServico = 'concluido'
+        ) AS total_servicos
+
+        FROM TB_prestadorPerfil p
+        INNER JOIN TB_usuario u ON p.FK_id_TB_usuario = u.PK_id_TB_usuario
         WHERE FK_id_TB_usuario = ?";
         $stmt = $conexao->prepare($sql);
         $stmt->bind_param("i", $id);

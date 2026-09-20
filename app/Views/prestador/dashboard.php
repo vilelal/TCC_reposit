@@ -6,7 +6,8 @@
     <link rel="stylesheet" href="app/css/dashboard.css">
     <title>Dashboard</title>
 </head>
-<body>  
+<body>
+    <?php if (!isset($user)) $user = [] ?>
         <div class="menu">
             <div class="conteudo">
                 <div class="titulo">
@@ -16,7 +17,7 @@
         <h1 class="nome_empresa">FastService</h1> </div>
        
                  <a class="menu-a" href="?route=dashboard"><img class="casa" src="app/css/img_dashboard/icone-sino2.png" alt=""><h2>Inicio</h2></a>
-                  <a class="menu-a" href="?route=dashboard"><img src="app/css/img_dashboard/icone-traco.png"  alt=""><h2>Relatório</h2></a>
+                  <a class="menu-a" href="?route="><img src="app/css/img_dashboard/icone-traco.png"  alt=""><h2>Relatório</h2></a>
                 <a class="menu-a" href="?route=lista-servicos"><img src="app/css/img_dashboard/icone-traco2.png"  alt=""><h2>Serviços</h2></a>
                 <a class="menu-a" href="?route=perfil"><img src="<?= !empty($user['foto_TB_usuario']) ? $user['foto_TB_usuario'] : ($_SESSION['foto'] ?? 'app/css/img/default-user.png') ?>" alt="Foto do usuário"><h2>Perfil</h2></a>
                 </div>
@@ -46,9 +47,11 @@
             </div>
             <div class="card">
                 <h4>Serviços prestados</h4>
+                <h3> <?= $user["total_servicos"] ?> </h3>
             </div>
             <div class="card">
                 <h4>média das avaliações</h4>
+                <h3> <?= $avaliacoes["media_avaliacoes"] ?? 0 ?> </h3>
             </div>
         </div>
     </div>

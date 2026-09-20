@@ -143,4 +143,22 @@ class solicitacaoModel
         $stmt->close();
         $conexao->close();
     }
+
+    public static function concluirServico($id, $pin)
+    {
+        $conexao = Database::conectarBanco();
+        $sql = "UPDATE TB_SolicitacaoServico SET status_TB_SolicitacaoServico = 'concluido'
+        WHERE PK_id_TB_SolicitacaoServico = ? AND pin_TB_SolicitacaoServico = ?";
+        $stmt = $conexao->prepare($sql);
+        $stmt->bind_param("is", $id, $pin);
+        $stmt->execute();
+        $result = $stmt->affected_rows;
+        $stmt->close();
+        $conexao->close();
+
+        if ($result == 0) {
+            return false;
+        }
+        return true;
+    }
 }

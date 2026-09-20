@@ -172,7 +172,7 @@ switch ($route) {
         $controller = new NotificacaoController();
         $controller->notificacoes();
         break;
-    
+
     case "painel-admin":
         $controller = new AdminController(); // Ou a classe Controller que você preferir usar
         $controller->exibirPainel();
@@ -194,16 +194,19 @@ switch ($route) {
         $controller = new ServiceController();
         $controller->statusSolicitacao();
         break;
-    
+
+    case "concluir-servico":
+        $controller = new PrestadorController();
+        $controller->concluirServico();
+        break;
+
     case "atualizar-foto":
-    $controller = new UserController(); 
-    $controller->atualizarFotoPerfil();
-    break;
+        $controller = new UserController();
+        $controller->atualizarFotoPerfil();
+        break;
 
     default:
         $controller = new HomeController();
         $controller->home();
         break;
-
-
 }
