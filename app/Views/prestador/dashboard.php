@@ -1,59 +1,95 @@
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="app/css/dashboard.css">
-    <title>Dashboard</title>
+    <title>Início | FastService</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;600;700;800&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="app/css/painel.css">
+    <link rel="stylesheet" href="app/css/inicio.css">
 </head>
-<body>  
-        <div class="menu">
-            <div class="conteudo">
-                <div class="titulo">
-              <a href="?route=">
-                <img src="app/css/img/logo.png" alt="" class="logo">
-                </a>
-        <h1 class="nome_empresa">FastService</h1> </div>
-       
-                 <a class="menu-a" href="?route=dashboard"><img class="casa" src="app/css/img_dashboard/icone-sino2.png" alt=""><h2>Inicio</h2></a>
-                  <a class="menu-a" href="?route=dashboard"><img src="app/css/img_dashboard/icone-traco.png"  alt=""><h2>Relatório</h2></a>
-                <a class="menu-a" href="?route=lista-servicos"><img src="app/css/img_dashboard/icone-traco2.png"  alt=""><h2>Serviços</h2></a>
-                <a class="menu-a" href="?route=perfil"><img src="<?= !empty($user['foto_TB_usuario']) ? $user['foto_TB_usuario'] : ($_SESSION['foto'] ?? 'app/css/img/default-user.png') ?>" alt="Foto do usuário"><h2>Perfil</h2></a>
+
+<body>
+    <?php
+    $paginaAtiva = 'inicio';
+    $paginaTitulo = 'Início';
+    require __DIR__ . '/partials/menu.php';
+
+    // Valores ainda não vêm do back-end; quando vierem, basta o controller defini-los.
+    $faturamento = isset($faturamento) ? 'R$ ' . number_format((float) $faturamento, 2, ',', '.') : 'R$ 0,00';
+    $servicosPrestados = $servicosPrestados ?? 0;
+    $mediaAvaliacoes = isset($mediaAvaliacoes) ? number_format((float) $mediaAvaliacoes, 1, ',', '') : '—';
+
+    $primeiroNome = trim(explode(' ', trim($_SESSION['nome'] ?? ''))[0]);
+    ?>
+
+    <main class="conteudo">
+        <div class="pagina-cab">
+            <h2>Olá<?= $primeiroNome !== '' ? ', ' . htmlspecialchars($primeiroNome) : '' ?></h2>
+            <p>Um resumo da sua atividade na FastService.</p>
+        </div>
+
+        <section class="resumo" aria-label="Resumo">
+            <article class="metrica destaque">
+                <span class="metrica-rotulo">Faturamento</span>
+                <div>
+                    <strong class="metrica-valor"><?= $faturamento ?></strong>
+                    <p class="metrica-nota">Total dos serviços concluídos</p>
                 </div>
+            </article>
+
+            <article class="metrica">
+                <span class="metrica-rotulo">Serviços prestados</span>
+                <div>
+                    <strong class="metrica-valor"><?= (int) $servicosPrestados ?></strong>
+                    <p class="metrica-nota">Concluídos até hoje</p>
+                </div>
+            </article>
+
+            <article class="metrica">
+                <span class="metrica-rotulo">Média das avaliações</span>
+                <div>
+                    <strong class="metrica-valor"><?= $mediaAvaliacoes ?></strong>
+                    <p class="metrica-nota">De 0 a 5 estrelas</p>
+                </div>
+            </article>
+        </section>
+
+        <div class="blocos">
+            <section class="bloco">
+                <h3>Atividade recente</h3>
+                <p class="vazio-bloco">Nada por aqui ainda. Novas solicitações e avaliações vão aparecer neste espaço.</p>
+            </section>
+
+            <section class="bloco">
+                <h3>Atalhos</h3>
+                <ul class="atalhos">
+                    <li>
+                        <a href="?route=lista-servicos">
+                            <span>Ver solicitações<small>Aceite ou recuse novos pedidos</small></span>
+                            <svg class="icone" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="?route=relatorio">
+                            <span>Abrir relatório<small>Faturamento e desempenho</small></span>
+                            <svg class="icone" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="?route=chat">
+                            <span>Conversas<small>Fale com seus clientes</small></span>
+                            <svg class="icone" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg>
+                        </a>
+                    </li>
+                </ul>
+            </section>
         </div>
-    <div class="area-direita">
-       <header class="header">
-        <!--d
--->
-            <div class="header-right">
-                <a href="">
-                    <img src="app/css/img/chat.png" alt="" class="chat">
-                </a>
-                <a href="?route=notificacoes">
-                    <img src="app/css/img_dashboard/icone-sino.png" alt="" class="chat">
-                </a>
-                <img src="<?= !empty($user['foto_TB_usuario']) ? $user['foto_TB_usuario'] : ($_SESSION['foto'] ?? 'app/css/img/default-user.png') ?>" alt="Foto do usuário">
-                <?php
-                    if (isset($_SESSION["id"])) {
-                        echo "<h3 class='user-name'>{$_SESSION['nome']}</h3>";
-                    }
-                ?>
-            </div><img class="verificado"src="app/css/img_dashboard/icone-check.png" alt="">
-        </header>
-        <div class="cards">
-            <div class="card">
-                <h4>Faturamento</h4>
-            </div>
-            <div class="card">
-                <h4>Serviços prestados</h4>
-            </div>
-            <div class="card">
-                <h4>média das avaliações</h4>
-            </div>
-        </div>
+    </main>
     </div>
 </body>
- 
-</html>
-</body>
+
 </html>
