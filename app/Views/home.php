@@ -40,7 +40,7 @@
                     <?php
                     if (isset($_SESSION["id"])) {
                         echo "<a href='?route=logout'>logout</a>";
-                        echo "<h3> Olá {$_SESSION['nome']} </h3>";
+                        echo "<h3> Olá, {$_SESSION['nome']} </h3>";
                         echo "<a href='?route=chat'>Chat</a>";
 
                         if ($_SESSION["tipo"] != "prestador") {

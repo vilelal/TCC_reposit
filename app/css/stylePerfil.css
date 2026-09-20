@@ -48,23 +48,107 @@ body {
 
 
 
-.foto {
+/* Container da Foto */
+.foto-container {
+    position: relative;
     width: 120px;
     height: 120px;
-
-    background-color: #ffbd59;
-
+    margin: 0 auto 15px auto;
     border-radius: 50%;
-
-    margin-bottom: 20px;
-
-    border: 4px solid white;
-
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    overflow: hidden;
+    cursor: pointer;
 }
 
+.foto-perfil {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
 
+.foto-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #fff;
+    font-size: 0.85rem;
+    font-weight: bold;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
 
+.foto-container:hover .foto-overlay {
+    opacity: 1;
+}
+
+/* Modal do Cropper */
+.modal-cropper {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.75);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+}
+
+.modal-content {
+    background: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    max-width: 450px;
+    width: 90%;
+    text-align: center;
+}
+
+.cropper-wrapper {
+    max-height: 350px;
+    margin: 15px 0;
+    overflow: hidden;
+}
+
+.cropper-wrapper img {
+    max-width: 100%;
+}
+
+.modal-actions {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+.btn-cancelar {
+    background: #dc3545;
+    color: #fff;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.btn-salvar {
+    background: #28a745;
+    color: #fff;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+/* Deixa a área de seleção do Cropper.js com formato de CÍRCULO */
+.cropper-view-box,
+.cropper-face {
+    border-radius: 50%;
+}
 
 .container h3 {
     font-size: 20px;
