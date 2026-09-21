@@ -1,0 +1,243 @@
+/* Painel do Administrador - FastService
+   CSS feito pra deixar a pagina mais bonita */
+
+/* isso aqui tira aquele espaço padrão que o navegador coloca */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif; /* fonte simples, da pra ler bem */
+    background-color: #f2f2f2; /* cor de fundo cinza clarinho */
+    color: #333333; /* cor do texto, um cinza escuro (nao gosto de preto puro) */
+    padding: 30px;
+}
+
+/* essa div e a caixa que engloba tudo, deixei ela centralizada */
+.admin-container {
+    max-width: 850px;
+    margin: 0 auto; /* isso centraliza a div na tela */
+}
+
+.admin-container h2 {
+    color: #222222;
+    margin-bottom: 5px;
+    border-bottom: 3px solid orange; /* linha laranja embaixo do titulo, ficou legal */
+    padding-bottom: 10px;
+}
+
+.admin-container p {
+    color: #666666;
+    margin-bottom: 25px;
+    font-size: 14px;
+}
+
+/* cada bloco (cadastrar servico e lista de usuarios) fica dentro dessa classe */
+.admin-section {
+    background-color: white;
+    border: 1px solid #cccccc;
+    border-radius: 8px; /* deixa as bordas arredondadas */
+    padding: 20px;
+    margin-bottom: 25px;
+}
+
+.admin-section h3 {
+    margin-bottom: 15px;
+    color: #333333;
+    border-bottom: 1px solid #eeeeee;
+    padding-bottom: 10px;
+}
+
+/* formulario de criar servico - input e botao lado a lado */
+.form-servico {
+    display: flex;
+    gap: 10px;
+}
+
+.form-servico input[type="text"] {
+    flex: 1; /* ocupa o espaco todo que sobrar */
+    padding: 10px;
+    border: 1px solid #bbbbbb;
+    border-radius: 5px;
+    font-size: 14px;
+}
+
+/* quando clica no input ele fica com borda laranja, fica mais facil de ver */
+.form-servico input[type="text"]:focus {
+    outline: none;
+    border-color: orange;
+}
+
+.btn-salvar {
+    padding: 10px 20px;
+    background-color: #333333;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer; /* muda o cursor pra mostrar que da pra clicar */
+    font-size: 14px;
+}
+
+/* efeito de hover, fica mais claro quando passa o mouse */
+.btn-salvar:hover {
+    background-color: #555555;
+}
+
+/* tabela dos usuarios */
+table {
+    width: 100%;
+    border-collapse: collapse; /* junta as bordas das celulas, sem isso fica um espacinho feio */
+}
+
+thead {
+    background-color: #f9f9f9;
+}
+
+thead th {
+    text-align: left;
+    padding: 10px;
+    font-size: 13px;
+    color: #555555;
+    border-bottom: 2px solid #333333;
+}
+
+/* deixei a coluna de acoes alinhada na direita pq fica mais organizado */
+thead th:last-child,
+tbody td:last-child {
+    text-align: right;
+}
+
+tbody tr {
+    border-bottom: 1px solid #eeeeee;
+}
+
+/* quando passa o mouse na linha ela fica meio cinza, ajuda a ler a linha certa */
+tbody tr:hover {
+    background-color: #fafafa;
+}
+
+tbody td {
+    padding: 10px;
+}
+
+/* essa e a "tag" colorida que mostra o tipo do usuario (admin, cliente...) */
+tbody td strong {
+    background-color: #fff3cd; /* amarelo bem clarinho */
+    color: #a06c00;
+    padding: 3px 8px;
+    border-radius: 10px;
+    font-size: 12px;
+}
+
+/* mensagem de quando nao tem nenhum usuario na lista */
+tbody td[colspan] {
+    text-align: center;
+    padding: 20px;
+    color: #999999;
+}
+
+/* --- barra de pesquisa que eu adicionei --- */
+.tabela-toolbar {
+    margin-bottom: 20px;
+}
+
+.tabela-toolbar input[type="text"] {
+    width: 100%;
+    max-width: 320px;
+    padding: 12px 16px 12px 40px; /* espaço extra à esquerda pro ícone da lupa */
+    border: 1px solid #dddddd;
+    border-radius: 999px; /* borda bem arredondada, tipo "pílula" */
+    font-size: 14px;
+    font-family: 'Montserrat', sans-serif;
+    background-color: #F8F9FA;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.06);
+
+    /* ícone de lupa desenhado em SVG, colocado como fundo do input */
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%23999999' viewBox='0 0 16 16'%3E%3Cpath d='M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: 14px center;
+
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.tabela-toolbar input[type="text"]::placeholder {
+    color: #999999;
+}
+
+/* quando clica, a borda e a sombra ficam na cor laranja do tema */
+.tabela-toolbar input[type="text"]:focus {
+    outline: none;
+    border-color: #FDB441;
+    box-shadow: 0px 0px 0px 3px rgba(253, 180, 65, 0.25);
+    background-color: white;
+}
+
+/* mensagem que aparece quando a pesquisa nao acha ninguem */
+.sem-resultado {
+    text-align: center;
+    padding: 20px;
+    color: #999999;
+}
+
+/* --- botoes de paginacao (1 2 3 ...) --- */
+.paginacao {
+    display: flex;
+    justify-content: center;
+    gap: 5px;
+    margin-top: 15px;
+}
+
+.pagina-btn {
+    width: 32px;
+    height: 32px;
+    border: 1px solid #cccccc;
+    border-radius: 5px;
+    background-color: white;
+    cursor: pointer;
+    font-size: 13px;
+}
+
+.pagina-btn:hover {
+    background-color: #eeeeee;
+}
+
+/* essa classe marca qual pagina ta selecionada agora */
+.pagina-btn.ativo {
+    background-color: #333333;
+    color: white;
+    border-color: #333333;
+}
+
+/* deixa os botoes de proxima/anterior meio apagados quando nao da pra clicar */
+.pagina-btn:disabled {
+    opacity: 0.4;
+    cursor: default;
+}
+
+/* botao de banir usuario, deixei vermelho pra dar a entender que e perigoso */
+.btn-banir {
+    padding: 6px 14px;
+    background-color: white;
+    color: #cc0000;
+    border: 1px solid #e3a3a3;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 13px;
+}
+
+.btn-banir:hover {
+    background-color: #fdecea;
+}
+
+/* deixa mais responsivo pra quando abrir no celular */
+@media (max-width: 600px) {
+    body {
+        padding: 15px;
+    }
+
+    .form-servico {
+        flex-direction: column; /* empilha o input e o botao um em cima do outro */
+    }
+}
