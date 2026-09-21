@@ -193,7 +193,8 @@ class UserModel
         (
         SELECT COUNT(*)
         FROM TB_SolicitacaoServico s
-        WHERE s.FK_id_TB_prestadorServico = p.PK_id_TB_prestadorPerfil 
+        JOIN TB_prestadorServico ps ON ps.PK_id_TB_prestadorServico = s.FK_id_TB_prestadorServico
+        WHERE ps.FK_id_TB_prestadorPerfil = p.PK_id_TB_prestadorPerfil
         AND s.status_TB_SolicitacaoServico = 'concluido'
         ) AS total_servicos
 

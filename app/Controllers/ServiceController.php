@@ -121,4 +121,14 @@ class ServiceController
         header("Location: ?route=lista-servicos");
         return;
     }
+
+    public static function avaliar()
+    {
+        $id = $_POST["user"];
+        $nota = $_POST["nota"];
+
+        $avaliacao = AvaliacaoModel::avaliar($nota, $id);
+
+        header("Location: ?route=dashboard");
+    }
 }
