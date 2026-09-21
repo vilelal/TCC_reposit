@@ -43,8 +43,10 @@ class PrestadorController
     {
         $solicitacaoId = $_POST["servico_id"];
         $pin = $_POST["pin"];
+        $user = $_POST["cliente"];
 
         if (solicitacaoModel::concluirServico($solicitacaoId, $pin)) {
+            // require_once "app/Views/servicos/avaliar.php";
             header("Location: ?route=dashboard");
             return;
         }

@@ -44,16 +44,6 @@
     $iconeValor = '<svg class="icone" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M14.5 9.5c-.5-.9-1.4-1.3-2.5-1.3-1.4 0-2.4.7-2.4 1.8 0 2.6 5 1.2 5 3.8 0 1.1-1.1 1.8-2.6 1.8-1.2 0-2.2-.5-2.7-1.4"/><path d="M12 6.5v1.7"/><path d="M12 15.8v1.7"/></svg>';
     ?>
 
-    <dialog id="modal" closedby="any">
-        <h3> Digite o codigo passado pelo cliente! </h3>
-        <form action="?route=concluir-servico" method="post">
-            <input type="text" placeholder="0000" maxlength="4" name="pin"
-                inputmode="numeric" oninput="this.value = this.value.replace(/[^0-9]/g, '')">
-            <input type="hidden" name="servico_id" id="" value="<?= $servico["PK_id_TB_SolicitacaoServico"] ?? "" ?>">
-            <button type="submit" class=""> Concluir Serviço </button>
-        </form>
-    </dialog>
-
     <main class="conteudo">
 
         <div class="pagina-cab">
@@ -116,6 +106,18 @@
                 $dataAtual = new DateTime();
                 $passouPrazo = $dataAtual > $agendamento ? true : false;
             ?>
+
+                <dialog id="modal" closedby="any">
+                    <h3> Digite o codigo passado pelo cliente! </h3>
+                    <form action="?route=concluir-servico" method="post">
+                        <input type="text" placeholder="0000" maxlength="4" name="pin"
+                            inputmode="numeric" oninput="this.value = this.value.replace(/[^0-9]/g, '')">
+                        <input type="hidden" name="servico_id" id="" value="<?= $servico["PK_id_TB_SolicitacaoServico"] ?? "" ?>">
+                        <input type="hidden" name="cliente" id="" value="<?= $servico["FK_id_TB_cliente"] ?? "" ?>">
+                        <button type="submit" class=""> Concluir Serviço </button>
+                    </form>
+                </dialog>
+                
                 <article class="servico-card aceito">
                     <div class="servico-info">
                         <h3><?= htmlspecialchars($servico["nome_TB_servico"]) ?></h3>

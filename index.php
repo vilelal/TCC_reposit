@@ -208,6 +208,11 @@ switch ($route) {
         $controller->solicitarServico();
         break;
 
+    case "avaliar":
+        $controller = new ServiceController;
+        $controller->avaliar();
+        break;
+
     default:
         $controller = new HomeController();
         $controller->home();
