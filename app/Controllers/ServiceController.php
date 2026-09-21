@@ -52,8 +52,8 @@ class ServiceController
         $id = $_POST["servico_id"];
         $status = $_POST["status"];
         $servico = $_POST["servico"];
-        $cliente = $_POST["cliente"];
-        $prestador = $_POST["prestador"];
+        $cliente = $_POST["cliente"] ?? null;
+        $prestador = $_POST["prestador"] ?? null;
         $user_prestador = null;
         $user_cliente = null;
 

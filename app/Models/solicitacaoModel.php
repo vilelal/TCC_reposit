@@ -83,7 +83,7 @@ class solicitacaoModel
         $sql = "INSERT INTO TB_SolicitacaoServico 
                 (FK_id_TB_cliente, FK_id_TB_prestadorServico, FK_id_TB_servico, data_agendamento_TB_SolicitacaoServico, status_TB_SolicitacaoServico, valorTotal_TB_SolicitacaoServico,
                 pin_TB_SolicitacaoServico) 
-                VALUES (?, ?, ?, ?, 'aceito', ?, ?)";
+                VALUES (?, ?, ?, ?, 'pendente', ?, ?)";
 
         $stmt = $conexao->prepare($sql);
         $stmt->bind_param("iiisds", $clienteId, $prestadorServicoId, $servico, $dataAgendamento, $valorTotal, $pin);
@@ -101,7 +101,9 @@ class solicitacaoModel
         $sql = "SELECT * FROM TB_SolicitacaoServico 
         INNER JOIN TB_servico ON FK_id_TB_servico = PK_id_TB_servico
         INNER JOIN TB_clientePerfil ON TB_SolicitacaoServico.FK_id_TB_cliente = PK_id_TB_cliente
-        WHERE FK_id_TB_prestadorServico = ?";
+        INNER JOIN TB_prestadorServico ON PK_id_TB_prestadorServico = FK_id_TB_prestadorServico
+        INNER JOIN TB_prestadorPerfil ON PK_id_TB_prestadorPerfil = FK_id_TB_prestadorPerfil
+        WHERE FK_id_TB_prestadorPerfil = ?";
         $stmt = $conexao->prepare($sql);
         $stmt->bind_param("i", $id);
         $stmt->execute();
