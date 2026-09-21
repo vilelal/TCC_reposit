@@ -135,6 +135,11 @@ switch ($route) {
         $controller->listaServicos();
         break;
 
+    case "lista-servicos-cliente":
+        $controller = new UserController();
+        $controller->listaServicos();
+        break;
+
     case "perfil":
         $controller = new UserController();
         $controller->perfil();
@@ -172,7 +177,7 @@ switch ($route) {
         $controller = new NotificacaoController();
         $controller->notificacoes();
         break;
-    
+
     case "painel-admin":
         $controller = new AdminController(); 
         $controller->exibirPainel();
@@ -194,16 +199,19 @@ switch ($route) {
         $controller = new ServiceController();
         $controller->statusSolicitacao();
         break;
-    
+
+    case "concluir-servico":
+        $controller = new PrestadorController();
+        $controller->concluirServico();
+        break;
+
     case "atualizar-foto":
-    $controller = new UserController(); 
-    $controller->atualizarFotoPerfil();
-    break;
+        $controller = new UserController();
+        $controller->atualizarFotoPerfil();
+        break;
 
     default:
         $controller = new HomeController();
         $controller->home();
         break;
-
-
 }
