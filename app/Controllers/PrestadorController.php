@@ -23,19 +23,22 @@ class PrestadorController
         require_once "app/Views/prestador/meus-servicos.php";
     }
 
-    public function editServicos() {
+    public function editServicos()
+    {
         $data = $_POST;
         PrestadorModel::editServicos($data);
 
         header("Location: ?route=perfil");
     }
 
-    public function listaServicos() {
+    public function listaServicos()
+    {
         $servicos = solicitacaoModel::getSolicitacao($_SESSION["id_prestador"]);
         require_once "app/Views/prestador/servicos.php";
     }
 
-    public function concluirServico() {
+    public function concluirServico()
+    {
         $solicitacaoId = $_POST["servico_id"];
         $pin = $_POST["pin"];
 
@@ -45,5 +48,15 @@ class PrestadorController
         }
 
         header("Location: ?route=lista-servicos");
+    }
+
+    public function listarPrestadores()
+    {
+        $cliente = $_SESSION["id_cliente"];
+        $servico = $_POST["FK_id_TB_servico"];
+        $data = $_POST["data_agendamento"];
+
+        $prestadores = UserModel::buscarPrestadoresProximos($cliente, $servico);
+        require_once "app/Views/servicos/lista-prestadores.php";
     }
 }

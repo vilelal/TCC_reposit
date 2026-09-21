@@ -86,12 +86,6 @@ switch ($route) {
         $controller->exibirWizard();
         break;
 
-    // 2. Processa os dados do Wizard e lista os prestadores próximos (Salva na Sessão)
-    case "buscar-prestadores-proximos":
-        $controller = new ServiceController();
-        $controller->buscarPrestadoresProximos();
-        break;
-
     // 3. Grava definitivamente na TB_SolicitacaoServico após o aceite
     case "confirmar-solicitacao":
         $controller = new ServiceController();
@@ -209,6 +203,11 @@ switch ($route) {
         $controller = new UserController();
         $controller->atualizarFotoPerfil();
         break;
+    
+    case "buscar-proximos":
+        $controller = new PrestadorController();
+        $controller->listarPrestadores();
+        break;        
 
     default:
         $controller = new HomeController();
