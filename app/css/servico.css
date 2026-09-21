@@ -2,6 +2,125 @@
    Carregar depois de painel.css */
 
 /* ABAS */
+/* ==============================
+   MODAL / DIALOG (CÓDIGO PIN)
+   ============================== */
+
+/* Fundo escurecido e desfocado */
+dialog#modal::backdrop {
+    background-color: rgba(26, 26, 26, 0.4);
+    backdrop-filter: blur(4px);
+}
+
+/* Caixa Principal */
+dialog#modal {
+    position: fixed;
+    inset: 0;
+    margin: auto;
+    padding: 32px 28px;
+    width: 90%;
+    max-width: 400px;
+    background-color: var(--surface);
+    border: 1px solid var(--amber-line);
+    border-radius: var(--radius-md);
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.12);
+    text-align: center;
+}
+
+/* Botão Fechar (X) */
+.btn-fechar {
+    position: absolute;
+    top: 14px;
+    right: 16px;
+    background: transparent;
+    border: none;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--muted);
+    cursor: pointer;
+    transition: color 0.15s ease;
+}
+
+.btn-fechar:hover {
+    color: var(--ink);
+}
+
+/* Título */
+dialog#modal h3 {
+    font-family: 'Archivo', sans-serif;
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: var(--ink);
+    margin-bottom: 20px;
+    line-height: 1.3;
+}
+
+/* Form e Input de PIN */
+dialog#modal form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+}
+
+dialog#modal input[type="text"] {
+    width: 100%;
+    max-width: 200px;
+    padding: 12px 16px;
+    font-family: 'Archivo', sans-serif;
+    font-size: 1.6rem;
+    font-weight: 800;
+    letter-spacing: 0.35em;
+    text-align: center;
+    color: var(--ink);
+    background-color: var(--bg);
+    border: 2px solid var(--line);
+    border-radius: var(--radius-sm);
+    outline: none;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+dialog#modal input[type="text"]:focus {
+    border-color: var(--amber);
+    box-shadow: 0 0 0 3px var(--amber-soft);
+}
+
+dialog#modal input[type="text"]::placeholder {
+    color: var(--line);
+    letter-spacing: 0.2em;
+}
+
+/* ==============================
+   BOTÃO CONCLUIR SERVIÇO
+   ============================== */
+
+dialog#modal button[type="submit"] {
+    width: 100%;
+    padding: 12px 24px;
+
+    background-color: var(--amber);
+    color: var(--ink);
+
+    border: none;
+    border-radius: var(--radius-pill);
+
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 700;
+
+    cursor: pointer;
+    transition: background-color 0.2s ease, transform 0.1s ease, box-shadow 0.2s ease;
+    box-shadow: 0 4px 12px rgba(253, 180, 65, 0.25);
+}
+
+dialog#modal button[type="submit"]:hover {
+    background-color: #f8c065;
+    box-shadow: 0 6px 16px rgba(253, 180, 65, 0.35);
+}
+
+dialog#modal button[type="submit"]:active {
+    transform: scale(0.98);
+}
 .abas {
     display: flex;
     gap: 4px;
