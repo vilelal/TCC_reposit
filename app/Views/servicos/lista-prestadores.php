@@ -6,14 +6,17 @@
     <title>Lista</title>
 </head>
 <body>
-    <?php foreach($prestadores as $prestador): ?>
-        <h3> <?= $prestador["nome_TB_prestador"] ?> </h3>
+    <?php foreach($prestadores ?? [] as $prestador): ?>
+        <span> <?= $prestador["nome_TB_prestador"] ?> </span>
+        <span> prestou <?= $prestador["total_servicos"] ?> serviços </span>
+        <span> media de avaliações: <?= $prestador["media_avaliacoes"] ?? "-" ?> </span>
+        <span> ,está se sentindo sozinho? esta á <?= $prestador["distancia_km"] ?> km de vc </span>
         <form action="?route=solicitar" method="post">
-            <input type="hidden" name="data" value="<?= $data ?>">
-            <input type="hidden" name="servico" value="<?= $servico ?>">
-            <input type="hidden" name="prestador" value="<?= $prestador["PK_id_TB_prestadorperfil"] ?>">
+            <input type="hidden" name="data" value="<?= $data ?? "" ?>">
+            <input type="hidden" name="servico" value="<?= $servico ?? "" ?>">
+            <input type="hidden" name="prestador" value="<?= $prestador["PK_id_TB_prestadorServico"] ?>">
             <input type="hidden" name="valor" value="<?= $prestador["preco_customizado_TB_servico"] ?? $prestador["precoPadrao_TB_servico"] ?>">
-            <button type="submit"> Solicitar </button>
+            <button type="submit"> Solicitar Serviço </button>
         </form>
     <?php endforeach; ?>
 </body>
