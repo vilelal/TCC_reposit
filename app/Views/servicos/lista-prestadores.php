@@ -6,12 +6,13 @@
     <title>Lista</title>
 </head>
 <body>
-    <?php foreach($prestadores as $prestador): ?>
-        <h3> <?= $prestador["nome_TB_prestador"] ?> </h3>
+    <?php foreach($prestadores ?? [] as $prestador): ?>
+        <span> <?= $prestador["nome_TB_prestador"] ?> </span>
+        <span> <?= $prestador["distancia_km"] ?> km </span>
         <form action="?route=solicitar" method="post">
-            <input type="hidden" name="data" value="<?= $data ?>">
-            <input type="hidden" name="servico" value="<?= $servico ?>">
-            <input type="hidden" name="prestador" value="<?= $prestador["PK_id_TB_prestadorperfil"] ?>">
+            <input type="hidden" name="data" value="<?= $data ?? "" ?>">
+            <input type="hidden" name="servico" value="<?= $servico ?? "" ?>">
+            <input type="hidden" name="prestador" value="<?= $prestador["PK_id_TB_prestadorPerfil"] ?>">
             <input type="hidden" name="valor" value="<?= $prestador["preco_customizado_TB_servico"] ?? $prestador["precoPadrao_TB_servico"] ?>">
             <button type="submit"> Solicitar </button>
         </form>
