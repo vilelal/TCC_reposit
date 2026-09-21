@@ -76,16 +76,17 @@ class solicitacaoModel
     }
 
     // Insere na tabela TB_SolicitacaoServico APENAS quando houver o aceite de ambos
-    public static function criarSolicitacaoFinal($clienteId, $prestadorServicoId, $dataAgendamento, $valorTotal)
+    public static function criarSolicitacaoFinal($clienteId, $prestadorServicoId, $servico, $dataAgendamento, $valorTotal, $pin)
     {
         $conexao = Database::conectarBanco();
 
         $sql = "INSERT INTO TB_SolicitacaoServico 
-                (FK_id_TB_cliente, FK_id_TB_prestadorServico, data_agendamento_TB_SolicitacaoServico, status_TB_SolicitacaoServico, valorTotal_TB_SolicitacaoServico) 
-                VALUES (?, ?, ?, 'aceito', ?)";
+                (FK_id_TB_cliente, FK_id_TB_prestadorServico, FK_id_TB_servico, data_agendamento_TB_SolicitacaoServico, status_TB_SolicitacaoServico, valorTotal_TB_SolicitacaoServico,
+                pin_TB_SolicitacaoServico) 
+                VALUES (?, ?, ?, ?, 'aceito', ?, ?)";
 
         $stmt = $conexao->prepare($sql);
-        $stmt->bind_param("iisd", $clienteId, $prestadorServicoId, $dataAgendamento, $valorTotal);
+        $stmt->bind_param("iiisds", $clienteId, $prestadorServicoId, $servico, $dataAgendamento, $valorTotal, $pin);
         $sucesso = $stmt->execute();
 
         $stmt->close();
@@ -118,7 +119,8 @@ class solicitacaoModel
         $conexao = Database::conectarBanco();
         $sql = "SELECT * FROM TB_SolicitacaoServico 
         INNER JOIN TB_servico ON FK_id_TB_servico = PK_id_TB_servico
-        INNER JOIN TB_prestadorPerfil ON TB_SolicitacaoServico.FK_id_TB_prestadorServico = PK_id_TB_prestadorPerfil
+        INNER JOIN TB_prestadorServico ON TB_SolicitacaoServico.FK_id_TB_prestadorServico = PK_id_TB_prestadorServico
+        INNER JOIN TB_prestadorPerfil ON TB_prestadorServico.FK_id_TB_prestadorPerfil = PK_id_TB_prestadorPerfil
         WHERE FK_id_TB_cliente = ?";
         $stmt = $conexao->prepare($sql);
         $stmt->bind_param("i", $id);

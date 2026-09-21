@@ -1,5 +1,7 @@
 <?php
 
+require_once __DIR__ . "/CriptoController.php";
+
 class PrestadorController
 {
     public function dashboard()
@@ -23,19 +25,22 @@ class PrestadorController
         require_once "app/Views/prestador/meus-servicos.php";
     }
 
-    public function editServicos() {
+    public function editServicos()
+    {
         $data = $_POST;
         PrestadorModel::editServicos($data);
 
         header("Location: ?route=perfil");
     }
 
-    public function listaServicos() {
+    public function listaServicos()
+    {
         $servicos = solicitacaoModel::getSolicitacao($_SESSION["id_prestador"]);
         require_once "app/Views/prestador/servicos.php";
     }
 
-    public function concluirServico() {
+    public function concluirServico()
+    {
         $solicitacaoId = $_POST["servico_id"];
         $pin = $_POST["pin"];
 
@@ -45,5 +50,35 @@ class PrestadorController
         }
 
         header("Location: ?route=lista-servicos");
+    }
+
+    public function listarPrestadores()
+    {
+        $cliente = $_SESSION["id_cliente"];
+        $servico = $_POST["FK_id_TB_servico"];
+        $data = $_POST["data_agendamento"];
+
+        $prestadores = UserModel::buscarPrestadoresProximos($cliente, $servico);
+        require_once "app/Views/servicos/lista-prestadores.php";
+    }
+
+    public function solicitarServico() {
+        $cliente = $_SESSION["id_cliente"];
+        $prestador = $_POST["prestador"];
+        $servico = $_POST["servico"];
+        $valor = $_POST["valor"];
+        $data = str_replace("T", " ", $_POST["data"]);
+        $user = UserModel::getClientById($_SESSION["id"]);
+        $tel = CriptoController::decrypt($user["tel_TB_cliente"]);
+        $pin = substr($tel, -4);
+
+        $solicitacao = solicitacaoModel::criarSolicitacaoFinal($cliente, $prestador, $servico, $data, $valor, $pin);
+        if (!$solicitacao) {
+            header("Location: ?route=buscar-proximo");
+            return;
+        }
+        
+        header("Location: ?route=lista-servicos-cliente");
+        return;
     }
 }

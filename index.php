@@ -86,18 +86,6 @@ switch ($route) {
         $controller->exibirWizard();
         break;
 
-    // 2. Processa os dados do Wizard e lista os prestadores próximos (Salva na Sessão)
-    case "buscar-prestadores-proximos":
-        $controller = new ServiceController();
-        $controller->buscarPrestadoresProximos();
-        break;
-
-    // 3. Grava definitivamente na TB_SolicitacaoServico após o aceite
-    case "confirmar-solicitacao":
-        $controller = new ServiceController();
-        $controller->confirmarEAceitarSolicitacao();
-        break;
-
     // --- ROTAS DO CHAT DE MENSAGENS ---
 
     // Carrega a tela dividida com a lista de conversas e o chat ativo
@@ -208,6 +196,16 @@ switch ($route) {
     case "atualizar-foto":
         $controller = new UserController();
         $controller->atualizarFotoPerfil();
+        break;
+    
+    case "buscar-proximos":
+        $controller = new PrestadorController();
+        $controller->listarPrestadores();
+        break;     
+    
+    case "solicitar":
+        $controller = new PrestadorController();
+        $controller->solicitarServico();
         break;
 
     default:
