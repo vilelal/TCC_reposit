@@ -17,7 +17,7 @@
         <h1>Qual serviço você precisa?</h1>
 
 
-        <form id="form-wizard" action="?route=buscar-prestadores-proximos" method="POST">
+        <form id="form-wizard" action="?route=buscar-proximos" method="POST">
             <div class="progress-conteiner">
                     <div class="progress"></div>
                 <ol>

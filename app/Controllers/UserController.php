@@ -226,47 +226,46 @@ class UserController
         exit;
     }
 
-        public function salvarCoordenadas(){
+    public function salvarCoordenadas()
+    {
 
-    // ---------------------- CASO SEJA CLIENTE ----------------------
-    if ($_SESSION["tipo"] == "cliente") {
-        $cliente = UserModel::getClientById($_SESSION["id"]);
-        $id      = $cliente["PK_id_TB_cliente"];
-        $rua     = $cliente["rua_TB_cliente"] ?? ''; 
-        $cep     = $cliente["cep_TB_cliente"] ?? '';
-        $numero  = $cliente["numeroCasa_TB_cliente"] ?? '';
-        $cidade  = $cliente["cidade_TB_cliente"] ?? '';
+        // ---------------------- CASO SEJA CLIENTE ----------------------
+        if ($_SESSION["tipo"] == "cliente") {
+            $cliente = UserModel::getClientById($_SESSION["id"]);
+            $id = $cliente["PK_id_TB_cliente"];
+            $rua = $cliente["rua_TB_cliente"] ?? '';
+            $cep = $cliente["cep_TB_cliente"] ?? '';
+            $numero = $cliente["numeroCasa_TB_cliente"] ?? '';
+            $cidade = $cliente["cidade_TB_cliente"] ?? '';
 
 
-        // USA O MÉTODO CORRETO AQUI
-        $coordenadas = GeocodingService::buscarCoordenadasPorEndereco($rua, $numero, $cidade, $cep);
-        $latitude  = $coordenadas['latitude'] ?? null;
-        $longitude = $coordenadas['longitude'] ?? null;
-        if ($latitude && $longitude) {
-            UserModel::coordenadasCliente($id, $latitude, $longitude); 
+            // USA O MÉTODO CORRETO AQUI
+            $coordenadas = GeocodingService::buscarCoordenadasPorEndereco($rua, $numero, $cidade, $cep);
+            $latitude = $coordenadas['latitude'] ?? null;
+            $longitude = $coordenadas['longitude'] ?? null;
+            if ($latitude && $longitude) {
+                UserModel::coordenadasCliente($id, $latitude, $longitude);
+            }
         }
-    } 
 
-    // ---------------------- CASO SEJA PRESTADOR ----------------------
-    elseif ($_SESSION["tipo"] == "prestador") {
-        $prestador = UserModel::getPrestadorById($_SESSION["id"]);
-        $id        = $prestador["PK_id_TB_prestadorPerfil"];
-        $rua       = $prestador["rua_TB_prestadorPerfil"] ?? ''; 
-        $cep       = $prestador["cep_TB_prestadorPerfil"] ?? '';
-        $numero    = $prestador["numeroCasa_TB_prestadorPerfil"] ?? '';
-        $cidade    = $prestador["cidade_TB_prestadorPerfil"] ?? '';
+        // ---------------------- CASO SEJA PRESTADOR ----------------------
+        elseif ($_SESSION["tipo"] == "prestador") {
+            $prestador = UserModel::getPrestadorById($_SESSION["id"]);
+            $id = $prestador["PK_id_TB_prestadorPerfil"];
+            $rua = $prestador["rua_TB_prestadorPerfil"] ?? '';
+            $cep = $prestador["cep_TB_prestadorPerfil"] ?? '';
+            $numero = $prestador["numeroCasa_TB_prestadorPerfil"] ?? '';
+            $cidade = $prestador["cidade_TB_prestadorPerfil"] ?? '';
 
-        // USA O MESMO MÉTODO CORRETO AQUI TAMBÉM
-        $localiza = GeocodingService::buscarCoordenadasPorEndereco($rua, $numero, $cidade, $cep);
-        $latitude  = $localiza['latitude'] ?? null;
-        $longitude = $localiza['longitude'] ?? null;
-        if ($latitude && $longitude) {
-            UserModel::coordenadasPrestadorr($id, $latitude, $longitude); 
+            // USA O MESMO MÉTODO CORRETO AQUI TAMBÉM
+            $localiza = GeocodingService::buscarCoordenadasPorEndereco($rua, $numero, $cidade, $cep);
+            $latitude = $localiza['latitude'] ?? null;
+            $longitude = $localiza['longitude'] ?? null;
+            if ($latitude && $longitude) {
+                UserModel::coordenadasPrestadorr($id, $latitude, $longitude);
+            }
         }
     }
-}
-
-}
     public function listaServicos()
     {
         $servicos = solicitacaoModel::getSolicitacaoCliente($_SESSION["id_cliente"]);
