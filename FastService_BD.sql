@@ -125,4 +125,12 @@ ALTER TABLE TB_mensagem ADD COLUMN imagem_TB_mensagem VARCHAR(255) NULL;
 ALTER TABLE TB_clientePerfil ADD COLUMN foto_TB_cliente VARCHAR(255) NULL;
 ALTER TABLE TB_prestadorPerfil ADD COLUMN foto_TB_prestador VARCHAR(255) NULL;
 ALTER TABLE tb_usuario ADD COLUMN foto_TB_usuario VARCHAR(255) NULL;
-ALTER TABLE TB_SolicitacaoServico ADD COLUMN pin_TB_SolicitacaoServico CHAR(4) NOT NULL; 
+ALTER TABLE TB_SolicitacaoServico ADD COLUMN pin_TB_SolicitacaoServico CHAR(4) NOT NULL;
+
+ALTER TABLE TB_prestadorPerfil
+ADD COLUMN latitude_TB_prestadorPerfil DECIMAL(10, 8) NULL,
+ADD COLUMN longitude_TB_prestadorPerfil DECIMAL(11, 8) NULL;
+
+ALTER TABLE TB_clientePerfil
+ADD COLUMN latitude_TB_clientePerfil DECIMAL(10, 8) NULL,
+ADD COLUMN longitude_TB_clientePerfil DECIMAL(11, 8) NULL;
