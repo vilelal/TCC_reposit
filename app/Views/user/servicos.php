@@ -58,10 +58,6 @@ $servicosAceitos = array_filter($servicos, function ($servico) {
 
             <?php if ($logado): ?>
 
-                <span class="saudacao">
-                    Olá, <?= $nome ?>
-                </span>
-
                 <a href="?route=chat" class="btn-header btn-ghost btn-sm hide-sm">
                     Chat
                 </a>

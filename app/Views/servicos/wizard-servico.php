@@ -41,9 +41,7 @@ $ehAdmin = $tipo === "Admin";
 
             <?php if ($logado): ?>
 
-                <span class="saudacao">
-                    Olá, <?= $nome ?>
-                </span>
+               
 
                 <a href="?route=chat" class="btn-header btn-ghost btn-sm hide-sm">
                     Chat
