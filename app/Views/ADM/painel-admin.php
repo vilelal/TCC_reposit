@@ -3,38 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <title>Painel do Administrador</title>
-    <link rel="stylesheet" href="app/css/styleCad.css">
-    <style>
-        .admin-container { max-width: 1000px; margin: 30px auto; padding: 20px; background: #fff; border-radius: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); }
-        .admin-section { margin-bottom: 40px; }
-        .admin-section h3 { margin-bottom: 15px; border-bottom: 2px solid #007bff; padding-bottom: 5px; color: #333; }
-        
-        table { width: 100%; border-collapse: collapse; margin-top: 10px; }
-        th, td { padding: 12px; text-align: left; border-bottom: 1px solid #ddd; font-size: 0.9rem; }
-        th { background: #f8f9fa; font-weight: bold; }
-        
-        .btn-banir { background: #dc3545; color: white; border: none; padding: 6px 12px; border-radius: 4px; cursor: pointer; font-size: 0.8rem; }
-        .btn-banir:hover { background: #c82333; }
-        
-        .form-servico { display: flex; gap: 10px; align-items: center; background: #f8f9fa; padding: 15px; border-radius: 6px; }
-        .form-servico input { flex: 1; padding: 10px; border: 1px solid #ccc; border-radius: 4px; }
-        .btn-salvar { background: #28a745; color: white; border: none; padding: 10px 20px; border-radius: 4px; cursor: pointer; font-weight: bold; }
-        .btn-salvar:hover { background: #218838; }
-        
-        .alerta { padding: 10px; margin-bottom: 15px; border-radius: 4px; font-size: 0.9rem; }
-        .alerta-sucesso { background: #d4edda; color: #155724; border: 1px solid #c3e6cb; }
-    </style>
+    <link rel="stylesheet" href="app/css/styleAdmPanel.css">
+
 </head>
 <body>
 
 <div class="admin-container">
-    <h2>Painel Administrativo</h2>
-    <p style="color: #666; margin-bottom: 20px;">Gerenciamento de usuários e catálogo de serviços do sistema.</p>
+    <h2>Painel Administrativo da FastService</h2>
+    <p>Gerenciamento de usuários e catálogo de serviços do sistema.</p>
 
     <!-- SEÇÃO 1: CRIAR NOVO SERVIÇO -->
     <div class="admin-section">
         <h3>Cadastrar Novo Serviço</h3>
-        
+
         <form action="?route=admin-criar-servico" method="POST" class="form-servico">
             <input type="text" name="nome_servico" placeholder="Nome do novo serviço (ex: Eletricista, Encanador...)" required autocomplete="off">
             <button type="submit" class="btn-salvar">Adicionar Serviço</button>
@@ -44,8 +25,12 @@
     <!-- SEÇÃO 2: GERENCIAR USUÁRIOS -->
     <div class="admin-section">
         <h3>Usuários Cadastrados</h3>
-        
-        <table>
+
+        <div class="tabela-toolbar">
+            <input type="text" id="filtroUsuarios" placeholder="Pesquisar por ID, email ou tipo..." autocomplete="off">
+        </div>
+
+        <table id="tabelaUsuarios">
             <thead>
                 <tr>
                     <th>ID</th>
@@ -56,16 +41,17 @@
             </thead>
             <tbody>
                 <?php if (!empty($listaUsuarios)): ?>
+                    <?php $idAdminLogado = (int) ($_SESSION['id'] ?? 0); ?>
                     <?php foreach ($listaUsuarios as $usuario): ?>
                         <tr>
-                            <td>#<?= $usuario['PK_id_TB_usuario'] ?></td>
+                            <td>#<?= (int) $usuario['PK_id_TB_usuario'] ?></td>
                             <td><?= htmlspecialchars($usuario['email_TB_usuario']) ?></td>
                             <td><strong><?= htmlspecialchars($usuario['tipo_TB_usuario']) ?></strong></td>
                             <td>
                                 <!-- Evita que o admin bane a si mesmo -->
-                                <?php if ($usuario['PK_id_TB_usuario'] != $_SESSION['id']): ?>
+                                <?php if ((int) $usuario['PK_id_TB_usuario'] !== $idAdminLogado): ?>
                                     <form action="?route=admin-banir-usuario" method="POST" onsubmit="return confirm('Tem certeza que deseja banir este usuário?');" style="margin: 0;">
-                                        <input type="hidden" name="id_usuario" value="<?= $usuario['PK_id_TB_usuario'] ?>">
+                                        <input type="hidden" name="id_usuario" value="<?= (int) $usuario['PK_id_TB_usuario'] ?>">
                                         <button type="submit" class="btn-banir">Banir / Excluir</button>
                                     </form>
                                 <?php else: ?>
@@ -76,13 +62,93 @@
                     <?php endforeach; ?>
                 <?php else: ?>
                     <tr>
-                        <td colspan="4" style="text-align: center; color: #888;">Nenhum usuário encontrado.</td>
+                        <td colspan="4">Nenhum usuário encontrado.</td>
                     </tr>
                 <?php endif; ?>
             </tbody>
         </table>
+
+        <p id="semResultado" class="sem-resultado" hidden>Nenhum usuário corresponde à pesquisa.</p>
+
+        <div class="paginacao" id="paginacaoUsuarios"></div>
     </div>
 </div>
+
+<script>
+(function () {
+    const POR_PAGINA = 10;
+    const tabela = document.getElementById('tabelaUsuarios');
+    const corpo = tabela.tBodies[0];
+    const linhasOriginais = Array.from(corpo.querySelectorAll('tr'))
+        .filter(tr => !tr.querySelector('td[colspan]'))
+        .sort((a, b) => {
+            const emailA = a.cells[1].textContent.trim();
+            const emailB = b.cells[1].textContent.trim();
+            return emailA.localeCompare(emailB, 'pt-BR', { sensitivity: 'base' });
+        });
+
+    linhasOriginais.forEach(tr => corpo.appendChild(tr));
+    const campoFiltro = document.getElementById('filtroUsuarios');
+    const semResultado = document.getElementById('semResultado');
+    const paginacao = document.getElementById('paginacaoUsuarios');
+
+    let paginaAtual = 1;
+
+    function linhasFiltradas() {
+        const termo = campoFiltro.value.trim().toLowerCase();
+        if (!termo) return linhasOriginais;
+        return linhasOriginais.filter(tr => tr.textContent.toLowerCase().includes(termo));
+    }
+
+    function renderizar() {
+        const resultado = linhasFiltradas();
+        const totalPaginas = Math.max(1, Math.ceil(resultado.length / POR_PAGINA));
+        paginaAtual = Math.min(paginaAtual, totalPaginas);
+
+        linhasOriginais.forEach(tr => tr.style.display = 'none');
+
+        const inicio = (paginaAtual - 1) * POR_PAGINA;
+        const paginaAtualLinhas = resultado.slice(inicio, inicio + POR_PAGINA);
+        paginaAtualLinhas.forEach(tr => tr.style.display = '');
+
+        semResultado.hidden = resultado.length !== 0;
+        tabela.style.display = resultado.length === 0 ? 'none' : '';
+
+        renderizarPaginacao(totalPaginas);
+    }
+
+    function renderizarPaginacao(totalPaginas) {
+        paginacao.innerHTML = '';
+        if (totalPaginas <= 1) return;
+
+        const criarBotao = (rotulo, pagina, ativo, desabilitado) => {
+            const btn = document.createElement('button');
+            btn.type = 'button';
+            btn.textContent = rotulo;
+            btn.className = 'pagina-btn' + (ativo ? ' ativo' : '');
+            btn.disabled = !!desabilitado;
+            btn.addEventListener('click', () => {
+                paginaAtual = pagina;
+                renderizar();
+            });
+            return btn;
+        };
+
+        paginacao.appendChild(criarBotao('‹', paginaAtual - 1, false, paginaAtual === 1));
+        for (let p = 1; p <= totalPaginas; p++) {
+            paginacao.appendChild(criarBotao(String(p), p, p === paginaAtual, false));
+        }
+        paginacao.appendChild(criarBotao('›', paginaAtual + 1, false, paginaAtual === totalPaginas));
+    }
+
+    campoFiltro.addEventListener('input', () => {
+        paginaAtual = 1;
+        renderizar();
+    });
+
+    renderizar();
+})();
+</script>
 
 </body>
 </html>

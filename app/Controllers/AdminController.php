@@ -8,7 +8,7 @@ public function exibirPainel()
 
     // Valida em minúsculo para evitar falhas por causa de 'Admin' vs 'admin'
     if (!isset($_SESSION['tipo']) || strtolower($_SESSION['tipo']) !== 'admin') {
-        header('Location: ?route=home');
+        header('Location: ?route=painel-admin');
         exit;
     }
 
