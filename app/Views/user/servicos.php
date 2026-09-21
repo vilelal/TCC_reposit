@@ -37,7 +37,7 @@
                 <form action="?route=solicitacao" method="post">
                     <input type="hidden" name="servico_id" id="" value="<?= $servico["PK_id_TB_SolicitacaoServico"] ?>">
                     <input type="hidden" name="status" value="cancelado">
-                    <input type="hidden" name="prestador" value="<?= $servico["FK_id_TB_prestadorServico"] ?>">
+                    <input type="hidden" name="prestador" value="<?= $servico["PK_id_TB_prestadorPerfil"] ?>">
                     <input type="hidden" name="servico" value="<?= $servico["nome_TB_servico"] ?>">
                     <button type="submit"> Cancelar </button>
                 </form>
@@ -60,7 +60,7 @@
                 <form action="?route=solicitacao" method="post">
                     <input type="hidden" name="servico_id" id="" value="<?= $servico["PK_id_TB_SolicitacaoServico"] ?>">
                     <input type="hidden" name="status" value="cancelado">
-                    <input type="hidden" name="prestador" value="<?= $servico["FK_id_TB_prestadorServico"] ?>">
+                    <input type="hidden" name="prestador" value="<?= $servico["PK_id_TB_prestadorPerfil"] ?>">
                     <input type="hidden" name="servico" value="<?= $servico["nome_TB_servico"] ?>">
                     <button type="submit"> Cancelar </button>
                 </form>

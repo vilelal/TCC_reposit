@@ -86,12 +86,6 @@ switch ($route) {
         $controller->exibirWizard();
         break;
 
-    // 3. Grava definitivamente na TB_SolicitacaoServico após o aceite
-    case "confirmar-solicitacao":
-        $controller = new ServiceController();
-        $controller->confirmarEAceitarSolicitacao();
-        break;
-
     // --- ROTAS DO CHAT DE MENSAGENS ---
 
     // Carrega a tela dividida com a lista de conversas e o chat ativo
@@ -207,7 +201,12 @@ switch ($route) {
     case "buscar-proximos":
         $controller = new PrestadorController();
         $controller->listarPrestadores();
-        break;        
+        break;     
+    
+    case "solicitar":
+        $controller = new PrestadorController();
+        $controller->solicitarServico();
+        break;
 
     default:
         $controller = new HomeController();

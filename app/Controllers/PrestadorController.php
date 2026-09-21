@@ -1,5 +1,7 @@
 <?php
 
+require_once __DIR__ . "/CriptoController.php";
+
 class PrestadorController
 {
     public function dashboard()
@@ -58,5 +60,25 @@ class PrestadorController
 
         $prestadores = UserModel::buscarPrestadoresProximos($cliente, $servico);
         require_once "app/Views/servicos/lista-prestadores.php";
+    }
+
+    public function solicitarServico() {
+        $cliente = $_SESSION["id_cliente"];
+        $prestador = $_POST["prestador"];
+        $servico = $_POST["servico"];
+        $valor = $_POST["valor"];
+        $data = str_replace("T", " ", $_POST["data"]);
+        $user = UserModel::getClientById($_SESSION["id"]);
+        $tel = CriptoController::decrypt($user["tel_TB_cliente"]);
+        $pin = substr($tel, -4);
+
+        $solicitacao = solicitacaoModel::criarSolicitacaoFinal($cliente, $prestador, $servico, $data, $valor, $pin);
+        if (!$solicitacao) {
+            header("Location: ?route=buscar-proximo");
+            return;
+        }
+        
+        header("Location: ?route=lista-servicos-cliente");
+        return;
     }
 }

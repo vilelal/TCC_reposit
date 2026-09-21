@@ -182,7 +182,7 @@ class UserModel
         return $user;
     }
 
-    
+
 
     public static function getPrestadorById($id)
     {
@@ -303,101 +303,115 @@ class UserModel
         return $sucesso;
     }
 
-       // aqui salvo no banco a lat e long do cliente
-    public static function coordenadasCliente($id, $latitude, $longitude) 
-{
-    $conexao = Database::conectarBanco();
+    // aqui salvo no banco a lat e long do cliente
+    public static function coordenadasCliente($id, $latitude, $longitude)
+    {
+        $conexao = Database::conectarBanco();
 
-    $sql = "UPDATE tb_clientePerfil 
+        $sql = "UPDATE tb_clientePerfil 
             SET latitude_TB_clientePerfil = ?, 
                 longitude_TB_clientePerfil = ? 
             WHERE PK_id_TB_cliente = ?";
 
-    $stmt = $conexao->prepare($sql);
-    // "ddi" = double (latitude), double (longitude), integer (id do cliente)
-    $stmt->bind_param("ddi", $latitude, $longitude, $id); 
-    $sucesso = $stmt->execute();
+        $stmt = $conexao->prepare($sql);
+        // "ddi" = double (latitude), double (longitude), integer (id do cliente)
+        $stmt->bind_param("ddi", $latitude, $longitude, $id);
+        $sucesso = $stmt->execute();
 
-    $stmt->close();
-    $conexao->close();
+        $stmt->close();
+        $conexao->close();
 
-    return $sucesso;
-}
+        return $sucesso;
+    }
 
- // aqui salvo no banco a lat e long do prestador
+    // aqui salvo no banco a lat e long do prestador
 
-   public static function coordenadasPrestadorr($id, $latitude, $longitude) 
-{
-    $conexao = Database::conectarBanco();
+    public static function coordenadasPrestadorr($id, $latitude, $longitude)
+    {
+        $conexao = Database::conectarBanco();
 
-    $sql = "UPDATE TB_prestadorPerfil 
+        $sql = "UPDATE TB_prestadorPerfil 
             SET latitude_TB_prestadorPerfil = ?, 
                 longitude_TB_prestadorPerfil = ? 
             WHERE PK_id_TB_prestadorPerfil= ?";
 
-    $stmt = $conexao->prepare($sql);
-    // "ddi" = double (latitude), double (longitude), integer (id do cliente)
-    $stmt->bind_param("ddi", $latitude, $longitude, $id); 
-    $sucesso = $stmt->execute();
+        $stmt = $conexao->prepare($sql);
+        // "ddi" = double (latitude), double (longitude), integer (id do cliente)
+        $stmt->bind_param("ddi", $latitude, $longitude, $id);
+        $sucesso = $stmt->execute();
 
-    $stmt->close();
-    $conexao->close();
+        $stmt->close();
+        $conexao->close();
 
-    return $sucesso;
-}
+        return $sucesso;
+    }
 
 
     public static function buscarPrestadoresProximos($clienteId, $servicoId, $raioMaximoKm = 50)
-{
-    $conexao = Database::conectarBanco();
+    {
+        $conexao = Database::conectarBanco();
 
-    // 1. Busca as coordenadas salvas do cliente
-    $sqlCliente = "SELECT latitude_TB_clientePerfil, longitude_TB_clientePerfil 
+        // 1. Busca as coordenadas salvas do cliente
+        $sqlCliente = "SELECT latitude_TB_clientePerfil, longitude_TB_clientePerfil 
                    FROM TB_clientePerfil 
                    WHERE PK_id_TB_cliente = ?";
-    $stmtC = $conexao->prepare($sqlCliente);
-    $stmtC->bind_param("i", $clienteId);
-    $stmtC->execute();
-    $cliente = $stmtC->get_result()->fetch_assoc();  //pega lat e long do cliente
-    $stmtC->close();
+        $stmtC = $conexao->prepare($sqlCliente);
+        $stmtC->bind_param("i", $clienteId);
+        $stmtC->execute();
+        $cliente = $stmtC->get_result()->fetch_assoc();  //pega lat e long do cliente
+        $stmtC->close();
 
-    $latCliente = $cliente['latitude_TB_clientePerfil']; //lat do cliente
-    $lngCliente = $cliente['longitude_TB_clientePerfil']; // long do cliente
+        $latCliente = $cliente['latitude_TB_clientePerfil']; //lat do cliente
+        $lngCliente = $cliente['longitude_TB_clientePerfil']; // long do cliente
 
-    if (!$latCliente || !$lngCliente) {
-        return []; // Retorna vazio se o cliente não tiver coordenadas salvas
-    }
+        if (!$latCliente || !$lngCliente) {
+            return []; // Retorna vazio se o cliente não tiver coordenadas salvas
+        }
 
-    // 2. Faz comparação: calcula a distância em KM e ordena os prestadores, melhor fazer aqui mesmo
-    $sql = "SELECT p.PK_id_TB_prestadorPerfil, p.nome_TB_prestador, p.cidade_TB_prestadorPerfil, 
+        // 2. Faz comparação: calcula a distância em KM e ordena os prestadores, melhor fazer aqui mesmo
+        $sql = "SELECT p.PK_id_TB_prestadorPerfil, p.nome_TB_prestador, p.cidade_TB_prestadorPerfil, 
                    ps.PK_id_TB_prestadorServico, ps.preco_customizado_TB_prestadorServico,
                    s.nome_TB_servico, s.precoPadrao_TB_servico,
                    (6371 * acos(
                        cos(radians(?)) * cos(radians(p.latitude_TB_prestadorPerfil)) * 
                        cos(radians(p.longitude_TB_prestadorPerfil) - radians(?)) + 
                        sin(radians(?)) * sin(radians(p.latitude_TB_prestadorPerfil))
-                   )) AS distancia_km
+                   )) AS distancia_km,
+
+                   (
+                    SELECT COUNT(*)
+                    FROM TB_SolicitacaoServico solicitacao
+                    WHERE solicitacao.FK_id_TB_prestadorServico = p.PK_id_TB_prestadorPerfil 
+                    AND solicitacao.status_TB_SolicitacaoServico = 'concluido'
+                    ) AS total_servicos,
+
+                    (
+                    SELECT ROUND(AVG(a.nota_TB_avaliacao), 1)
+                    FROM TB_avaliacao a
+                    WHERE p.FK_id_TB_usuario = a.FK_id_TB_usuario
+                    ) AS media_avaliacoes
+
             FROM TB_prestadorServico ps
             JOIN TB_servico s ON ps.FK_id_TB_servico = s.PK_id_TB_servico
-            JOIN TB_prestadorPerfil p ON ps.FK_id_TB_prestadorPerfil = p.PK_id_TB_prestadorPerfil
+            JOIN TB_prestadorPerfil p ON ps.FK_id_TB_prestadorPerfil = p.PK_id_TB_prestadorPerfil 
             WHERE ps.FK_id_TB_servico = ?
             HAVING distancia_km <= ?
             ORDER BY distancia_km ASC";
 
-    $stmt = $conexao->prepare($sql);
-    $stmt->bind_param("dddid", $latCliente, $lngCliente, $latCliente, $servicoId, $raioMaximoKm);
-    $stmt->execute();
-    $result = $stmt->get_result();
+        $stmt = $conexao->prepare($sql);
+        $stmt->bind_param("dddid", $latCliente, $lngCliente, $latCliente, $servicoId, $raioMaximoKm);
+        $stmt->execute();
+        $result = $stmt->get_result();
 
-    $prestadores = [];
-    while ($row = $result->fetch_assoc()) {
-        $row['distancia_km'] = round($row['distancia_km'], 1); // Exemplo: 3.2 km
-        $prestadores[] = $row;
+        $prestadores = [];
+        while ($row = $result->fetch_assoc()) {
+            $row['distancia_km'] = round($row['distancia_km'], 1); // Exemplo: 3.2 km
+            $prestadores[] = $row;
+        }
+
+        $stmt->close();
+        $conexao->close();
+
+        return $prestadores;
     }
-
-    $stmt->close();
-    $conexao->close();
-
-    return $prestadores;    
-}
 }
