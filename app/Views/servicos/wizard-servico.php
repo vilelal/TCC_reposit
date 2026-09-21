@@ -1,10 +1,18 @@
+<?php
+$logado = isset($_SESSION["id"]);
+$tipo = $_SESSION["tipo"] ?? "";
+$nome = htmlspecialchars($_SESSION["nome"] ?? "", ENT_QUOTES, "UTF-8");
+
+$ehPrestador = $tipo === "prestador";
+$ehAdmin = $tipo === "Admin";
+?>
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Solicitar Serviço</title>
-      <?php require_once "app/Views/header/header.php";?>
+ 
     <link rel="stylesheet" href="app/css/wizard.css">
     
     <link rel="stylesheet" href="app/css/detalhe.css">
@@ -12,6 +20,75 @@
 </head>
 <body>
 
+<header class="site-header">
+    <div class="header-wrap">
+
+        <a href="?route=home" class="brand" aria-label="FastService - página inicial">
+            <img src="app/css/img/logo.png" alt="FastService">
+            <span>FastService</span>
+        </a>
+
+        <nav class="nav-links" aria-label="Principal">
+            <a href=""  class="funcionamento">Como funciona</a>
+            <a href=""  class="servico">Serviços</a>
+            <!-- links para cliente logado -->
+            <?php if (isset($_SESSION["id_cliente"])): ?>
+            <a href="?route=lista-servicos-cliente"  class="servico">Minhas Solicitações</a>
+            <?php endif; ?>
+        </nav>
+
+        <div class="nav-actions">
+
+            <?php if ($logado): ?>
+
+                <span class="saudacao">
+                    Olá, <?= $nome ?>
+                </span>
+
+                <a href="?route=chat" class="btn-header btn-ghost btn-sm hide-sm">
+                    Chat
+                </a>
+
+                <?php if ($ehAdmin): ?>
+
+                    <a href="?route=painel-admin" class="btn-header btn-ghost btn-sm hide-sm">
+                        Painel
+                    </a>
+
+                <?php elseif ($ehPrestador): ?>
+
+                    <a href="?route=dashboard" class="btn-header btn-primary btn-sm">
+                        Meu painel
+                    </a>
+
+                <?php else: ?>
+
+                    <a href="?route=perfil" class="btn-header btn-primary btn-sm">
+                        Meu perfil
+                    </a>
+
+                <?php endif; ?>
+
+                <a href="?route=logout" class="btn-header btn-ghost btn-sm">
+                    Sair
+                </a>
+
+            <?php else: ?>
+
+                <a href="?route=login-form" class="btn-header btn-ghost btn-sm">
+                    Entrar
+                </a>
+
+                <a href="?route=prestador-form" class="btn-header btn-primary btn-sm">
+                    Seja um profissional
+                </a>
+
+            <?php endif; ?>
+
+        </div>
+
+    </div>
+</header>
 <div class="container">
     <div class="cadastro-etapa">
         <h1>Qual serviço você precisa?</h1>
@@ -21,9 +98,9 @@
             <div class="progress-conteiner">
                     <div class="progress"></div>
                 <ol>
-                    <li class="current">Step</li>
-                    <li>Step</li>
-                    <li>Step</li>
+                    <li class="current">Categoria</li>
+                    <li>Detalhes</li>
+                    <li>Buscar</li>
                 </ol>
                 </div>
             <!-- PASSO 1: Seleção de Categoria -->
@@ -80,8 +157,9 @@
 
                 <br><br>
                 <label>
+                     Desejo negociar um orçamento personalizado com o prestador
                     <input type="checkbox" name="solicitar_orcamento" value="1">
-                    Desejo negociar um orçamento personalizado com o prestador
+                   
                 </label>
 
                 <label style="margin-top: 15px; display:block;">Descrição adicional do problema:</label>

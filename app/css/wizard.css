@@ -18,6 +18,202 @@ body {
     --step-size: 32px;
     --error-color: #d9534f;
     --steps: 3;
+    --amber: #FDB441;
+    --amber-soft: #FFF4DE;
+    --amber-line: #F0D49C;
+
+    --ink: #1a1a1a;
+    --muted: #6b6b6b;
+
+    --bg: #F5F5F5;
+    --surface: #ffffff;
+    --line: #ebe6da;
+
+    --ok: #3d8b40;
+    --danger: #c9443f;
+    --danger-soft: #fdeceb;
+
+    --radius-md: 16px;
+    --radius-pill: 999px;
+}/* ==============================
+   HEADER
+   ============================== */
+
+.site-header {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+
+    width: 100%;
+
+    background-color: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+
+    border-bottom: 3px solid var(--amber);
+}
+
+/* Container do header */
+
+.header-wrap {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    width: 100%;
+    max-width: 1080px;
+
+    min-height: 72px;
+
+    margin: 0 auto;
+    padding: 0 40px;
+
+    gap: 24px;
+}
+
+/* ==============================
+   LOGO
+   ============================== */
+
+.brand {
+    display: flex;
+    align-items: center;
+
+    gap: 8px;
+
+    color: var(--ink);
+    text-decoration: none;
+
+    flex-shrink: 0;
+}
+
+.brand img {
+    width: 44px;
+    height: 44px;
+
+    object-fit: contain;
+}
+
+.brand span {
+    font-family: 'Archivo', sans-serif;
+
+    font-size: 1.3rem;
+    font-weight: 800;
+
+    color: var(--ink);
+}
+
+/* ==============================
+   LINKS
+   ============================== */
+
+.nav-links {
+    display: flex;
+    align-items: center;
+
+    gap: 32px;
+
+    font-family: 'Archivo', sans-serif;
+    font-size: 0.95rem;
+    font-weight: 700;
+}
+
+.nav-links a {
+    padding: 6px 0;
+
+    color: var(--ink);
+    text-decoration: none;
+
+    border-bottom: 3px solid transparent;
+
+    transition: border-color 0.2s ease;
+}
+
+.nav-links a:hover {
+    border-bottom-color: var(--amber);
+}
+
+/* ==============================
+   AÇÕES
+   ============================== */
+
+.nav-actions {
+    display: flex;
+    align-items: center;
+
+    gap: 12px;
+
+    flex-shrink: 0;
+}
+
+.saudacao {
+    color: var(--muted);
+
+    font-size: 0.9rem;
+    font-weight: 600;
+
+    white-space: nowrap;
+}
+
+/* ==============================
+   BOTÕES DO HEADER
+   ============================== */
+
+.btn-header {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 8px 20px;
+
+    border-radius: var(--radius-pill);
+
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.88rem;
+    font-weight: 700;
+
+    text-decoration: none;
+
+    cursor: pointer;
+
+    transition: all 0.2s ease;
+
+    white-space: nowrap;
+}
+
+.btn-ghost {
+    background-color: transparent;
+
+    color: var(--ink);
+
+    border: 1.5px solid var(--amber-line);
+}
+
+.btn-ghost:hover {
+    background-color: var(--amber-soft);
+
+    border-color: var(--amber);
+}
+
+.btn-primary {
+    background-color: var(--amber);
+
+    color: var(--ink);
+
+    border: 1.5px solid var(--amber);
+
+    box-shadow: 0 2px 8px rgba(253, 180, 65, 0.3);
+}
+
+.btn-primary:hover {
+    background-color: #f8c065;
+
+    border-color: #f8c065;
+}
+
+.btn-sm {
+    padding: 8px 16px;
+
+    font-size: 0.85rem;
 }
 
 h1 {
@@ -237,4 +433,57 @@ button[type="submit"]:active {
     font-size: 0.9rem;
     margin-top: 5px;
     display: none;
+}
+
+/* ==============================
+   RESPONSIVIDADE
+   ============================== */
+
+@media (max-width: 900px) {
+
+    .nav-links {
+        display: none;
+    }
+
+}
+
+@media (max-width: 600px) {
+
+    .header-wrap {
+        gap: 8px;
+
+        padding: 0 16px;
+    }
+
+    .brand span {
+        font-size: 1.1rem;
+    }
+
+    .nav-actions {
+        gap: 8px;
+    }
+
+    .saudacao,
+    .hide-sm {
+        display: none;
+    }
+
+    .brand img {
+        width: 36px;
+        height: 36px;
+    }
+
+}
+
+@media (max-width: 480px) {
+
+    .brand span {
+        display: none;
+    }
+
+    .btn-header {
+        padding: 7px 12px;
+        font-size: 0.8rem;
+    }
+
 }
