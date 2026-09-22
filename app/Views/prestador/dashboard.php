@@ -20,7 +20,7 @@
     if (!isset($user)) $user = [];
 
     // Valores ainda não vêm do back-end; quando vierem, basta o controller defini-los.
-    $faturamento = isset($faturamento) ? 'R$ ' . number_format((float) $faturamento, 2, ',', '.') : 'R$ 0,00';
+    $faturamento = isset($user["faturamento"]) ? 'R$ ' . number_format((float) $user["faturamento"], 2, ',', '.') : 'R$ 0,00';
     $servicosPrestados = $user["total_servicos"] ?? 0;
     $mediaAvaliacoes = isset($avaliacoes["media_avaliacoes"]) ? $avaliacoes["media_avaliacoes"] : '—';
 

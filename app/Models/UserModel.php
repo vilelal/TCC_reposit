@@ -196,7 +196,15 @@ class UserModel
         JOIN TB_prestadorServico ps ON ps.PK_id_TB_prestadorServico = s.FK_id_TB_prestadorServico
         WHERE ps.FK_id_TB_prestadorPerfil = p.PK_id_TB_prestadorPerfil
         AND s.status_TB_SolicitacaoServico = 'concluido'
-        ) AS total_servicos
+        ) AS total_servicos,
+
+        (
+        SELECT SUM(s.valorTotal_TB_SolicitacaoServico)
+        FROM TB_SolicitacaoServico s
+        JOIN TB_prestadorServico ps ON ps.PK_id_TB_prestadorServico = s.FK_id_TB_prestadorServico
+        WHERE ps.FK_id_TB_prestadorPerfil = p.PK_id_TB_prestadorPerfil
+        AND s.status_TB_SolicitacaoServico = 'concluido'
+        ) AS faturamento
 
         FROM TB_prestadorPerfil p
         INNER JOIN TB_usuario u ON p.FK_id_TB_usuario = u.PK_id_TB_usuario
