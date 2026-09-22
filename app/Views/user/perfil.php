@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Perfil</title>
     <link rel="stylesheet" href="app/css/stylePerfil.css">
-    
+
     <!-- Cropper.js CSS e JS via CDN -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.js"></script>
@@ -16,10 +16,31 @@
 
     <?php
     if (!isset($user)) $user = [];
-    
-    // Pega a foto da tabela de usuários (ou da sessão) adicionando uma query string para evitar cache do navegador
-    $fotoUsuario = !empty($user['foto_TB_usuario']) ? $user['foto_TB_usuario'] : (!empty($_SESSION['foto']) ? $_SESSION['foto'] : 'app/css/img/default-user.png');
-    $fotoComCacheBuster = $fotoUsuario . '?v=' . time(); 
+
+    // Nome do usuário (cliente ou prestador)
+    $nomeUsuario = $user['nome_TB_cliente'] ?? $user['nome_TB_prestador'] ?? ($_SESSION['nome'] ?? '');
+
+    // Só considera que "tem foto" se realmente houver um caminho salvo
+    $caminhoFoto = $user['foto_TB_usuario'] ?? ($_SESSION['foto'] ?? null);
+    $temFoto = !empty($caminhoFoto);
+    $fotoComCacheBuster = $temFoto ? $caminhoFoto . '?v=' . time() : '';
+
+    // Gera as iniciais a partir do nome (ex: "Renan Silva" -> "RS")
+    function obterIniciais(string $nome): string
+    {
+        $nome = trim($nome);
+        if ($nome === '') {
+            return '?';
+        }
+        $partes = preg_split('/\s+/', $nome);
+        $iniciais = mb_strtoupper(mb_substr($partes[0], 0, 1));
+        if (count($partes) > 1) {
+            $iniciais .= mb_strtoupper(mb_substr(end($partes), 0, 1));
+        }
+        return $iniciais;
+    }
+
+    $iniciais = obterIniciais($nomeUsuario);
     ?>
 
     <div class="container">
@@ -35,7 +56,13 @@
         <!-- Área do Perfil com Hover -->
         <div class="foto-container">
             <label for="inputFoto" class="foto-label">
-                <img src="<?= $fotoComCacheBuster ?>" alt="Foto de Perfil" class="foto-perfil" id="fotoExibicao">
+
+                <?php if ($temFoto): ?>
+                    <img src="<?= htmlspecialchars($fotoComCacheBuster) ?>" alt="Foto de Perfil" class="foto-perfil" id="fotoExibicao">
+                <?php else: ?>
+                    <div class="foto-iniciais" id="fotoIniciais"><?= htmlspecialchars($iniciais) ?></div>
+                <?php endif; ?>
+
                 <div class="foto-overlay">
                     <span>Trocar foto</span>
                 </div>
@@ -44,7 +71,7 @@
             <input type="file" id="inputFoto" accept="image/*" style="display: none;">
         </div>
 
-        <h3> <?= $user["nome_TB_cliente"] ?? $user["nome_TB_prestador"] ?? $_SESSION['nome'] ?> </h3>
+        <h3><?= htmlspecialchars($nomeUsuario) ?></h3>
         <a href="?route=edit-perfil">Dados pessoais</a>
         <a href="?route=seguranca">Segurança</a>
         <a href="?route=meus-servicos">Meus serviços</a>
@@ -84,7 +111,6 @@
         const btnSalvarCorte = document.getElementById('btnSalvarCorte');
 
         // 1. Quando escolhe um arquivo
-        // 1. Quando escolhe um arquivo
         inputFoto.addEventListener('change', function(e) {
             const files = e.target.files;
             if (files && files.length > 0) {
@@ -93,7 +119,7 @@
                 // --- INÍCIO DAS VALIDAÇÕES ---
 
                 // Validação de Tamanho (Exemplo: limite de 5MB)
-                const tamanhoMaximoMB = 5; 
+                const tamanhoMaximoMB = 5;
                 const tamanhoMaximoBytes = tamanhoMaximoMB * 1024 * 1024;
                 if (file.size > tamanhoMaximoBytes) {
                     alert(`A imagem é muito pesada! O limite máximo é ${tamanhoMaximoMB}MB.`);
@@ -112,7 +138,7 @@
                 // --- FIM DAS VALIDAÇÕES ---
 
                 const reader = new FileReader();
-                
+
                 reader.onload = function(e) {
                     imageToCrop.src = e.target.result;
                     modalCropper.style.display = 'flex';
@@ -156,25 +182,37 @@
 
                 // Envia para o Controller
                 fetch('?route=atualizar-foto', {
-                    method: 'POST',
-                    body: formData
-                })
-                .then(response => response.json())
-                .then(data => {
-                    if (data.success) {
-                        // Atualiza a imagem na página instantaneamente com o cache-buster
-                        document.getElementById('fotoExibicao').src = data.caminho + '?v=' + new Date().getTime();
-                        modalCropper.style.display = 'none';
-                        inputFoto.value = '';
-                        if (cropper) cropper.destroy();
-                    } else {
-                        alert('Erro ao atualizar foto: ' + data.message);
-                    }
-                })
-                .catch(err => {
-                    console.error(err);
-                    alert('Erro no envio da imagem.');
-                });
+                        method: 'POST',
+                        body: formData
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            const novoSrc = data.caminho + '?v=' + new Date().getTime();
+
+                            // Se ainda estava mostrando as iniciais, troca o <div> por um <img>
+                            let img = document.getElementById('fotoExibicao');
+                            if (!img) {
+                                const divIniciais = document.getElementById('fotoIniciais');
+                                img = document.createElement('img');
+                                img.id = 'fotoExibicao';
+                                img.className = 'foto-perfil';
+                                img.alt = 'Foto de Perfil';
+                                divIniciais.replaceWith(img);
+                            }
+                            img.src = novoSrc;
+
+                            modalCropper.style.display = 'none';
+                            inputFoto.value = '';
+                            if (cropper) cropper.destroy();
+                        } else {
+                            alert('Erro ao atualizar foto: ' + data.message);
+                        }
+                    })
+                    .catch(err => {
+                        console.error(err);
+                        alert('Erro no envio da imagem.');
+                    });
             }, 'image/jpeg', 0.9);
         });
     </script>
