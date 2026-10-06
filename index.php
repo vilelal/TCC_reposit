@@ -86,18 +86,6 @@ switch ($route) {
         $controller->exibirWizard();
         break;
 
-    // 2. Processa os dados do Wizard e lista os prestadores próximos (Salva na Sessão)
-    case "buscar-prestadores-proximos":
-        $controller = new ServiceController();
-        $controller->buscarPrestadoresProximos();
-        break;
-
-    // 3. Grava definitivamente na TB_SolicitacaoServico após o aceite
-    case "confirmar-solicitacao":
-        $controller = new ServiceController();
-        $controller->confirmarEAceitarSolicitacao();
-        break;
-
     // --- ROTAS DO CHAT DE MENSAGENS ---
 
     // Carrega a tela dividida com a lista de conversas e o chat ativo
@@ -125,8 +113,18 @@ switch ($route) {
         $controller->dashboard();
         break;
 
+    case "relatorio":
+        $controller = new PrestadorController();
+        $controller->relatorio();
+        break;
+
     case "lista-servicos":
         $controller = new PrestadorController();
+        $controller->listaServicos();
+        break;
+
+    case "lista-servicos-cliente":
+        $controller = new UserController();
         $controller->listaServicos();
         break;
 
@@ -153,7 +151,7 @@ switch ($route) {
 
     case "meus-servicos":
         $controller = new PrestadorController();
-        $controller->listaServicos();
+        $controller->meusServicos();
         break;
 
     case "edit-servicos":
@@ -167,9 +165,9 @@ switch ($route) {
         $controller = new NotificacaoController();
         $controller->notificacoes();
         break;
-    
+
     case "painel-admin":
-        $controller = new AdminController(); // Ou a classe Controller que você preferir usar
+        $controller = new AdminController(); 
         $controller->exibirPainel();
         break;
 
@@ -185,10 +183,38 @@ switch ($route) {
         $controller->banirUsuario();
         break;
 
+    case "solicitacao":
+        $controller = new ServiceController();
+        $controller->statusSolicitacao();
+        break;
+
+    case "concluir-servico":
+        $controller = new PrestadorController();
+        $controller->concluirServico();
+        break;
+
+    case "atualizar-foto":
+        $controller = new UserController();
+        $controller->atualizarFotoPerfil();
+        break;
+    
+    case "buscar-proximos":
+        $controller = new PrestadorController();
+        $controller->listarPrestadores();
+        break;     
+    
+    case "solicitar":
+        $controller = new PrestadorController();
+        $controller->solicitarServico();
+        break;
+
+    case "avaliar":
+        $controller = new ServiceController;
+        $controller->avaliar();
+        break;
+
     default:
         $controller = new HomeController();
         $controller->home();
         break;
-
-
 }

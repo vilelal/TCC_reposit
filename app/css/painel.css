@@ -1,0 +1,311 @@
+/* Painel do prestador: estrutura compartilhada (menu lateral, barra superior, tokens)
+   Usada por: Início, Relatório e Serviços. Estilos de cada página ficam em
+   inicio.css, relatorio.css e servico.css (carregar depois deste). */
+
+:root {
+    --amber: #FDB441;
+    --amber-side: #FCBA52;
+    --amber-dark: #b87c1d;
+    --amber-soft: #FFF4DE;
+    --amber-line: #F0D49C;
+    --ink: #1a1a1a;
+    --muted: #6b6b6b;
+    --bg: #F5F5F5;
+    --surface: #ffffff;
+    --line: #ebe6da;
+    --ok: #3d8b40;
+    --ok-soft: #e9f5ea;
+    --danger: #c9443f;
+    --danger-soft: #fdeceb;
+
+    --radius-sm: 10px;
+    --radius-md: 16px;
+    --radius-pill: 999px;
+
+    --menu-largura: 236px;
+    --topo-altura: 64px;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    min-height: 100vh;
+    display: grid;
+    grid-template-columns: var(--menu-largura) minmax(0, 1fr);
+    font-family: 'Montserrat', sans-serif;
+    color: var(--ink);
+    background-color: var(--bg);
+    line-height: 1.5;
+}
+
+img {
+    display: block;
+    max-width: 100%;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+:focus-visible {
+    outline: 3px solid var(--ink);
+    outline-offset: 2px;
+    border-radius: 6px;
+}
+
+.icone {
+    width: 20px;
+    height: 20px;
+    flex-shrink: 0;
+}
+
+/* ---------- MENU LATERAL ---------- */
+.menu {
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
+    padding: 24px 16px;
+    background-color: var(--amber-side);
+}
+
+.marca {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 0 8px;
+}
+
+.marca-logo {
+    width: 40px;
+    height: 40px;
+    object-fit: contain;
+}
+
+.marca-nome {
+    font-family: 'Archivo', sans-serif;
+    font-size: 1.25rem;
+    font-weight: 800;
+    letter-spacing: -0.01em;
+}
+
+.menu-nav {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.menu-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 11px 14px;
+    border-radius: 12px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--ink);
+    transition: background-color 0.15s ease;
+}
+
+.menu-item:hover {
+    background-color: rgba(255, 255, 255, 0.4);
+}
+
+.menu-item.ativo {
+    background-color: var(--surface);
+    font-weight: 700;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.08);
+}
+
+.menu-foto {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    object-fit: cover;
+    flex-shrink: 0;
+    background-color: var(--amber-line);
+    outline: 1.5px solid var(--ink);
+    outline-offset: 1px;
+}
+
+/* Avatar sem foto: inicial do nome */
+.sem-foto {
+    display: grid;
+    place-items: center;
+    font-family: 'Archivo', sans-serif;
+    font-weight: 800;
+    line-height: 1;
+    color: var(--ink);
+}
+
+.menu-foto.sem-foto {
+    background-color: var(--surface);
+    font-size: 0.7rem;
+}
+
+.topo-foto.sem-foto {
+    background-color: var(--amber);
+    font-size: 0.95rem;
+}
+
+/* ---------- ÁREA PRINCIPAL ---------- */
+.principal {
+    min-width: 0;
+}
+
+.topo {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    height: var(--topo-altura);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 0 40px;
+    background-color: var(--surface);
+    border-bottom: 1px solid var(--amber-line);
+}
+
+.topo-titulo {
+    font-family: 'Archivo', sans-serif;
+    font-size: 1.1rem;
+    font-weight: 700;
+}
+
+.topo-acoes {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.topo-btn {
+    display: grid;
+    place-items: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    color: var(--ink);
+    transition: background-color 0.15s ease;
+}
+
+.topo-btn:hover {
+    background-color: var(--amber-soft);
+}
+
+.topo-divisor {
+    width: 1px;
+    height: 24px;
+    margin: 0 10px;
+    background-color: var(--amber-line);
+}
+
+.topo-usuario {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.topo-foto {
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    object-fit: cover;
+    background-color: var(--amber-line);
+}
+
+.topo-nome {
+    font-size: 0.9rem;
+    font-weight: 600;
+}
+
+.topo-verificado {
+    width: 16px;
+    height: 16px;
+    margin-left: -4px;
+}
+
+.conteudo {
+    width: 100%;
+    max-width: 1080px;
+    margin: 0 auto;
+    padding: 36px 40px 64px;
+}
+
+/* Cabeçalho de página (título + subtítulo) */
+.pagina-cab {
+    margin-bottom: 28px;
+}
+
+.pagina-cab h2 {
+    font-family: 'Archivo', sans-serif;
+    font-size: 1.75rem;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    line-height: 1.2;
+}
+
+.pagina-cab p {
+    margin-top: 6px;
+    color: var(--muted);
+    font-size: 0.95rem;
+}
+
+/* ---------- MOBILE: menu vira barra inferior ---------- */
+@media (max-width: 800px) {
+    body {
+        grid-template-columns: minmax(0, 1fr);
+        padding-bottom: 68px;
+    }
+
+    .menu {
+        position: fixed;
+        inset: auto 0 0 0;
+        z-index: 20;
+        height: auto;
+        padding: 6px 8px;
+        gap: 0;
+        box-shadow: 0 -2px 12px rgba(0, 0, 0, 0.12);
+    }
+
+    .marca {
+        display: none;
+    }
+
+    .menu-nav {
+        flex-direction: row;
+        justify-content: space-around;
+    }
+
+    .menu-item {
+        flex: 1;
+        flex-direction: column;
+        gap: 2px;
+        padding: 8px 4px;
+        font-size: 0.72rem;
+    }
+
+    .topo {
+        padding: 0 16px;
+    }
+
+    .topo-nome,
+    .topo-divisor {
+        display: none;
+    }
+
+    .conteudo {
+        padding: 24px 16px 40px;
+    }
+
+    .pagina-cab h2 {
+        font-size: 1.45rem;
+    }
+}

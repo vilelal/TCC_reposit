@@ -58,9 +58,7 @@ class ChatModel
         -- Identifica o nome do contato de acordo com quem está logado
         IF(c.FK_id_TB_usuario = ?, pp.nome_TB_prestador, c.nome_TB_cliente) AS nome_contato,
         
-        -- IDENTIFICA A FOTO: Puxa a foto do prestador se o logado for cliente, e a do cliente se o logado for prestador
-        -- (ATENÇÃO: Mude 'foto_TB_cliente' e 'foto_TB_prestadorPerfil' se os nomes das colunas no seu banco forem diferentes)
-        IF(c.FK_id_TB_usuario = ?, pp.foto_TB_prestador, c.foto_TB_cliente) AS foto_contato,
+        IF(c.FK_id_TB_usuario = ?, u_prestador.foto_TB_usuario, u_cliente.foto_TB_usuario) AS foto_contato,
         
         -- Identifica a ROLE do contato
         IF(c.FK_id_TB_usuario = ?, u_prestador.tipo_TB_usuario, u_cliente.tipo_TB_usuario) AS tipo_TB_usuario,

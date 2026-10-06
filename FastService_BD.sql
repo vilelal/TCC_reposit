@@ -70,11 +70,13 @@ CREATE TABLE TB_SolicitacaoServico (
     PK_id_TB_SolicitacaoServico INT AUTO_INCREMENT PRIMARY KEY,
     FK_id_TB_cliente INT NOT NULL,
     FK_id_TB_prestadorServico INT NOT NULL,
+    FK_id_TB_servico INT NOT NULL,
     data_agendamento_TB_SolicitacaoServico DATETIME NOT NULL,
     status_TB_SolicitacaoServico ENUM('pendente', 'aceito', 'em_andamento', 'concluido', 'cancelado') DEFAULT 'pendente',
     valorTotal_TB_SolicitacaoServico DECIMAL(10,2) NOT NULL,
     FOREIGN KEY (FK_id_TB_cliente) REFERENCES TB_clientePerfil(PK_id_TB_cliente),
-    FOREIGN KEY (FK_id_TB_prestadorServico) REFERENCES TB_prestadorServico(PK_id_TB_prestadorServico)
+    FOREIGN KEY (FK_id_TB_prestadorServico) REFERENCES TB_prestadorServico(PK_id_TB_prestadorServico),
+    FOREIGN KEY (FK_id_TB_servico) REFERENCES TB_servico(PK_id_TB_servico)
 );
 
 -- 8. Pagamento
@@ -107,7 +109,7 @@ CREATE TABLE TB_notificacao (
     data_criacao_TB_notificacao TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
---11. Mensagem
+-- 11. Mensagem
 
 CREATE TABLE TB_mensagem (
     PK_id_TB_mensagem INT AUTO_INCREMENT PRIMARY KEY,
@@ -122,3 +124,13 @@ CREATE TABLE TB_mensagem (
 ALTER TABLE TB_mensagem ADD COLUMN imagem_TB_mensagem VARCHAR(255) NULL;
 ALTER TABLE TB_clientePerfil ADD COLUMN foto_TB_cliente VARCHAR(255) NULL;
 ALTER TABLE TB_prestadorPerfil ADD COLUMN foto_TB_prestador VARCHAR(255) NULL;
+ALTER TABLE tb_usuario ADD COLUMN foto_TB_usuario VARCHAR(255) NULL;
+ALTER TABLE TB_SolicitacaoServico ADD COLUMN pin_TB_SolicitacaoServico CHAR(4) NOT NULL;
+
+ALTER TABLE TB_prestadorPerfil
+ADD COLUMN latitude_TB_prestadorPerfil DECIMAL(10, 8) NULL,
+ADD COLUMN longitude_TB_prestadorPerfil DECIMAL(11, 8) NULL;
+
+ALTER TABLE TB_clientePerfil
+ADD COLUMN latitude_TB_clientePerfil DECIMAL(10, 8) NULL,
+ADD COLUMN longitude_TB_clientePerfil DECIMAL(11, 8) NULL;

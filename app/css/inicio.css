@@ -1,0 +1,135 @@
+/* Início do painel do prestador. Carregar depois de painel.css */
+
+.resumo {
+    display: grid;
+    grid-template-columns: 1.4fr 1fr 1fr;
+    gap: 16px;
+}
+
+.metrica {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 28px;
+    min-height: 150px;
+    padding: 22px 24px;
+    background-color: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-md);
+}
+
+.metrica-rotulo {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--muted);
+}
+
+.metrica-valor {
+    font-family: 'Archivo', sans-serif;
+    font-size: 2.1rem;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    line-height: 1;
+}
+
+.metrica-nota {
+    margin-top: 8px;
+    font-size: 0.8rem;
+    color: var(--muted);
+}
+
+/* Faturamento é o número principal: ganha a cor da marca */
+.metrica.destaque {
+    background-color: var(--amber);
+    border-color: var(--amber);
+}
+
+.metrica.destaque .metrica-rotulo,
+.metrica.destaque .metrica-nota {
+    color: rgba(26, 26, 26, 0.72);
+}
+
+.metrica.destaque .metrica-valor {
+    font-size: 2.6rem;
+}
+
+/* Blocos abaixo das métricas */
+.blocos {
+    display: grid;
+    grid-template-columns: 1.4fr 1fr;
+    gap: 16px;
+    margin-top: 16px;
+}
+
+.bloco {
+    padding: 22px 24px;
+    background-color: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-md);
+}
+
+.bloco h3 {
+    margin-bottom: 14px;
+    font-family: 'Archivo', sans-serif;
+    font-size: 1.05rem;
+    font-weight: 700;
+}
+
+.vazio-bloco {
+    padding: 28px 16px;
+    border: 1px dashed var(--amber-line);
+    border-radius: var(--radius-sm);
+    text-align: center;
+    font-size: 0.9rem;
+    color: var(--muted);
+}
+
+.atalhos {
+    display: flex;
+    flex-direction: column;
+    list-style: none;
+}
+
+.atalhos li + li {
+    border-top: 1px solid var(--line);
+}
+
+.atalhos a {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 13px 4px;
+    font-size: 0.92rem;
+    font-weight: 600;
+    transition: color 0.15s ease, padding 0.15s ease;
+}
+
+.atalhos a small {
+    display: block;
+    font-size: 0.8rem;
+    font-weight: 500;
+    color: var(--muted);
+}
+
+.atalhos a:hover {
+    padding-left: 10px;
+    color: var(--amber-dark);
+}
+
+.atalhos .icone {
+    width: 18px;
+    height: 18px;
+    color: var(--amber-dark);
+}
+
+@media (max-width: 900px) {
+    .resumo,
+    .blocos {
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    .metrica {
+        min-height: 0;
+    }
+}

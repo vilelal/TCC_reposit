@@ -22,10 +22,14 @@
             <div class="separar">
             <a href="" style="font-size: clamp(0.8rem, 1.07vw, 3.5rem);" class="funcionamento">Funcionamento</a>
             <a href="" style="font-size: clamp(0.8rem, 1.07vw, 3.5rem);" class="servico">Serviços</a>
-                
+            <!-- links para cliente logado -->
+            <?php if (isset($_SESSION["id_cliente"])): ?>
+            <a href="?route=lista-servicos-cliente" style="font-size: clamp(0.8rem, 1.07vw, 3.5rem);" class="servico">Minhas Solicitações</a>
+            <?php endif; ?>
             </div>
             <a href="" class="btn-profissional">Seja um Profissional</a>
             
+<<<<<<< HEAD
             <?php if(isset($_SESSION["id"])):?>
 
             <a href="">
@@ -42,6 +46,28 @@
             <a href="?route=login" class="btn-login">Login</a>
             
             <?php endif;?>
+=======
+            
+        <?php if (isset($_SESSION['id'])): ?>
+    <a href="?route=chat">
+        <img src="app/css/img/chat.png" alt="Chat" class="chat">
+    </a>
+
+    <a href="?route=perfil">
+        perfil
+    </a>
+
+        <?php else: ?>
+
+        <!-- Login -->
+        <a href="?route=login-form" class="btn-login">
+        Login
+        </a>
+
+        <?php endif;?>
+            
+
+>>>>>>> 33778466ef174a4a695f3d4025e991b8a111e723
         </nav>
     </header>
 </body>

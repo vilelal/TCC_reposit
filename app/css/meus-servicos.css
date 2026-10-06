@@ -1,89 +1,211 @@
-body {
+/* Meus serviços (fluxo do perfil). Carregar depois de painel.css */
 
-    margin: 0;
-    padding: 0;
-    font-family: 'Montserrat', sans-serif;
-}
-.form {
-    background-color: #fff;
-    padding: 32px;
-    border-radius: 8px;
-    margin-left: auto;
-    margin-right: auto;
-    margin-top: 5%;
-    width: 60%;
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
-    text-align: center;
-}
-#categorias {
-    width: 80%;
-    padding: 8px;
-    margin-left: 10%;
-       margin-right: 10%;
-    margin-top: 2%;
-    margin-bottom: 12px;
-    border-radius: 15px;
-    border: 1px solid #000000;
-    background-color: #E7E5E5;
-    color: #000000;
-    font-size: 18px;
-}
-.container-selecionados{
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    margin-left: 15%;
-    min-width: 80%;
-    gap: 8px; /* Espaço entre cada item da lista */
-    margin-bottom: 15px;
-}
-.h4-esq{
-    display: flex;
-    margin-left: 60px;
-    text-align: left;
-}
-.container-selecionados button {
-  text-decoration: none;
-    color: #fff;
-    background-color: #FDB441;
-    border: #d19533 solid 1px;
-    transition: opacity 0.2s;
-    border-radius: 5px;
-    display: flex;
+.voltar {
+    display: inline-flex;
     align-items: center;
-    margin-top: -20px;
-    margin-left: -40px;    
-    /* Ajustes para aumentar o tamanho */
-    font-size: 16px;       /* Aumenta o tamanho da letra X */
-    padding: 2px 8px;     /* Aumenta a área interna (vertical e horizontal) */
-    font-weight: bold;     /* Deixa o X mais encorpado */
-    cursor: pointer;
+    gap: 4px;
+    margin-bottom: 16px;
+    font-size: 0.88rem;
+    font-weight: 600;
+    color: var(--muted);
+    transition: color 0.15s ease;
 }
 
-button:hover {
-    opacity: 0.8;
-    background-color: #f8c065;
+.voltar:hover {
+    color: var(--ink);
 }
 
-.btn{
-   max-width: 200px;
-    background-color: #f8c065;
-    color: #ffffff;
-    border: none;
-    padding: 12px;
-    border-radius: 20px;
-    font-weight: bold;
-    cursor: pointer;
-    margin: 15px auto 0 auto;
+.voltar .icone {
+    width: 18px;
+    height: 18px;
+}
+
+.form-servicos {
+    display: grid;
+    grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr);
+    gap: 16px;
+    align-items: start;
+}
+
+.etapa {
+    padding: 22px 24px;
+    background-color: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-md);
+}
+
+.etapa h3 {
     display: flex;
-    justify-content: center;
     align-items: center;
     gap: 8px;
+    margin-bottom: 14px;
+    font-family: 'Archivo', sans-serif;
+    font-size: 1.05rem;
+    font-weight: 700;
 }
 
-h4{
-      display: flex;
-    margin-left: 60px;
-    text-align: left;
-    color: #000000;
+.rotulo {
+    display: block;
+    margin: 14px 0 6px;
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: var(--muted);
+}
+
+.dica {
+    font-size: 0.85rem;
+    color: var(--muted);
+}
+
+/* Select de categoria */
+#categorias {
+    width: 100%;
+    padding: 11px 14px;
+    border: 1px solid var(--line);
+    border-radius: var(--radius-sm);
+    background-color: var(--bg);
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.92rem;
+    color: var(--ink);
+    cursor: pointer;
+}
+
+#categorias:focus-visible {
+    outline-offset: 0;
+}
+
+/* Serviços da categoria */
+.container-servicos {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.item-servico {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 11px 14px;
+    border: 1px solid var(--line);
+    border-radius: var(--radius-sm);
+    transition: background-color 0.15s ease, border-color 0.15s ease;
+}
+
+.item-servico:hover {
+    background-color: var(--amber-soft);
+    border-color: var(--amber-line);
+}
+
+.item-servico input {
+    width: 18px;
+    height: 18px;
+    accent-color: var(--amber);
+    cursor: pointer;
+}
+
+.item-servico label {
+    flex: 1;
+    font-size: 0.92rem;
+    font-weight: 500;
+    cursor: pointer;
+}
+
+/* Selecionados */
+.etapa-selecionados {
+    position: sticky;
+    top: calc(var(--topo-altura) + 16px);
+}
+
+.contador {
+    min-width: 24px;
+    padding: 1px 9px;
+    border-radius: var(--radius-pill);
+    background-color: var(--amber);
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-align: center;
+}
+
+.container-selecionados {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    margin: 14px 0 18px;
+}
+
+.item-servico-selecionado {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 9px 8px 9px 14px;
+    background-color: var(--amber-soft);
+    border: 1px solid var(--amber-line);
+    border-radius: var(--radius-sm);
+    font-size: 0.9rem;
+    font-weight: 600;
+}
+
+.btn-remover {
+    display: grid;
+    place-items: center;
+    width: 28px;
+    height: 28px;
+    border: none;
+    border-radius: 50%;
+    background: none;
+    font-size: 1.25rem;
+    line-height: 1;
+    color: var(--muted);
+    cursor: pointer;
+    transition: background-color 0.15s ease, color 0.15s ease;
+}
+
+.btn-remover:hover {
+    background-color: var(--danger-soft);
+    color: var(--danger);
+}
+
+.vazio {
+    padding: 22px 14px;
+    border: 1px dashed var(--amber-line);
+    border-radius: var(--radius-sm);
+    text-align: center;
+    font-size: 0.88rem;
+    color: var(--muted);
+}
+
+.btn-salvar {
+    width: 100%;
+    padding: 12px 20px;
+    border: none;
+    border-radius: var(--radius-pill);
+    background-color: var(--amber);
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.92rem;
+    font-weight: 700;
+    color: var(--ink);
+    cursor: pointer;
+    transition: background-color 0.15s ease;
+}
+
+.btn-salvar:hover {
+    background-color: #f8c065;
+}
+
+@media (max-width: 900px) {
+    .form-servicos {
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    .etapa-selecionados {
+        position: static;
+    }
+}
+
+@media (max-width: 800px) {
+    .etapa {
+        padding: 18px 16px;
+    }
 }

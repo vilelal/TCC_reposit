@@ -1,23 +1,90 @@
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+/* Notificações do painel. Carregar depois de painel.css */
+
+.lista-notificacoes {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    list-style: none;
 }
 
-.card-notificacao {
-    margin-bottom: 15px;
-    padding: 15px;
-    border: 1px solid #f0ec1d;
-    border-left: 4px solid #f0ec1d;
-    border-radius: 10px;
+.notificacao {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 20px;
+    padding: 16px 22px;
+    background-color: var(--surface);
+    border: 1px solid var(--line);
+    border-left: 4px solid var(--line);
+    border-radius: var(--radius-md);
 }
 
-.container {
-    padding: 10px;
+/* Não lida: usa a cor da marca */
+.notificacao.nova {
+    background-color: var(--amber-soft);
+    border-color: var(--amber-line);
+    border-left-color: var(--amber);
 }
 
-.card-notificacao.nova-notificacao {
-    background-color: #e8f4fd;
-    border-left: 4px solid #1d9bf0;
-    border: 1px solid #1d9bf0;
+.notificacao-corpo {
+    min-width: 0;
+}
+
+.notificacao h3 {
+    font-family: 'Archivo', sans-serif;
+    font-size: 1rem;
+    font-weight: 700;
+}
+
+.notificacao p {
+    margin-top: 2px;
+    font-size: 0.9rem;
+    color: var(--muted);
+    overflow-wrap: anywhere;
+}
+
+.notificacao-lado {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 4px;
+    flex-shrink: 0;
+}
+
+.notificacao time {
+    font-size: 0.78rem;
+    color: var(--muted);
+    white-space: nowrap;
+}
+
+.selo-nova {
+    padding: 1px 9px;
+    border-radius: var(--radius-pill);
+    background-color: var(--amber);
+    font-size: 0.7rem;
+    font-weight: 700;
+}
+
+.vazio {
+    padding: 40px 20px;
+    background-color: var(--surface);
+    border: 1px dashed var(--amber-line);
+    border-radius: var(--radius-md);
+    text-align: center;
+    font-size: 0.92rem;
+    color: var(--muted);
+}
+
+@media (max-width: 800px) {
+    .notificacao {
+        flex-direction: column;
+        gap: 8px;
+        padding: 14px 16px;
+    }
+
+    .notificacao-lado {
+        flex-direction: row-reverse;
+        align-items: center;
+        gap: 10px;
+    }
 }
