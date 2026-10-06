@@ -47,6 +47,7 @@ class ChatModel
 
 
     // Busca todas as conversas do usuário (para preencher a barra lateral)
+// Busca todas as conversas do usuário (para preencher a barra lateral)
     public static function buscarMeusChats($usuarioId)
     {
         $conexao = Database::conectarBanco();
@@ -55,9 +56,13 @@ class ChatModel
         s.PK_id_TB_SolicitacaoServico AS id_solicitacao,
         serv.nome_TB_servico,
         
+        -- NOVO: Pega o ID da pessoa com quem você está conversando
+        IF(c.FK_id_TB_usuario = ?, u_prestador.PK_id_TB_usuario, u_cliente.PK_id_TB_usuario) AS id_contato,
+        
         -- Identifica o nome do contato de acordo com quem está logado
         IF(c.FK_id_TB_usuario = ?, pp.nome_TB_prestador, c.nome_TB_cliente) AS nome_contato,
         
+        -- Identifica a foto do contato
         IF(c.FK_id_TB_usuario = ?, u_prestador.foto_TB_usuario, u_cliente.foto_TB_usuario) AS foto_contato,
         
         -- Identifica a ROLE do contato
@@ -115,8 +120,8 @@ class ChatModel
 
         $stmt = $conexao->prepare($sql);
 
-        // Passamos o $usuarioId 6 vezes por conta dos 6 interrogações (?) na query
-        $stmt->bind_param("iiiiii", $usuarioId, $usuarioId, $usuarioId, $usuarioId, $usuarioId, $usuarioId);
+        // ATENÇÃO: Mudou de 6 para 7 interrogações (?) por causa do id_contato!
+        $stmt->bind_param("iiiiiii", $usuarioId, $usuarioId, $usuarioId, $usuarioId, $usuarioId, $usuarioId, $usuarioId);
         $stmt->execute();
         $result = $stmt->get_result();
 
