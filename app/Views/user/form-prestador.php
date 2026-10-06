@@ -35,12 +35,26 @@
                 ?>
                 <input type="text" name="nome_user" placeholder="Digite seu nome" required
                     value="<?= htmlspecialchars($user["nome_TB_cliente"] ?? "") ?>">
-                <input type="tel" name="tel_user" placeholder="Digite seu telefone"
-                    value="<?= htmlspecialchars($user["tel_TB_cliente"] ?? "") ?>">
-                <!-- Preencher no formato de telefone automaticamente **FAZER   -->
-                <input type="text" name="cpf_cnpj_user" placeholder="CPF ou CNPJ"
-                    value="<?= htmlspecialchars($user["cpf_TB_cliente"] ?? "") ?>">
-                <!-- Preencher no formato de cpf automaticamente **FAZER   -->
+                            
+                    <div class="campo-login">
+                                <label for="telefone_user">
+                                </label>
+
+                                <input type="tel" id="telefone_user" name="telefone_user" placeholder="Digite seu telefone"
+                                    required>
+                            </div>
+
+                            <div class="campo-login">
+                                <label for="cpf_user">
+
+                                </label>
+
+                                <input type="text" id="cpf_user" name="cpf_user" placeholder="Digite seu cpf" required>
+                            </div>
+
+
+
+
                 <textarea type="text" name="bio_user" placeholder="Sobre mim" rows="5" cols="40"></textarea>
                 <h3> Endereço </h3>
                 <input type="text" id="cep" name="cep_user" placeholder="Digite seu CEP" maxlength="8" pattern="\d{8}"
@@ -192,5 +206,8 @@
         container.innerHTML = htmlServicos;
     });
 </script>
+
+
+
 
 </html>

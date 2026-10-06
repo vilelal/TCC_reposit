@@ -5,3 +5,24 @@
 - Pesquisa dos prestadores
 - O slide e as pesquisas
 - Treinar as falas e fazer o vídeo
+
+
+
+
+
+6/10/26
+
+Pegar o API para alertar as notificações
+Implementar as avaliações mútuas
+Disque denuncia
+Relatórios funcionando com o banco
+Responsividade
+Perfil do prestador melhorado no solicitar serviço
+Fazer o vídeo
+O cadastro geral pronto com tudo
+Tirar caixa de seleção
+Arrumar as notificacoes do cliente
+Senha incorreta colocar notificacao de erro
+
+-Trazer dados preenchidos na aplicação, não deixar em branco.
+

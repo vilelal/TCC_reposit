@@ -7,6 +7,8 @@
     <title>Cadastro</title>
 
     <link rel="stylesheet" href="app/css/StyleCadInicial.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
 </head>
 
 <body>
@@ -60,13 +62,35 @@
                             </div>
 
 
-                            <div class="campo-login">
-                                <label for="password_user">
-                                    Digite sua senha
-                                </label>
+<div class="campo-login">
 
-                                <input type="password" id="password_user" name="senha_user" required>
-                            </div>
+    <label for="password_user">
+        Digite sua senha
+    </label>
+
+    <div class="senha-container">
+
+        <input 
+            type="password"
+            id="password_user"
+            name="senha_user"
+            placeholder=""
+            required
+        >
+
+        <button 
+            type="button"
+            class="olho"
+            id="mostrarSenha"
+            aria-label="Mostrar senha"
+        >
+            <i class="bi bi-eye"></i>
+        </button>
+
+    </div>
+
+</div>
+
 
 
                             <div class="campo-login">
@@ -199,6 +223,27 @@
     <!-- ========================= -->
     <!-- JAVASCRIPT -->
     <!-- ========================= -->
+
+    <script>
+const senha = document.getElementById("password_user");
+const botaoOlho = document.getElementById("mostrarSenha");
+
+botaoOlho.addEventListener("click", function () {
+
+    if (senha.type === "password") {
+        senha.type = "text";
+        botaoOlho.innerHTML = '<i class="bi bi-eye-slash"></i>';
+    } else {
+        senha.type = "password";
+        botaoOlho.innerHTML = '<i class="bi bi-eye"></i>';
+    }
+
+});
+
+
+
+    </script>
+
 
     <script>
 
