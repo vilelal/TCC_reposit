@@ -131,4 +131,10 @@ class ServiceController
 
         header("Location: ?route=dashboard");
     }
+
+    public static function avaliacao()
+    {
+        $prestador = $_POST["prestador"];   
+        require_once "app/Views/servicos/avaliar.php";
+    }
 }

@@ -35,7 +35,17 @@
                     <?php
                     $nova = !$notificacao['lida_TB_notificacao'];
                     $ts = strtotime((string) ($notificacao['data_criacao_TB_notificacao'] ?? ''));
+                    $sub = explode("#", $notificacao["mensagem_TB_notificacao"]);
+                    $prestador = $sub[1] ?? null;
+                    $prestador = (int) $prestador;
                     ?>
+
+                    <?php if ($notificacao['titulo_TB_notificacao'] === 'Serviço concluído'): ?>
+                        <form action="?route=avaliar-prestador" method="POST">
+                            <input type="hidden" name="prestador" value="<?= $prestador ?>">
+                            <button type="submit"> Clica em mimm </button>
+                    <?php endif; ?>
+                    
                     <li class="notificacao<?= $nova ? ' nova' : '' ?>">
                         <div class="notificacao-corpo">
                             <h3><?= htmlspecialchars($notificacao['titulo_TB_notificacao'] ?? '') ?></h3>
@@ -48,6 +58,9 @@
                             <time><?= $ts ? date('d/m/Y H:i', $ts) : htmlspecialchars((string) ($notificacao['data_criacao_TB_notificacao'] ?? '')) ?></time>
                         </div>
                     </li>
+                    <?php if ($notificacao['titulo_TB_notificacao'] === 'Serviço concluído'): ?>
+                    </form>
+                    <?php endif; ?>
                 <?php endforeach; ?>
             </ul>
         <?php else: ?>
