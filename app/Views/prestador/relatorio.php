@@ -42,13 +42,12 @@
         <section class="kpis" aria-label="Indicadores do período">
             <article class="kpi">
                 <span class="kpi-rotulo">Faturamento</span>
-                <strong class="kpi-valor" id="kpi-faturamento"></strong>
+                 <h1><?php echo $money; ?></h1>
                 <span class="kpi-var" id="kpi-faturamento-var"></span>
             </article>
             <article class="kpi">
                 <span class="kpi-rotulo">Serviços concluídos</span>
-                <strong class="kpi-valor" id="kpi-servicos"></strong>
-                <span class="kpi-var" id="kpi-servicos-var"></span>
+                <h1><?php echo $trampo; ?></h1>
             </article>
             <article class="kpi">
                 <span class="kpi-rotulo">Média das avaliações</span>
@@ -88,14 +87,14 @@
     </main>
     </div>
 
-    <script>
+    <!-- <script>
         (function () {
             // Dados de exemplo: só existem aqui, no front.
             var DADOS = {
                 '7d': {
                     unidade: 'dia',
                     rotulos: ['Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb', 'Dom'],
-                    valores: [180, 320, 0, 450, 290, 610, 240],
+                    valores: [180, 320, 10, 450, 290, 610, 240],
                     servicos: 9, servicosVar: 12,
                     media: 4.8, mediaVar: 0.1,
                     aceite: 86, aceiteVar: -3,
@@ -206,7 +205,7 @@
             desenhar('7d');
             desenharListas();
         })();
-    </script>
+    </script> -->
 </body>
 
 </html>

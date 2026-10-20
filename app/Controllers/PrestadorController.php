@@ -13,6 +13,11 @@ class PrestadorController
 
     public function relatorio()
     {
+        $idprestador = $_SESSION["id_prestador"];
+        $dadosrelatorio = PrestadorModel::servicosConcluidos($idprestador);
+
+        $trampo = $dadosrelatorio["total_concluidos"];
+        $money = $dadosrelatorio ["faturamento_total"];                 // olhga aquiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii
         require_once "app/Views/prestador/relatorio.php";
     }
 
@@ -83,4 +88,8 @@ class PrestadorController
         header("Location: ?route=lista-servicos-cliente");
         return;
     }
+
+
+
+    
 }

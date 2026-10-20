@@ -80,7 +80,7 @@ $ehAdmin = $tipo === "Admin";
                         <?php if (!$logado): ?>
                             <a href="?route=cadastro-form" class="btn btn-ghost">Criar conta</a>
                         <?php elseif (!$ehPrestador && !$ehAdmin): ?>
-                            <a href="?route=prestador-form" class="btn btn-ghost">Torne-se prestador</a>
+                            <a href="?route=prestador-form" class="btn btn-ghost" style="background-color:#FDB441;">Torne-se prestador</a>
                         <?php endif; ?>
                     </div>
                 </div>

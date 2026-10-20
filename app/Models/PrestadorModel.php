@@ -38,6 +38,29 @@ class PrestadorModel
                 $conexao->close();
             }
         }
-        
+    }
+
+     
+    public static function servicosConcluidos($idprestador)
+    {
+    $conexao = Database::conectarBanco();
+    $sql = "SELECT 
+                    COUNT(*) AS total_concluidos,
+                    SUM(s.valorTotal_TB_SolicitacaoServico) AS faturamento_total
+                FROM TB_SolicitacaoServico s
+                JOIN TB_prestadorServico ps 
+                ON s.FK_id_TB_prestadorServico = ps.PK_id_TB_prestadorServico 
+                WHERE ps.FK_id_TB_prestadorPerfil = ? 
+                AND s.status_TB_SolicitacaoServico = 'concluido';";
+            
+    $stmt = $conexao->prepare($sql);
+    $stmt->bind_param("i", $idprestador);
+    $stmt->execute();
+    $resultado = $stmt->get_result();
+    $dados = $resultado->fetch_assoc();
+    $stmt->close();
+    
+    return $dados; //retorna total de concluidos tipo 5
+
     }
 }
