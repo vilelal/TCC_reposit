@@ -250,6 +250,16 @@ switch ($route) {
         $controller->criarCategoria();
         break;  
             
+    case "banir-via-denuncia":
+        $controller = new AdminController();
+        $controller->processarBanimentoPorDenuncia();
+        break;
+    
+    case "atualizar-status-denuncia":
+        $controller = new AdminController();
+        $controller->atualizarStatusDenuncia();
+        break;
+
     default:
         $controller = new HomeController();
         $controller->home();

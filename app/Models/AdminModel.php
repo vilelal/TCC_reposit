@@ -20,19 +20,92 @@ class AdminModel
     }
 
     // 2. Banir/Deletar um usuário (pode ser usado tanto para o denunciado quanto para o denunciante)
-    public static function banirUsuario($idUsuario)
-    {
-        $conexao = Database::conectarBanco();
-        $sql = "DELETE FROM tb_usuario WHERE PK_id_TB_usuario = ?";
+public static function banirUsuario($idUsuario)
+{
+    $conexao = Database::conectarBanco();
 
-        $stmt = $conexao->prepare($sql);
-        $stmt->bind_param("i", $idUsuario);
-        $sucesso = $stmt->execute();
+    try {
+        $conexao->begin_transaction();
+        $conexao->query("SET FOREIGN_KEY_CHECKS = 0");
 
-        $stmt->close();
+        // 1. Apaga avaliações feitas pelo ou para o usuário
+        $stmtAval = $conexao->prepare("DELETE FROM TB_avaliacao WHERE FK_id_TB_usuario = ?");
+        $stmtAval->bind_param("i", $idUsuario);
+        $stmtAval->execute();
+        $stmtAval->close();
+
+        // 2. Apaga denúncias enviadas ou recebidas pelo usuário
+        $stmtDenuncia = $conexao->prepare("DELETE FROM TB_denuncia WHERE FK_id_TB_denunciante = ? OR FK_id_TB_denunciado = ?");
+        $stmtDenuncia->bind_param("ii", $idUsuario, $idUsuario);
+        $stmtDenuncia->execute();
+        $stmtDenuncia->close();
+
+        // 3. Apaga mensagens e notificações
+        $stmtMsg = $conexao->prepare("DELETE FROM TB_mensagem WHERE FK_id_TB_remetente = ?");
+        $stmtMsg->bind_param("i", $idUsuario);
+        $stmtMsg->execute();
+        $stmtMsg->close();
+
+        $stmtNotif = $conexao->prepare("DELETE FROM TB_notificacao WHERE FK_id_usuario = ?");
+        $stmtNotif->bind_param("i", $idUsuario);
+        $stmtNotif->execute();
+        $stmtNotif->close();
+
+        // 4. Obtém os IDs dos perfis (Cliente e Prestador)
+        $stmtC = $conexao->prepare("SELECT PK_id_TB_cliente FROM TB_clientePerfil WHERE FK_id_TB_usuario = ?");
+        $stmtC->bind_param("i", $idUsuario);
+        $stmtC->execute();
+        $resC = $stmtC->get_result()->fetch_assoc();
+        $idCliente = $resC['PK_id_TB_cliente'] ?? null;
+        $stmtC->close();
+
+        $stmtP = $conexao->prepare("SELECT PK_id_TB_prestadorPerfil FROM TB_prestadorPerfil WHERE FK_id_TB_usuario = ?");
+        $stmtP->bind_param("i", $idUsuario);
+        $stmtP->execute();
+        $resP = $stmtP->get_result()->fetch_assoc();
+        $idPrestador = $resP['PK_id_TB_prestadorPerfil'] ?? null;
+        $stmtP->close();
+
+        // 5. Se for cliente, limpa pagamentos, mensagens das solicitações e o perfil
+        if ($idCliente) {
+            $conexao->query("DELETE FROM TB_pagamento WHERE FK_id_TB_SolicitacaoServico IN (SELECT PK_id_TB_SolicitacaoServico FROM TB_SolicitacaoServico WHERE FK_id_TB_cliente = {$idCliente})");
+            $conexao->query("DELETE FROM TB_mensagem WHERE FK_id_TB_SolicitacaoServico IN (SELECT PK_id_TB_SolicitacaoServico FROM TB_SolicitacaoServico WHERE FK_id_TB_cliente = {$idCliente})");
+            
+            $conexao->query("DELETE FROM TB_SolicitacaoServico WHERE FK_id_TB_cliente = {$idCliente}");
+            $conexao->query("DELETE FROM TB_clientePerfil WHERE PK_id_TB_cliente = {$idCliente}");
+        }
+
+        // 6. Se for prestador, limpa solicitações dos seus serviços e o perfil
+        if ($idPrestador) {
+            $subQueryPS = "SELECT PK_id_TB_SolicitacaoServico FROM TB_SolicitacaoServico WHERE FK_id_TB_prestadorServico IN (SELECT PK_id_TB_prestadorServico FROM TB_prestadorServico WHERE FK_id_TB_prestadorPerfil = {$idPrestador})";
+
+            $conexao->query("DELETE FROM TB_pagamento WHERE FK_id_TB_SolicitacaoServico IN ({$subQueryPS})");
+            $conexao->query("DELETE FROM TB_mensagem WHERE FK_id_TB_SolicitacaoServico IN ({$subQueryPS})");
+
+            $conexao->query("DELETE FROM TB_SolicitacaoServico WHERE FK_id_TB_prestadorServico IN (SELECT PK_id_TB_prestadorServico FROM TB_prestadorServico WHERE FK_id_TB_prestadorPerfil = {$idPrestador})");
+            $conexao->query("DELETE FROM TB_prestadorServico WHERE FK_id_TB_prestadorPerfil = {$idPrestador}");
+            $conexao->query("DELETE FROM TB_prestadorPerfil WHERE PK_id_TB_prestadorPerfil = {$idPrestador}");
+        }
+
+        // 7. Apaga a conta de usuário principal
+        $stmtUser = $conexao->prepare("DELETE FROM TB_usuario WHERE PK_id_TB_usuario = ?");
+        $stmtUser->bind_param("i", $idUsuario);
+        $sucesso = $stmtUser->execute();
+        $stmtUser->close();
+
+        $conexao->query("SET FOREIGN_KEY_CHECKS = 1");
+        $conexao->commit();
         $conexao->close();
+
         return $sucesso;
+
+    } catch (Exception $e) {
+        $conexao->query("SET FOREIGN_KEY_CHECKS = 1");
+        $conexao->rollback();
+        $conexao->close();
+        throw $e;
     }
+}
 
     // 3. Busca todas as categorias cadastradas
     public static function listarTodasCategorias()

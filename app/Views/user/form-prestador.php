@@ -35,15 +35,15 @@
                 ?>
                 <input type="text" name="nome_user" placeholder="Digite seu nome" required
                     value="<?= htmlspecialchars($user["nome_TB_cliente"] ?? "") ?>">
-                <input type="tel" name="tel_user" placeholder="Digite seu telefone"
+                <input type="tel" name="tel_user" placeholder="Digite seu telefone" required
                     value="<?= htmlspecialchars($user["tel_TB_cliente"] ?? "") ?>">
                 <!-- Preencher no formato de telefone automaticamente **FAZER   -->
-                <input type="text" name="cpf_cnpj_user" placeholder="CPF ou CNPJ"
+                <input type="text" name="cpf_cnpj_user" placeholder="CPF ou CNPJ" required
                     value="<?= htmlspecialchars($user["cpf_TB_cliente"] ?? "") ?>">
                 <!-- Preencher no formato de cpf automaticamente **FAZER   -->
                 <textarea type="text" name="bio_user" placeholder="Sobre mim" rows="5" cols="40"></textarea>
                 <h3> Endereço </h3>
-                <input type="text" id="cep" name="cep_user" placeholder="Digite seu CEP" maxlength="8" pattern="\d{8}"
+                <input type="text" id="cep" name="cep_user" placeholder="Digite seu CEP" maxlength="8" pattern="\d{8}" required
                     value="<?= htmlspecialchars($user["cep_TB_cliente"] ?? "") ?>">
                 <input type="text" name="rua_user" id="rua" placeholder="Digite sua rua"
                     value="<?= htmlspecialchars($user["rua_TB_cliente"] ?? "") ?>">
