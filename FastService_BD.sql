@@ -93,7 +93,7 @@ CREATE TABLE TB_pagamento (
 -- 9. Avaliação do usuario
 CREATE TABLE TB_avaliacao (
     PK_id_TB_avaliacao INT AUTO_INCREMENT PRIMARY KEY,
-    FK_id_TB_usuario INT NOT NULL UNIQUE,
+    FK_id_TB_usuario INT NOT NULL,
     nota_TB_avaliacao INT NOT NULL CHECK (nota_TB_avaliacao BETWEEN 1 AND 5),
     data_avaliacao_TB_avaliacao DATETIME DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (FK_id_TB_usuario) REFERENCES TB_usuario(PK_id_TB_usuario)
