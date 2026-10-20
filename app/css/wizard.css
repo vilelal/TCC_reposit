@@ -1,4 +1,4 @@
-* {
+- {
     padding: 0;
     margin: 0;
     box-sizing: border-box;
@@ -11,6 +11,7 @@ body {
     font-family: Arial, sans-serif;
     margin: 0;
 }
+
 :root {
     --main-color: #ffc107;
     --dark-color: #dd992b;
@@ -35,7 +36,9 @@ body {
 
     --radius-md: 16px;
     --radius-pill: 999px;
-}/* ==============================
+}
+
+/* ==============================
    HEADER
    ============================== */
 
@@ -71,34 +74,110 @@ body {
 }
 
 /* ==============================
+   CHIPS (Categorias, Serviços e Urgências)
+   ============================== */
+
+.container-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 12px;
+}
+
+.container-chips .dica {
+    width: 100%;
+}
+
+/* Estilo padrão para todos os chips de seleção única (Categoria, Serviço, Urgência) */
+.chip-cat,
+.chip-servico,
+.chip-urgencia {
+    display: inline-flex;
+    align-items: center;
+    gap: 0;
+    padding: 8px 16px;
+    border: 1px solid var(--line, #ebe6da);
+    border-radius: var(--radius-pill, 999px);
+    background-color: var(--surface, #ffffff);
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.88rem;
+    font-weight: 500;
+    color: var(--ink, #1a1a1a);
+    cursor: pointer;
+    transition: background-color 0.15s ease, border-color 0.15s ease, gap 0.15s ease, padding 0.15s ease;
+}
+
+.chip-cat:hover,
+.chip-servico:hover,
+.chip-urgencia:hover {
+    background-color: var(--amber-soft, #FFF4DE);
+    border-color: var(--amber-line, #F0D49C);
+}
+
+/* Estado selecionado (quando aria-pressed="true") */
+.chip-cat[aria-pressed="true"],
+.chip-servico[aria-pressed="true"],
+.chip-urgencia[aria-pressed="true"] {
+    gap: 6px;
+    padding-left: 12px;
+    background-color: var(--amber-soft, #FFF4DE);
+    border-color: var(--amber, #FDB441);
+    font-weight: 600;
+}
+
+.chip-cat[aria-pressed="true"] {
+    font-weight: 700; /* Categoria fica um pouco mais destacada se desejar */
+}
+
+/* Ícone de check para serviços e urgências */
+.chip-servico .chip-check,
+.chip-urgencia .chip-check {
+    width: 0;
+    height: 16px;
+    opacity: 0;
+    color: var(--ink, #1a1a1a);
+    transition: width 0.15s ease, opacity 0.15s ease;
+}
+
+.chip-servico[aria-pressed="true"] .chip-check,
+.chip-urgencia[aria-pressed="true"] .chip-check {
+    width: 16px;
+    opacity: 1;
+}
+
+.chip-cat:focus-visible,
+.chip-servico:focus-visible,
+.chip-urgencia:focus-visible {
+    outline: 2px solid var(--ink, #1a1a1a);
+    outline-offset: 2px;
+}
+
+.container-chips + .rotulo {
+    margin-top: 20px;
+}
+/* ==============================
    LOGO
    ============================== */
 
 .brand {
     display: flex;
     align-items: center;
-
     gap: 8px;
-
     color: var(--ink);
     text-decoration: none;
-
     flex-shrink: 0;
 }
 
 .brand img {
     width: 44px;
     height: 44px;
-
     object-fit: contain;
 }
 
 .brand span {
     font-family: 'Archivo', sans-serif;
-
     font-size: 1.3rem;
     font-weight: 800;
-
     color: var(--ink);
 }
 
@@ -109,9 +188,7 @@ body {
 .nav-links {
     display: flex;
     align-items: center;
-
     gap: 32px;
-
     font-family: 'Archivo', sans-serif;
     font-size: 0.95rem;
     font-weight: 700;
@@ -119,12 +196,9 @@ body {
 
 .nav-links a {
     padding: 6px 0;
-
     color: var(--ink);
     text-decoration: none;
-
     border-bottom: 3px solid transparent;
-
     transition: border-color 0.2s ease;
 }
 
@@ -139,18 +213,14 @@ body {
 .nav-actions {
     display: flex;
     align-items: center;
-
     gap: 12px;
-
     flex-shrink: 0;
 }
 
 .saudacao {
     color: var(--muted);
-
     font-size: 0.9rem;
     font-weight: 600;
-
     white-space: nowrap;
 }
 
@@ -162,57 +232,42 @@ body {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-
     padding: 8px 20px;
-
     border-radius: var(--radius-pill);
-
     font-family: 'Montserrat', sans-serif;
     font-size: 0.88rem;
     font-weight: 700;
-
     text-decoration: none;
-
     cursor: pointer;
-
     transition: all 0.2s ease;
-
     white-space: nowrap;
 }
 
 .btn-ghost {
     background-color: transparent;
-
     color: var(--ink);
-
     border: 1.5px solid var(--amber-line);
 }
 
 .btn-ghost:hover {
     background-color: var(--amber-soft);
-
     border-color: var(--amber);
 }
 
 .btn-primary {
     background-color: var(--amber);
-
     color: var(--ink);
-
     border: 1.5px solid var(--amber);
-
     box-shadow: 0 2px 8px rgba(253, 180, 65, 0.3);
 }
 
 .btn-primary:hover {
     background-color: #f8c065;
-
     border-color: #f8c065;
 }
 
 .btn-sm {
     padding: 8px 16px;
-
     font-size: 0.85rem;
 }
 
@@ -257,11 +312,9 @@ button[type="submit"]:active {
 .container {
     width: 100%;
     min-height: 100vh;
-
     display: flex;
     justify-content: center;
     align-items: flex-start;
-
     padding-top: 80px;
 }
 
@@ -275,7 +328,6 @@ button[type="submit"]:active {
 
 /* ETAPAS */
 
-
 .etapa-wizard.ativa {
     display: block;
 }
@@ -287,8 +339,6 @@ button[type="submit"]:active {
     margin-bottom: 40px;
 }
 
-/* Linha cinza */
-
 .progress-conteiner::before {
     content: "";
     position: absolute;
@@ -299,8 +349,6 @@ button[type="submit"]:active {
     background-color: #ddd;
     transform: translateY(-50%);
 }
-
-/* Linha azul */
 
 .progress-conteiner .progress {
     height: 4px;
@@ -337,16 +385,12 @@ button[type="submit"]:active {
     font-size: 14px;
 }
 
-/* Número dentro do círculo */
-
-/* CÍRCULOS (Estado Padrão - Inativo / Futuro) */
 .progress-conteiner li::before {
     counter-increment: step-number;
     content: counter(step-number);
     width: var(--step-size);
     height: var(--step-size);
     background-color: #ccc;
-    /* Cor cinza para passos que ainda não foram alcançados */
     color: white;
     display: flex;
     align-items: center;
@@ -355,7 +399,6 @@ button[type="submit"]:active {
     transition: 0.3s;
 }
 
-/* PASSO ATUAL (Azul) */
 .progress-conteiner li.current {
     color: #333;
     font-weight: bold;
@@ -363,11 +406,9 @@ button[type="submit"]:active {
 
 .progress-conteiner li.current::before {
     background-color: var(--main-color) !important;
-    /* Azul */
     box-shadow: 0 0 0 4px rgba(0, 123, 255, 0.2);
 }
 
-/* PASSOS CONCLUÍDOS (Verde ou Azul dependendo da sua preferência) */
 .progress-conteiner li.done {
     color: #333;
     font-weight: 500;
@@ -375,7 +416,6 @@ button[type="submit"]:active {
 
 .progress-conteiner li.done::before {
     background-color: var(--step-color) !important;
-    /* Verde para concluídos */
 }
 
 /* CONTEÚDO */
@@ -440,18 +480,14 @@ button[type="submit"]:active {
    ============================== */
 
 @media (max-width: 900px) {
-
     .nav-links {
         display: none;
     }
-
 }
 
 @media (max-width: 600px) {
-
     .header-wrap {
         gap: 8px;
-
         padding: 0 16px;
     }
 
@@ -472,11 +508,9 @@ button[type="submit"]:active {
         width: 36px;
         height: 36px;
     }
-
 }
 
 @media (max-width: 480px) {
-
     .brand span {
         display: none;
     }
@@ -485,5 +519,13 @@ button[type="submit"]:active {
         padding: 7px 12px;
         font-size: 0.8rem;
     }
+}
 
+/* Redução de movimento */
+@media (prefers-reduced-motion: reduce) {
+    .chip-cat,
+    .chip-corpo,
+    .chip-check {
+        transition: none;
+    }
 }
