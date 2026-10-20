@@ -18,7 +18,7 @@
     <?php
     $paginaAtiva = 'servicos';
     $paginaTitulo = 'Serviços';
-    require __DIR__ . '/partials/menu.php';
+    require __DIR__ . '/../partials/menu.php';
 
     if (!isset($servicos))
         $servicos = [];

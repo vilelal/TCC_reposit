@@ -107,7 +107,7 @@ class ServiceController
         ]);
 
         NotificacaoModel::enviarNotificacao([
-            "titulo" => " Solicitação do serviço {$servico}",
+            "titulo" => "Solicitação do serviço {$servico}",
             "mensagem" => "O serviço {$servico} foi agendado! Confira as informações na aba de
             serviços no painel",
             "user_id" => $user_prestador["PK_id_TB_usuario"]

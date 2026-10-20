@@ -17,7 +17,7 @@
     // Tela do fluxo de perfil: mantém "Perfil" destacado no menu
     $paginaAtiva = 'perfil';
     $paginaTitulo = 'Meus serviços';
-    require __DIR__ . '/partials/menu.php';
+    require __DIR__ . '/../partials/menu.php';
     ?>
 
     <main class="conteudo">
