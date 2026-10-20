@@ -212,6 +212,11 @@ switch ($route) {
         $controller = new ServiceController;
         $controller->avaliar();
         break;
+    
+    case "avaliar-prestador":
+        $controller = new ServiceController;
+        $controller->avaliacao();
+        break;
 
     default:
         $controller = new HomeController();

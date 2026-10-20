@@ -127,8 +127,23 @@ class ServiceController
         $id = $_POST["user"];
         $nota = $_POST["nota"];
 
-        $avaliacao = AvaliacaoModel::avaliar($nota, $id);
+        AvaliacaoModel::avaliar($nota, $id);
 
-        header("Location: ?route=dashboard");
+        if ($_SESSION["tipo"] == "prestador") {
+            header("Location: ?route=dashboard");
+            return;
+        }
+
+        header("Location: ?route=");
+        return;
+    }
+
+    public static function avaliacao()
+    {
+        $userPrestador = $_POST["prestador"];
+        $id_notificacao = $_POST["notificacao"];
+        $avaliacao = NotificacaoModel::notificacaoAvaliada($id_notificacao);
+
+        require_once "app/Views/servicos/avaliar.php";
     }
 }
