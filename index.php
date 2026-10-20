@@ -1,6 +1,6 @@
 <?php
 
-$time = 7 * 24 * 60 * 60; // tempo da session (quanto tempo ele fica logado ao fazer login)
+$time = 7 * 24 * 60 * 60; // 7 dias em segundos (tempo da session)
 
 // config da session
 session_set_cookie_params([
@@ -21,6 +21,42 @@ if (isset($_COOKIE[session_name()])) {
 }
 
 $route = $_GET["route"] ?? "home";
+
+// =========================================================================
+// TRAVA DE SEGURANÇA / CONTROLE DE ACESSO DO ADMINISTRAÇÃO
+// =========================================================================
+
+// Identifica o tipo do usuário na sessão (ajuste para a chave exata da sua sessão, ex: 'usuario_tipo' ou 'tipo')
+$tipoUsuario = $_SESSION['usuario_tipo'] ?? $_SESSION['tipo'] ?? null;
+
+// Rotas exclusivas do Administrador + Logout
+$rotasAdmin = [
+    "painel-admin",
+    "admin-criar-servico",
+    "admin-criar-categoria", // <- Adicionado aqui
+    "admin-banir-usuario",
+    "atualizar-status-denuncia",
+    "banir-via-denuncia",
+    "logout"
+];
+
+// 1. SE FOR ADMIN: Só pode acessar as rotas do $rotasAdmin. Se tentar outra, é redirecionado para 'painel-admin'.
+if ($tipoUsuario === 'admin') {
+    if (!in_array($route, $rotasAdmin)) {
+        header("Location: ?route=painel-admin");
+        exit;
+    }
+}
+
+// 2. SE NÃO FOR ADMIN: Impede o acesso às rotas restritas de administração
+if (in_array($route, ["painel-admin", "admin-criar-servico", "admin-banir-usuario"])) {
+    if ($tipoUsuario !== 'admin') {
+        header("Location: ?route=home");
+        exit;
+    }
+}
+
+// =========================================================================
 
 spl_autoload_register(function ($classe) {
     $pastas = [
@@ -80,7 +116,6 @@ switch ($route) {
 
     // --- ROTAS DO FLUXO DE SOLICITAÇÃO DE SERVIÇO ---
 
-    // 1. Exibe o Formulário Wizard (Categorias, Serviços, Urgência)
     case "solicitar-servico":
         $controller = new ServiceController();
         $controller->exibirWizard();
@@ -88,25 +123,22 @@ switch ($route) {
 
     // --- ROTAS DO CHAT DE MENSAGENS ---
 
-    // Carrega a tela dividida com a lista de conversas e o chat ativo
     case "chat":
         $controller = new ChatController();
         $controller->exibirChat();
         break;
 
-    // Endpoint AJAX enviado pelo formulário JS
     case "enviar-mensagem":
         $controller = new ChatController();
         $controller->enviarMensagem();
         break;
 
-    // Endpoint AJAX para atualização em tempo real
     case "carregar-mensagens-json":
         $controller = new ChatController();
         $controller->carregarMensagensJSON();
         break;
 
-    // 4. Rotas de perfil do prestador
+    // Rotas de perfil e prestador
 
     case "dashboard":
         $controller = new PrestadorController();
@@ -138,11 +170,10 @@ switch ($route) {
         $controller->edit();
         break;
 
-    case "editPerfil": {
-            $controller = new UserController();
-            $controller->editPerfil();
-            break;
-        }
+    case "editPerfil":
+        $controller = new UserController();
+        $controller->editPerfil();
+        break;
 
     case "seguranca":
         $controller = new UserController();
@@ -159,8 +190,6 @@ switch ($route) {
         $controller->editServicos();
         break;
 
-    // notificacoes
-
     case "notificacoes":
         $controller = new NotificacaoController();
         $controller->notificacoes();
@@ -171,13 +200,11 @@ switch ($route) {
         $controller->exibirPainel();
         break;
 
-    // Processa a criação de um novo serviço
     case "admin-criar-servico":
         $controller = new AdminController();
         $controller->criarServico();
         break;
 
-    // Processa o banimento/exclusão de um usuário
     case "admin-banir-usuario":
         $controller = new AdminController();
         $controller->banirUsuario();
@@ -197,25 +224,45 @@ switch ($route) {
         $controller = new UserController();
         $controller->atualizarFotoPerfil();
         break;
-    
+
     case "buscar-proximos":
         $controller = new PrestadorController();
         $controller->listarPrestadores();
         break;     
-    
+
     case "solicitar":
         $controller = new PrestadorController();
         $controller->solicitarServico();
         break;
 
     case "avaliar":
-        $controller = new ServiceController;
+        $controller = new ServiceController();
         $controller->avaliar();
         break;
     
     case "avaliar-prestador":
         $controller = new ServiceController;
         $controller->avaliacao();
+        break;
+
+    case 'enviar-denuncia':
+        $controller = new DenunciaController();
+        $controller->registrarDenuncia();
+        break;
+    
+    case "admin-criar-categoria":
+        $controller = new AdminController();
+        $controller->criarCategoria();
+        break;  
+            
+    case "banir-via-denuncia":
+        $controller = new AdminController();
+        $controller->processarBanimentoPorDenuncia();
+        break;
+    
+    case "atualizar-status-denuncia":
+        $controller = new AdminController();
+        $controller->atualizarStatusDenuncia();
         break;
 
     default:

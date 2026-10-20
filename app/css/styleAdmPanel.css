@@ -1,7 +1,26 @@
-/* Painel do Administrador - FastService
-   CSS feito pra deixar a pagina mais bonita */
+/* ==============================================
+   PAINEL ADMINISTRATIVO - FASTSERVICE
+   Identidade Visual Unificada (Coerente com o Chat)
+============================================== */
 
-/* isso aqui tira aquele espaço padrão que o navegador coloca */
+:root {
+    --fundo: #f8fafc;
+    --borda: #e2e8f0;
+    --texto: #1e293b;
+    --texto-suave: #64748b;
+    --ouro: #fdb441;
+    --ouro-escuro: #b45309;
+    --ouro-fundo: #fef3c7;
+    --ouro-borda: #fde68a;
+    --perigo: #dc2626;
+    --perigo-fundo: #fef2f2;
+    --perigo-borda: #fecaca;
+    --raio: 8px;
+    --raio-pilula: 999px;
+    --sombra-suave: 0 2px 12px rgba(30, 41, 59, 0.06);
+}
+
+/* Reset de margens e box-sizing */
 * {
     margin: 0;
     padding: 0;
@@ -9,235 +28,406 @@
 }
 
 body {
-    font-family: Arial, sans-serif; /* fonte simples, da pra ler bem */
-    background-color: #f2f2f2; /* cor de fundo cinza clarinho */
-    color: #333333; /* cor do texto, um cinza escuro (nao gosto de preto puro) */
-    padding: 30px;
+    font-family: 'Montserrat', Arial, sans-serif;
+    background-color: var(--fundo);
+    color: var(--texto);
+    padding: 30px 20px;
+    line-height: 1.5;
 }
 
-/* essa div e a caixa que engloba tudo, deixei ela centralizada */
+/* Container Central */
 .admin-container {
-    max-width: 850px;
-    margin: 0 auto; /* isso centraliza a div na tela */
+    max-width: 1050px;
+    margin: 0 auto;
 }
 
 .admin-container h2 {
-    color: #222222;
-    margin-bottom: 5px;
-    border-bottom: 3px solid orange; /* linha laranja embaixo do titulo, ficou legal */
-    padding-bottom: 10px;
+    color: var(--texto);
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 4px;
+    display: inline-block;
+    position: relative;
+    padding-bottom: 8px;
 }
 
-.admin-container p {
-    color: #666666;
-    margin-bottom: 25px;
-    font-size: 14px;
+/* Linha sutil de destaque no título principal */
+.admin-container h2::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 60px;
+    height: 3px;
+    background-color: var(--ouro);
+    border-radius: var(--raio-pilula);
 }
 
-/* cada bloco (cadastrar servico e lista de usuarios) fica dentro dessa classe */
+.admin-container > p {
+    color: var(--texto-suave);
+    margin-bottom: 24px;
+    font-size: 0.875rem;
+}
+
+/* Blocos / Seções (Cards) */
 .admin-section {
-    background-color: white;
-    border: 1px solid #cccccc;
-    border-radius: 8px; /* deixa as bordas arredondadas */
-    padding: 20px;
-    margin-bottom: 25px;
+    background-color: #ffffff;
+    border: 1px solid var(--borda);
+    border-radius: var(--raio);
+    padding: 24px;
+    margin-bottom: 24px;
+    box-shadow: var(--sombra-suave);
 }
 
 .admin-section h3 {
-    margin-bottom: 15px;
-    color: #333333;
-    border-bottom: 1px solid #eeeeee;
-    padding-bottom: 10px;
+    margin-bottom: 18px;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--texto);
+    border-bottom: 1px solid var(--borda);
+    padding-bottom: 12px;
 }
 
-/* formulario de criar servico - input e botao lado a lado */
+/* ==============================================
+   FORMULÁRIOS
+============================================== */
+
 .form-servico {
     display: flex;
-    gap: 10px;
+    gap: 12px;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+.form-servico input[type="text"],
+.form-servico select {
+    padding: 10px 14px;
+    border: 1px solid var(--borda);
+    border-radius: var(--raio);
+    font-size: 0.875rem;
+    color: var(--texto);
+    background-color: #ffffff;
+    font-family: inherit;
+    outline: none;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
 
 .form-servico input[type="text"] {
-    flex: 1; /* ocupa o espaco todo que sobrar */
-    padding: 10px;
-    border: 1px solid #bbbbbb;
-    border-radius: 5px;
-    font-size: 14px;
+    flex: 2;
+    min-width: 240px;
 }
 
-/* quando clica no input ele fica com borda laranja, fica mais facil de ver */
-.form-servico input[type="text"]:focus {
-    outline: none;
-    border-color: orange;
+.form-servico select {
+    flex: 1;
+    min-width: 180px;
+    cursor: pointer;
+}
+
+.form-servico input[type="text"]:focus,
+.form-servico select:focus {
+    border-color: var(--ouro);
+    box-shadow: 0 0 0 3px var(--ouro-fundo);
 }
 
 .btn-salvar {
     padding: 10px 20px;
-    background-color: #333333;
-    color: white;
+    background-color: var(--ouro);
+    color: var(--texto);
     border: none;
-    border-radius: 5px;
-    cursor: pointer; /* muda o cursor pra mostrar que da pra clicar */
-    font-size: 14px;
+    border-radius: var(--raio);
+    cursor: pointer;
+    font-size: 0.875rem;
+    font-weight: 600;
+    transition: filter 0.2s ease, transform 0.1s ease;
 }
 
-/* efeito de hover, fica mais claro quando passa o mouse */
 .btn-salvar:hover {
-    background-color: #555555;
+    filter: brightness(0.95);
 }
 
-/* tabela dos usuarios */
+.btn-salvar:active {
+    transform: scale(0.98);
+}
+
+/* ==============================================
+   TABELAS DE DADOS
+============================================== */
+
 table {
     width: 100%;
-    border-collapse: collapse; /* junta as bordas das celulas, sem isso fica um espacinho feio */
+    border-collapse: collapse;
+    margin-top: 8px;
 }
 
 thead {
-    background-color: #f9f9f9;
+    background-color: var(--fundo);
 }
 
 thead th {
     text-align: left;
-    padding: 10px;
-    font-size: 13px;
-    color: #555555;
-    border-bottom: 2px solid #333333;
-}
-
-/* deixei a coluna de acoes alinhada na direita pq fica mais organizado */
-thead th:last-child,
-tbody td:last-child {
-    text-align: right;
+    padding: 12px 14px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: var(--texto-suave);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    border-bottom: 1px solid var(--borda);
 }
 
 tbody tr {
-    border-bottom: 1px solid #eeeeee;
+    border-bottom: 1px solid var(--borda);
+    transition: background-color 0.15s ease;
 }
 
-/* quando passa o mouse na linha ela fica meio cinza, ajuda a ler a linha certa */
 tbody tr:hover {
-    background-color: #fafafa;
+    background-color: var(--fundo);
 }
 
 tbody td {
-    padding: 10px;
+    padding: 14px;
+    font-size: 0.875rem;
+    vertical-align: middle;
 }
 
-/* essa e a "tag" colorida que mostra o tipo do usuario (admin, cliente...) */
+/* Tag / Badge de Roles e Status */
 tbody td strong {
-    background-color: #fff3cd; /* amarelo bem clarinho */
-    color: #a06c00;
-    padding: 3px 8px;
-    border-radius: 10px;
-    font-size: 12px;
+    display: inline-block;
+    background-color: var(--ouro-fundo);
+    color: var(--ouro-escuro);
+    border: 1px solid var(--ouro-borda);
+    padding: 2px 8px;
+    border-radius: var(--raio);
+    font-size: 0.725rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
 }
 
-/* mensagem de quando nao tem nenhum usuario na lista */
+/* Dropdown de Status da Denúncia dentro da tabela */
+tbody td select {
+    padding: 6px 10px;
+    border: 1px solid var(--borda);
+    border-radius: var(--raio);
+    font-size: 0.8rem;
+    color: var(--texto);
+    background-color: #ffffff;
+    cursor: pointer;
+    outline: none;
+}
+
+tbody td select:focus {
+    border-color: var(--ouro);
+}
+
+/* Estado sem registros */
 tbody td[colspan] {
     text-align: center;
-    padding: 20px;
-    color: #999999;
+    padding: 28px;
+    color: var(--texto-suave);
 }
 
-/* --- barra de pesquisa que eu adicionei --- */
+/* ==============================================
+   BARRA DE PESQUISA & FERRAMENTAS
+============================================== */
+
 .tabela-toolbar {
-    margin-bottom: 20px;
+    margin-bottom: 16px;
 }
 
 .tabela-toolbar input[type="text"] {
     width: 100%;
-    max-width: 320px;
-    padding: 12px 16px 12px 40px; /* espaço extra à esquerda pro ícone da lupa */
-    border: 1px solid #dddddd;
-    border-radius: 999px; /* borda bem arredondada, tipo "pílula" */
-    font-size: 14px;
-    font-family: 'Montserrat', sans-serif;
-    background-color: #F8F9FA;
-    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.06);
-
-    /* ícone de lupa desenhado em SVG, colocado como fundo do input */
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%23999999' viewBox='0 0 16 16'%3E%3Cpath d='M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0'/%3E%3C/svg%3E");
+    max-width: 340px;
+    padding: 10px 14px 10px 38px;
+    border: 1px solid var(--borda);
+    border-radius: var(--raio-pilula);
+    font-size: 0.85rem;
+    font-family: inherit;
+    background-color: #ffffff;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%2364748b' viewBox='0 0 16 16'%3E%3Cpath d='M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0'/%3E%3C/svg%3E");
     background-repeat: no-repeat;
-    background-position: 14px center;
-
+    background-position: 12px center;
     transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
 
 .tabela-toolbar input[type="text"]::placeholder {
-    color: #999999;
+    color: var(--texto-suave);
 }
 
-/* quando clica, a borda e a sombra ficam na cor laranja do tema */
 .tabela-toolbar input[type="text"]:focus {
     outline: none;
-    border-color: #FDB441;
-    box-shadow: 0px 0px 0px 3px rgba(253, 180, 65, 0.25);
-    background-color: white;
+    border-color: var(--ouro);
+    box-shadow: 0 0 0 3px var(--ouro-fundo);
 }
 
-/* mensagem que aparece quando a pesquisa nao acha ninguem */
 .sem-resultado {
     text-align: center;
-    padding: 20px;
-    color: #999999;
+    padding: 24px;
+    color: var(--texto-suave);
+    font-size: 0.875rem;
 }
 
-/* --- botoes de paginacao (1 2 3 ...) --- */
-.paginacao {
-    display: flex;
-    justify-content: center;
-    gap: 5px;
-    margin-top: 15px;
-}
+/* ==============================================
+   BOTÕES DE AÇÃO & BANIMENTO
+============================================== */
 
-.pagina-btn {
-    width: 32px;
-    height: 32px;
-    border: 1px solid #cccccc;
-    border-radius: 5px;
-    background-color: white;
-    cursor: pointer;
-    font-size: 13px;
-}
-
-.pagina-btn:hover {
-    background-color: #eeeeee;
-}
-
-/* essa classe marca qual pagina ta selecionada agora */
-.pagina-btn.ativo {
-    background-color: #333333;
-    color: white;
-    border-color: #333333;
-}
-
-/* deixa os botoes de proxima/anterior meio apagados quando nao da pra clicar */
-.pagina-btn:disabled {
-    opacity: 0.4;
-    cursor: default;
-}
-
-/* botao de banir usuario, deixei vermelho pra dar a entender que e perigoso */
 .btn-banir {
-    padding: 6px 14px;
-    background-color: white;
-    color: #cc0000;
-    border: 1px solid #e3a3a3;
-    border-radius: 5px;
+    display: inline-block;
+    padding: 6px 12px;
+    background-color: var(--perigo-fundo);
+    color: var(--perigo);
+    border: 1px solid var(--perigo-borda);
+    border-radius: var(--raio);
     cursor: pointer;
-    font-size: 13px;
+    font-size: 0.78rem;
+    font-weight: 600;
+    transition: background-color 0.15s ease, border-color 0.15s ease;
 }
 
 .btn-banir:hover {
-    background-color: #fdecea;
+    background-color: #fee2e2;
+    border-color: #fca5a5;
 }
 
-/* deixa mais responsivo pra quando abrir no celular */
-@media (max-width: 600px) {
-    body {
-        padding: 15px;
+/* ==============================================
+   PAGINAÇÃO
+============================================== */
+
+.paginacao {
+    display: flex;
+    justify-content: center;
+    gap: 6px;
+    margin-top: 20px;
+}
+
+.pagina-btn {
+    min-width: 34px;
+    height: 34px;
+    padding: 0 10px;
+    border: 1px solid var(--borda);
+    border-radius: var(--raio);
+    background-color: #ffffff;
+    color: var(--texto);
+    cursor: pointer;
+    font-size: 0.8rem;
+    font-weight: 600;
+    transition: background-color 0.15s ease, border-color 0.15s ease;
+}
+
+.pagina-btn:hover:not(:disabled) {
+    background-color: var(--fundo);
+    border-color: #cbd5e1;
+}
+
+.pagina-btn.ativo {
+    background-color: var(--ouro);
+    color: var(--texto);
+    border-color: var(--ouro);
+}
+
+.pagina-btn:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+}
+
+/* Botão principal de ação (Banir Denunciado - Vermelho Suave com Alto Contraste) */
+.btn-banir-denunciado {
+    width: 100%;
+    padding: 7px 12px;
+    background-color: var(--perigo-fundo);
+    color: var(--perigo);
+    border: 1px solid var(--perigo-borda);
+    border-radius: var(--raio);
+    font-size: 0.78rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.15s ease;
+}
+
+.btn-banir-denunciado:hover {
+    background-color: var(--perigo);
+    color: #ffffff;
+    border-color: var(--perigo);
+}
+
+/* Botão secundário (Banir Denunciante - Neutro/Cinza Suave) */
+.btn-banir-denunciante {
+    width: 100%;
+    padding: 7px 12px;
+    background-color: var(--fundo);
+    color: var(--texto-suave);
+    border: 1px solid var(--borda);
+    border-radius: var(--raio);
+    font-size: 0.78rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.15s ease;
+}
+
+.btn-banir-denunciante:hover {
+    background-color: var(--texto-suave);
+    color: #ffffff;
+    border-color: var(--texto-suave);
+}
+
+/* ==============================================
+   RESPONSIVIDADE (DISPOSITIVOS MÓVEIS)
+============================================== */
+
+@media (max-width: 768px) {
+    /* Esconde a estrutura tradicional da tabela */
+    .admin-section table,
+    .admin-section thead,
+    .admin-section tbody,
+    .admin-section th,
+    .admin-section td,
+    .admin-section tr {
+        display: block;
     }
 
-    .form-servico {
-        flex-direction: column; /* empilha o input e o botao um em cima do outro */
+    /* Esconde visualmente o cabeçalho original */
+    .admin-section thead tr {
+        position: absolute;
+        top: -9999px;
+        left: -9999px;
     }
+
+    /* Transforma cada linha da tabela em um Card */
+    .admin-section tbody tr {
+        background-color: #ffffff;
+        border: 1px solid var(--borda);
+        border-radius: var(--raio);
+        margin-bottom: 16px;
+        padding: 12px 16px;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+    }
+
+    /* Exibe as células empilhadas com rótulos à esquerda */
+    .admin-section tbody td {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 10px 0;
+        border-bottom: 1px solid var(--borda);
+        text-align: right;
+    }
+
+    .admin-section tbody td:last-child {
+        border-bottom: none;
+        padding-bottom: 0;
+    }
+
+    /* Injeta o nome da coluna via data-label */
+    .admin-section tbody td::before {
+        content: attr(data-label);
+        font-weight: 700;
+        font-size: 0.75rem;
+        color: var(--texto-suave);
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        text-align: left;
+        padding-right: 12px;
+    }
+
+    
 }
