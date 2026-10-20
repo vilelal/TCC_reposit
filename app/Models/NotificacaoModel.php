@@ -15,8 +15,9 @@ class NotificacaoModel
         $linhasAfetadas = $conexao->affected_rows;
         $conexao->close();
         $stmt->close();
-        
-        if ($linhasAfetadas == 0) return false;
+
+        if ($linhasAfetadas == 0)
+            return false;
         return true;
     }
 
@@ -48,8 +49,27 @@ class NotificacaoModel
         $linhasAfetadas = $conexao->affected_rows;
         $conexao->close();
         $stmt->close();
-        
-        if ($linhasAfetadas == 0) return false;
+
+        if ($linhasAfetadas == 0)
+            return false;
+        return true;
+    }
+
+    public static function notificacaoAvaliada($id)
+    {
+        $conexao = Database::conectarBanco();
+        $sql = "UPDATE TB_notificacao SET titulo_TB_notificacao = 'Serviço concluído '
+        WHERE PK_id_TB_notificacao = ?";
+        $stmt = $conexao->prepare($sql);
+        $stmt->bind_param("i", $id);
+        $stmt->execute();
+
+        $linhasAfetadas = $conexao->affected_rows;
+        $conexao->close();
+        $stmt->close();
+
+        if ($linhasAfetadas == 0)
+            return false;
         return true;
     }
 }

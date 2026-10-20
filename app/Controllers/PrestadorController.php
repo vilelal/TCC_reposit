@@ -43,11 +43,20 @@ class PrestadorController
     {
         $solicitacaoId = $_POST["servico_id"];
         $pin = $_POST["pin"];
-        $user = $_POST["cliente"];
+        $servico = $_POST["servico"];
+        $prestador = $_POST["prestador"];
+        $userCliente = $_POST["id_user_cliente"];
+        $userPrestador = $_POST["id_user_prestador"];
 
         if (solicitacaoModel::concluirServico($solicitacaoId, $pin)) {
-            // require_once "app/Views/servicos/avaliar.php";
-            header("Location: ?route=dashboard");
+            $notificacao = [
+                "titulo" => "Serviço concluído",
+                "mensagem" => "O serviço $servico foi concluído, avalie o prestador $prestador #$userPrestador",
+                "user_id" => $userCliente
+            ];
+
+            NotificacaoModel::enviarNotificacao($notificacao);
+            require_once "app/Views/servicos/avaliar.php";
             return;
         }
 
@@ -64,7 +73,8 @@ class PrestadorController
         require_once "app/Views/servicos/lista-prestadores.php";
     }
 
-    public function solicitarServico() {
+    public function solicitarServico()
+    {
         $cliente = $_SESSION["id_cliente"];
         $prestador = $_POST["prestador"];
         $servico = $_POST["servico"];
@@ -79,7 +89,7 @@ class PrestadorController
             header("Location: ?route=buscar-proximo");
             return;
         }
-        
+
         header("Location: ?route=lista-servicos-cliente");
         return;
     }

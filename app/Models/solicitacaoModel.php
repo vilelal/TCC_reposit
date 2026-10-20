@@ -98,7 +98,10 @@ class solicitacaoModel
     public static function getSolicitacao($id)
     {
         $conexao = Database::conectarBanco();
-        $sql = "SELECT * FROM TB_SolicitacaoServico 
+        $sql = "SELECT *,
+        TB_clientePerfil.FK_id_TB_usuario AS id_usuario_cliente,
+        TB_prestadorPerfil.FK_id_TB_usuario AS id_usuario_prestador
+        FROM TB_SolicitacaoServico 
         INNER JOIN TB_servico ON FK_id_TB_servico = PK_id_TB_servico
         INNER JOIN TB_clientePerfil ON TB_SolicitacaoServico.FK_id_TB_cliente = PK_id_TB_cliente
         INNER JOIN TB_prestadorServico ON PK_id_TB_prestadorServico = FK_id_TB_prestadorServico

@@ -16,7 +16,7 @@
     <?php
     $paginaAtiva = 'inicio';
     $paginaTitulo = 'Início';
-    require __DIR__ . '/partials/menu.php';
+    require __DIR__ . '/../partials/menu.php';
     if (!isset($user)) $user = [];
 
     // Valores ainda não vêm do back-end; quando vierem, basta o controller defini-los.
