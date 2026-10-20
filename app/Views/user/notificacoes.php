@@ -7,7 +7,9 @@
     <title>Notificações | FastService</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;600;700;800&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;600;700;800&family=Montserrat:wght@400;500;600;700&display=swap"
+        rel="stylesheet">
     <link rel="stylesheet" href="app/css/painel.css">
     <link rel="stylesheet" href="app/css/notificacoes.css">
 </head>
@@ -17,7 +19,12 @@
     // Nenhum item do menu fica ativo: notificações abre pelo sino da barra superior
     $paginaAtiva = '';
     $paginaTitulo = 'Notificações';
-    require __DIR__ . '/../prestador/partials/menu.php';
+    if ($_SESSION["tipo"] == "prestador") {
+        require __DIR__ . '/../partials/menu.php';
+    }
+    else {
+        require __DIR__ . '/../partials/menu-cliente.php';
+    }
 
     if (!isset($notificacoes))
         $notificacoes = [];
@@ -40,17 +47,20 @@
                     $prestador = (int) $prestador;
                     ?>
 
-                    <?php if ($notificacao['titulo_TB_notificacao'] === 'Serviço concluído'): ?>
-                        <form action="?route=avaliar-prestador" method="POST">
-                            <input type="hidden" name="prestador" value="<?= $prestador ?>">
-                            <button type="submit"> Clica em mimm </button>
-                    <?php endif; ?>
-                    
+
                     <li class="notificacao<?= $nova ? ' nova' : '' ?>">
                         <div class="notificacao-corpo">
                             <h3><?= htmlspecialchars($notificacao['titulo_TB_notificacao'] ?? '') ?></h3>
                             <p><?= htmlspecialchars($notificacao['mensagem_TB_notificacao'] ?? '') ?></p>
                         </div>
+                        
+                        <?php if ($notificacao['titulo_TB_notificacao'] === 'Serviço concluído'): ?>
+                            <form action="?route=avaliar-prestador" method="POST">
+                                <input type="hidden" name="prestador" value="<?= $prestador ?>">
+                                <input type="hidden" name="notificacao" value="<?= $notificacao['PK_id_TB_notificacao'] ?>">
+                                <button type="submit"> Avaliar prestador </button>
+                            </form>
+                        <?php endif; ?>
                         <div class="notificacao-lado">
                             <?php if ($nova): ?>
                                 <span class="selo-nova">Nova</span>
@@ -59,7 +69,6 @@
                         </div>
                     </li>
                     <?php if ($notificacao['titulo_TB_notificacao'] === 'Serviço concluído'): ?>
-                    </form>
                     <?php endif; ?>
                 <?php endforeach; ?>
             </ul>
