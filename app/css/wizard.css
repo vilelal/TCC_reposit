@@ -8,14 +8,15 @@ body {
     min-height: 100vh;
     background-color: #F5F5F5;
     color: #333;
-    font-family: Arial, sans-serif;
+    font-family: 'Montserrat', Arial, sans-serif;
     margin: 0;
 }
+
 :root {
     --main-color: #ffc107;
     --dark-color: #dd992b;
     --step-color: #FCBA52;
-    --step-size: 32px;
+    --step-size: 36px;
     --error-color: #d9534f;
     --steps: 3;
     --amber: #FDB441;
@@ -33,9 +34,12 @@ body {
     --danger: #c9443f;
     --danger-soft: #fdeceb;
 
+    --radius-sm: 12px;
     --radius-md: 16px;
     --radius-pill: 999px;
-}/* ==============================
+}
+
+/* ==============================
    HEADER
    ============================== */
 
@@ -216,9 +220,18 @@ body {
     font-size: 0.85rem;
 }
 
+/* ==============================
+   BASE
+   ============================== */
+
 h1 {
+    margin-bottom: 24px;
+    font-family: 'Archivo', sans-serif;
+    font-size: clamp(1.5rem, 4.5vw, 2rem);
+    font-weight: 800;
+    line-height: 1.2;
     text-align: center;
-    margin-bottom: 16px;
+    color: var(--ink);
 }
 
 button {
@@ -228,6 +241,7 @@ button {
     padding: 8px 16px;
     background-color: var(--main-color);
     color: #fff;
+    font-family: inherit;
     font-size: 14px;
     transition: 0.3s;
 }
@@ -254,73 +268,85 @@ button[type="submit"]:active {
     background-color: #444;
 }
 
+/* ==============================
+   PÁGINA E CARTÃO DO WIZARD
+   ============================== */
+
 .container {
     width: 100%;
-    min-height: 100vh;
+    min-height: calc(100vh - 75px);
 
     display: flex;
     justify-content: center;
     align-items: flex-start;
 
-    padding-top: 80px;
+    padding: clamp(24px, 5vw, 56px) 16px 64px;
+}
+
+.cadastro-etapa {
+    width: 100%;
+    max-width: 680px;
 }
 
 #form-wizard {
-    background-color: #fff;
-    padding: 32px;
-    border-radius: 8px;
     width: 100%;
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+    padding: clamp(20px, 5vw, 40px);
+    background-color: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-md);
+    box-shadow: 0 8px 28px rgba(26, 26, 26, 0.06);
 }
 
-/* ETAPAS */
-
+/* ETAPAS (legado) */
 
 .etapa-wizard.ativa {
     display: block;
 }
 
-/* PROGRESSO */
+/* ==============================
+   PROGRESSO
+   ============================== */
 
 .progress-conteiner {
     position: relative;
-    margin-bottom: 40px;
+    margin-bottom: 36px;
 }
 
-/* Linha cinza */
+/* Linha de fundo: vai do centro do primeiro ao centro do ultimo circulo */
 
 .progress-conteiner::before {
     content: "";
     position: absolute;
-    left: 0;
-    right: 0;
+    left: calc(50% / var(--steps));
+    right: calc(50% / var(--steps));
     top: calc(var(--step-size) / 2);
     height: 4px;
-    background-color: #ddd;
+    border-radius: var(--radius-pill);
+    background-color: var(--line);
     transform: translateY(-50%);
 }
 
-/* Linha azul */
+/* Linha de avanço (a largura é controlada pelo JS com scaleX) */
 
 .progress-conteiner .progress {
-    height: 4px;
-    background-color: var(--main-color);
     position: absolute;
+    left: calc(50% / var(--steps));
+    right: calc(50% / var(--steps));
     top: calc(var(--step-size) / 2);
-    left: 0;
+    height: 4px;
+    border-radius: var(--radius-pill);
+    background-color: var(--amber);
     transform: translateY(-50%) scaleX(0);
     transform-origin: left;
-    transition: 0.3s;
-    width: 100%;
+    transition: transform 0.35s ease;
     z-index: 2;
 }
 
-/* CÍRCULOS */
+/* Círculos: uma coluna por etapa, com o texto centralizado embaixo */
 
 .progress-conteiner ol {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+    display: grid;
+    grid-template-columns: repeat(var(--steps), 1fr);
     list-style-type: none;
     counter-reset: step-number;
     position: relative;
@@ -332,92 +358,365 @@ button[type="submit"]:active {
     flex-direction: column;
     align-items: center;
     gap: 8px;
-    color: #777;
-    transition: 0.3s;
-    font-size: 14px;
+    color: var(--muted);
+    font-size: 0.82rem;
+    font-weight: 500;
+    text-align: center;
+    transition: color 0.3s ease;
 }
 
-/* Número dentro do círculo */
-
-/* CÍRCULOS (Estado Padrão - Inativo / Futuro) */
+/* Estado padrão: etapa futura */
 .progress-conteiner li::before {
     counter-increment: step-number;
     content: counter(step-number);
-    width: var(--step-size);
-    height: var(--step-size);
-    background-color: #ccc;
-    /* Cor cinza para passos que ainda não foram alcançados */
-    color: white;
     display: flex;
     align-items: center;
     justify-content: center;
+    width: var(--step-size);
+    height: var(--step-size);
+    border: 2px solid var(--line);
     border-radius: 50%;
-    transition: 0.3s;
+    background-color: var(--surface);
+    font-size: 0.88rem;
+    font-weight: 700;
+    color: var(--muted);
+    transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease, color 0.3s ease;
 }
 
-/* PASSO ATUAL (Azul) */
+/* Etapa atual */
 .progress-conteiner li.current {
-    color: #333;
-    font-weight: bold;
+    color: var(--ink);
+    font-weight: 700;
 }
 
 .progress-conteiner li.current::before {
-    background-color: var(--main-color) !important;
-    /* Azul */
-    box-shadow: 0 0 0 4px rgba(0, 123, 255, 0.2);
+    background-color: var(--amber) !important;
+    border-color: var(--amber);
+    color: var(--ink);
+    box-shadow: 0 0 0 5px var(--amber-soft);
 }
 
-/* PASSOS CONCLUÍDOS (Verde ou Azul dependendo da sua preferência) */
+/* Etapas concluídas: círculo âmbar com check */
 .progress-conteiner li.done {
-    color: #333;
-    font-weight: 500;
+    color: var(--ink);
+    font-weight: 600;
 }
 
 .progress-conteiner li.done::before {
-    background-color: var(--step-color) !important;
-    /* Verde para concluídos */
+    content: "\2713";
+    background-color: var(--amber-soft) !important;
+    border-color: var(--amber);
+    color: var(--ink);
 }
 
-/* CONTEÚDO */
+/* ==============================
+   CONTEÚDO DAS ETAPAS
+   ============================== */
 
 .step {
     display: none;
-    padding: 24px 8px;
+    padding: 8px 0 0;
 }
 
 .step.ativa {
     display: block;
+    animation: entrar-etapa 0.3s ease;
 }
 
-.step label {
+@keyframes entrar-etapa {
+    from {
+        opacity: 0;
+        transform: translateY(8px);
+    }
+
+    to {
+        opacity: 1;
+        transform: none;
+    }
+}
+
+/* Os <br> do HTML só serviam de espaçamento; o espaçamento agora vem do CSS */
+.step br {
+    display: none;
+}
+
+.step h2 {
+    margin-bottom: 4px;
+    font-family: 'Archivo', sans-serif;
+    font-size: clamp(1.15rem, 3.5vw, 1.4rem);
+    font-weight: 700;
+    color: var(--ink);
+}
+
+.step p {
+    line-height: 1.55;
+}
+
+/* Rótulos dos campos */
+.step label,
+.rotulo-chips {
     display: block;
-    margin-top: 15px;
-    margin-bottom: 5px;
+    margin: 20px 0 8px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--muted);
 }
 
+/* Campos de texto, data e área de texto (radios e checkbox têm estilo próprio) */
+.step input:not([type="radio"]):not([type="checkbox"]),
 .step select,
-.step input,
 .step textarea {
     width: 100%;
-    padding: 10px;
-    margin-bottom: 10px;
-    border: 1px solid #ccc;
-    border-radius: 8px;
+    min-height: 48px;
+    padding: 12px 14px;
+    border: 1.5px solid var(--line);
+    border-radius: var(--radius-sm);
+    background-color: var(--surface);
+    font-family: inherit;
+    font-size: 1rem;
+    color: var(--ink);
+    transition: border-color 0.15s ease, box-shadow 0.15s ease;
 }
 
-/* BOTÕES */
+.step textarea {
+    min-height: 104px;
+    resize: vertical;
+    line-height: 1.5;
+}
+
+.step textarea::placeholder {
+    color: #a09a8c;
+}
+
+.step input:not([type="radio"]):not([type="checkbox"]):hover,
+.step select:hover,
+.step textarea:hover {
+    border-color: var(--amber-line);
+}
+
+.step input:not([type="radio"]):not([type="checkbox"]):focus,
+.step select:focus,
+.step textarea:focus {
+    outline: none;
+    border-color: var(--amber);
+    box-shadow: 0 0 0 4px var(--amber-soft);
+}
+
+/* ==============================
+   OPÇÃO "NEGOCIAR ORÇAMENTO" (checkbox)
+   ============================== */
+
+.step .opcao-check {
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 12px;
+    margin: 20px 0 0;
+    padding: 14px 16px;
+    border: 1.5px solid var(--line);
+    border-radius: var(--radius-sm);
+    background-color: var(--surface);
+    font-size: 0.92rem;
+    font-weight: 500;
+    line-height: 1.4;
+    color: var(--ink);
+    cursor: pointer;
+    transition: background-color 0.15s ease, border-color 0.15s ease;
+}
+
+.step .opcao-check:hover {
+    background-color: var(--amber-soft);
+    border-color: var(--amber-line);
+}
+
+.step .opcao-check:has(input:checked) {
+    background-color: var(--amber-soft);
+    border-color: var(--amber);
+}
+
+.step .opcao-check input {
+    flex: none;
+    width: 20px;
+    height: 20px;
+    margin: 0;
+    accent-color: var(--amber);
+    cursor: pointer;
+}
+
+/* ==============================
+   CHIPS (categoria, serviço e urgência)
+   ============================== */
+
+.container-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.container-chips .dica {
+    width: 100%;
+    padding: 18px 14px;
+    border: 1px dashed var(--line);
+    border-radius: var(--radius-sm);
+    text-align: center;
+    font-size: 0.88rem;
+    color: var(--muted);
+}
+
+.container-chips .dica[hidden] {
+    display: none;
+}
+
+/* Cada chip é um <label> com um radio invisível dentro.
+   Os seletores usam ".step .chip" para vencer as regras gerais de label/input acima. */
+.step .chip {
+    position: relative;
+    display: inline-flex;
+    margin: 0;
+    font-size: inherit;
+    cursor: pointer;
+}
+
+.step .chip[hidden] {
+    display: none;
+}
+
+.step .chip input {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    min-height: 0;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    opacity: 0;
+    cursor: pointer;
+}
+
+.chip-corpo {
+    display: inline-flex;
+    align-items: center;
+    gap: 0;
+    padding: 10px 18px;
+    border: 1.5px solid var(--line);
+    border-radius: var(--radius-pill);
+    background-color: var(--surface);
+    font-size: 0.9rem;
+    font-weight: 500;
+    line-height: 1.25;
+    color: var(--ink);
+    transition: background-color 0.15s ease, border-color 0.15s ease, gap 0.15s ease, padding 0.15s ease, transform 0.1s ease;
+}
+
+.chip:hover .chip-corpo {
+    background-color: var(--amber-soft);
+    border-color: var(--amber-line);
+}
+
+.chip:active .chip-corpo {
+    transform: scale(0.97);
+}
+
+/* Check: escondido até o chip ser marcado */
+.chip-check {
+    flex: none;
+    width: 0;
+    height: 16px;
+    opacity: 0;
+    color: var(--ink);
+    transition: width 0.15s ease, opacity 0.15s ease;
+}
+
+/* Marcado (serviço e urgência): âmbar suave + check */
+.chip input:checked+.chip-corpo {
+    gap: 6px;
+    padding-left: 13px;
+    background-color: var(--amber-soft);
+    border-color: var(--amber);
+    font-weight: 600;
+}
+
+.chip input:checked+.chip-corpo .chip-check {
+    width: 16px;
+    opacity: 1;
+}
+
+/* Categoria marcada: âmbar cheio, sem check */
+.chip-cat input:checked+.chip-corpo {
+    gap: 0;
+    padding-left: 18px;
+    background-color: var(--amber);
+    border-color: var(--amber);
+    font-weight: 700;
+}
+
+.chip input:focus-visible+.chip-corpo {
+    outline: 2px solid var(--ink);
+    outline-offset: 2px;
+}
+
+/* ==============================
+   BOTÕES DE NAVEGAÇÃO
+   ============================== */
 
 .controls {
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    gap: 16px;
-    margin-top: 16px;
-    padding-inline: 8px;
+    gap: 12px;
+    margin-top: 28px;
+    padding-inline: 0;
 }
 
 .controls button {
+    min-height: 48px;
+    padding: 12px 24px;
+    border-radius: var(--radius-pill);
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.95rem;
+    font-weight: 700;
+    transition: background-color 0.15s ease, border-color 0.15s ease, transform 0.1s ease;
+}
+
+.controls button:active {
+    transform: scale(0.98);
+}
+
+/* Ação principal: âmbar com texto escuro (igual aos botões do resto do site) */
+.controls .next-btn,
+.controls .submit-btn {
     flex: 1;
+    border: 1.5px solid var(--amber);
+    background-color: var(--amber);
+    color: var(--ink);
+}
+
+.controls .next-btn:hover,
+.controls .next-btn:active,
+.controls .submit-btn:hover,
+.controls .submit-btn:active {
+    border-color: #f8c065;
+    background-color: #f8c065;
+}
+
+/* Ação secundária: contorno, como o .btn-ghost */
+.controls .prev-btn {
+    flex: 0 0 auto;
+    border: 1.5px solid var(--amber-line);
+    background-color: transparent;
+    color: var(--ink);
+}
+
+.controls .prev-btn:hover,
+.controls .prev-btn:active {
+    border-color: var(--amber);
+    background-color: var(--amber-soft);
+}
+
+.controls button:focus-visible {
+    outline: 2px solid var(--ink);
+    outline-offset: 2px;
 }
 
 .btn-voltar {
@@ -426,13 +725,20 @@ button[type="submit"]:active {
     margin-right: 10px;
 }
 
-/* ERRO */
+/* ==============================
+   ERRO
+   ============================== */
 
 .erro-mensagem {
-    color: var(--error-color);
-    font-size: 0.9rem;
-    margin-top: 5px;
     display: none;
+    margin-top: 14px;
+    padding: 10px 14px;
+    border-left: 3px solid var(--danger);
+    border-radius: 8px;
+    background-color: var(--danger-soft);
+    font-size: 0.88rem;
+    font-weight: 600;
+    color: var(--danger);
 }
 
 /* ==============================
@@ -473,6 +779,43 @@ button[type="submit"]:active {
         height: 36px;
     }
 
+    /* Wizard no celular */
+
+    .container {
+        padding-inline: 12px;
+    }
+
+    :root {
+        --step-size: 32px;
+    }
+
+    .progress-conteiner {
+        margin-bottom: 28px;
+    }
+
+    .progress-conteiner li {
+        font-size: 0.74rem;
+    }
+
+    /* Botão principal em cima, "Voltar" embaixo, ambos na largura toda */
+    .controls {
+        flex-direction: column-reverse;
+        align-items: stretch;
+    }
+
+    .controls .prev-btn {
+        flex: none;
+    }
+
+    .controls .next-btn,
+    .controls .submit-btn {
+        flex: none;
+    }
+
+    .step .opcao-check {
+        padding: 14px;
+    }
+
 }
 
 @media (max-width: 480px) {
@@ -484,6 +827,35 @@ button[type="submit"]:active {
     .btn-header {
         padding: 7px 12px;
         font-size: 0.8rem;
+    }
+
+}
+
+/* Telas de toque: alvos de pelo menos 44px */
+@media (pointer: coarse) {
+
+    .chip-corpo {
+        min-height: 44px;
+    }
+
+    .step .opcao-check {
+        min-height: 52px;
+    }
+
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+    .step.ativa {
+        animation: none;
+    }
+
+    .chip-corpo,
+    .chip-check,
+    .progress-conteiner .progress,
+    .progress-conteiner li::before,
+    .controls button {
+        transition: none;
     }
 
 }

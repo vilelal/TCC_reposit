@@ -506,6 +506,8 @@ img {
 .modal-denuncia-content {
     width: 100%;
     max-width: 480px;
+    max-height: 100%;
+    overflow-y: auto;
     background: #fff;
     border: 1px solid var(--borda);
     border-radius: var(--raio);
@@ -544,6 +546,14 @@ img {
     color: var(--texto);
 }
 
+/* Rótulo de um grupo de chips (mesmo visual dos <label> do modal) */
+.modal-denuncia-content .rotulo-grupo {
+    margin: 0;
+    font-size: 0.825rem;
+    font-weight: 600;
+    color: var(--texto);
+}
+
 .modal-denuncia-content select,
 .modal-denuncia-content textarea {
     width: 100%;
@@ -567,6 +577,87 @@ img {
 .modal-denuncia-content textarea {
     resize: vertical;
     min-height: 90px;
+}
+
+/* ----- Chips do motivo da denúncia (escolha única) ----- */
+
+.modal-denuncia .motivo-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.modal-denuncia .chip-motivo {
+    position: relative;
+    display: inline-flex;
+    margin: 0;
+    cursor: pointer;
+}
+
+/* O radio continua existindo (teclado e envio do form), só fica invisível */
+.modal-denuncia .chip-motivo input {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    opacity: 0;
+    cursor: pointer;
+}
+
+.modal-denuncia .chip-motivo-corpo {
+    display: inline-flex;
+    align-items: center;
+    gap: 0;
+    padding: 9px 16px;
+    border: 1.5px solid var(--borda);
+    border-radius: 999px;
+    background-color: #fff;
+    font-size: 0.82rem;
+    font-weight: 500;
+    line-height: 1.25;
+    color: var(--texto);
+    text-align: left;
+    transition: background-color 0.15s ease, border-color 0.15s ease, gap 0.15s ease, padding 0.15s ease, transform 0.1s ease;
+}
+
+.modal-denuncia .chip-motivo:hover .chip-motivo-corpo {
+    background-color: var(--ouro-fundo);
+    border-color: var(--ouro-borda);
+}
+
+.modal-denuncia .chip-motivo:active .chip-motivo-corpo {
+    transform: scale(0.97);
+}
+
+/* Check: escondido até o chip ser marcado */
+.modal-denuncia .chip-motivo-check {
+    flex: none;
+    width: 0;
+    height: 16px;
+    opacity: 0;
+    color: var(--texto);
+    transition: width 0.15s ease, opacity 0.15s ease;
+}
+
+.modal-denuncia .chip-motivo input:checked+.chip-motivo-corpo {
+    gap: 6px;
+    padding-left: 12px;
+    background-color: var(--ouro-fundo);
+    border-color: var(--ouro);
+    font-weight: 600;
+}
+
+.modal-denuncia .chip-motivo input:checked+.chip-motivo-corpo .chip-motivo-check {
+    width: 16px;
+    opacity: 1;
+}
+
+.modal-denuncia .chip-motivo input:focus-visible+.chip-motivo-corpo {
+    outline: 2px solid var(--ouro);
+    outline-offset: 2px;
 }
 
 /* Ações / Botões do Modal */
@@ -824,6 +915,19 @@ img {
         width: 42px;
         padding: 0;
         justify-content: center;
+    }
+
+    /* Modal: menos folga nas laterais e chips mais fáceis de tocar */
+    .modal-denuncia {
+        padding: 12px;
+    }
+
+    .modal-denuncia-content {
+        padding: 20px 16px;
+    }
+
+    .modal-denuncia .chip-motivo-corpo {
+        min-height: 40px;
     }
 
 }
