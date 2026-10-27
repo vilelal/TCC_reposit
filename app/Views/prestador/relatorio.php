@@ -16,7 +16,7 @@
     <?php
     $paginaAtiva = 'relatorio';
     $paginaTitulo = 'Relatório';
-    require __DIR__ . '/partials/menu.php';
+    require __DIR__ . '/../partials/menu.php';
     ?>
 
     <main class="conteudo">
@@ -26,11 +26,24 @@
                 <p>Faturamento e desempenho dos seus serviços.</p>
             </div>
 
-            <div class="periodos" role="group" aria-label="Período">
-                <button type="button" class="periodo ativo" data-periodo="7d" aria-pressed="true">7 dias</button>
-                <button type="button" class="periodo" data-periodo="30d" aria-pressed="false">30 dias</button>
-                <button type="button" class="periodo" data-periodo="12m" aria-pressed="false">12 meses</button>
-            </div>
+            <?php 
+// Pega o período atual da URL para saber qual fica com a classe 'ativo' (padrão é 7d)
+$periodoAtual = $_GET['dias'] ?? '7d'; 
+?>
+
+<div class="periodos" role="group" aria-label="Período">
+    <a href="?route=relatorio&dias=7d" 
+       class="periodo <?php echo ($periodoAtual == '7d') ? 'ativo' : ''; ?>" 
+       aria-pressed="<?php echo ($periodoAtual == '7d') ? 'true' : 'false'; ?>">7 dias</a>
+       
+    <a href="?route=relatorio&dias=30d" 
+       class="periodo <?php echo ($periodoAtual == '30d') ? 'ativo' : ''; ?>" 
+       aria-pressed="<?php echo ($periodoAtual == '30d') ? 'true' : 'false'; ?>">30 dias</a>
+       
+    <a href="?route=relatorio&dias=12m" 
+       class="periodo <?php echo ($periodoAtual == '12m') ? 'ativo' : ''; ?>" 
+       aria-pressed="<?php echo ($periodoAtual == '12m') ? 'true' : 'false'; ?>">12 meses</a>
+</div>
         </div>
 
         <!-- TODO: trocar os dados de exemplo (const DADOS no script abaixo) por dados reais do back-end -->
@@ -87,7 +100,7 @@
     </main>
     </div>
 
-    <!-- <script>
+    <script>
         (function () {
             // Dados de exemplo: só existem aqui, no front.
             var DADOS = {
@@ -205,7 +218,8 @@
             desenhar('7d');
             desenharListas();
         })();
-    </script> -->
+    </script>
+    
 </body>
 
 </html>

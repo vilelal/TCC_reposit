@@ -11,10 +11,39 @@ class PrestadorController
         require_once "app/Views/prestador/dashboard.php";
     }
 
-    public function relatorio()
+
+    public function porcentagemComparada (){
+        
+
+    }
+
+
+    public function relatorio()  // servindo para ver concluidos e dinheiro
     {
+    // Pega o parâmetro 'dia do js da pagina relatorio
+    $periodoParam = $_GET['dias'] ?? '7'; 
+
+    // quantos dias a pessoa ve
+    switch ($periodoParam) {
+        case '7':
+        case '7d':
+            $diasSelecionados = 7;
+            break;
+        case '30':
+        case '30d':
+            $diasSelecionados = 30;
+            break;
+        case '365':
+        case '12m':
+            $diasSelecionados = 365; 
+            break;
+        default:
+            $diasSelecionados = 7; // Valor padrão 
+            break;
+    }
+
         $idprestador = $_SESSION["id_prestador"];
-        $dadosrelatorio = PrestadorModel::servicosConcluidos($idprestador);
+        $dadosrelatorio = PrestadorModel::servicosConcluidos($idprestador, $diasSelecionados);
 
         $trampo = $dadosrelatorio["total_concluidos"];
         $money = $dadosrelatorio ["faturamento_total"];                 // olhga aquiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii
