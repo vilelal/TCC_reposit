@@ -7,7 +7,9 @@
     <title>Serviços | FastService</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;600;700;800&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;600;700;800&family=Montserrat:wght@400;500;600;700&display=swap"
+        rel="stylesheet">
     <link rel="stylesheet" href="app/css/painel.css">
     <link rel="stylesheet" href="app/css/servico.css">
 </head>
@@ -16,7 +18,7 @@
     <?php
     $paginaAtiva = 'servicos';
     $paginaTitulo = 'Serviços';
-    require __DIR__ . '/partials/menu.php';
+    require __DIR__ . '/../partials/menu.php';
 
     if (!isset($servicos))
         $servicos = [];
@@ -70,8 +72,10 @@
                     <div class="servico-info">
                         <h3><?= htmlspecialchars($servico["nome_TB_servico"]) ?></h3>
                         <ul class="servico-meta">
-                            <li><?= $iconeData ?><?= formatarDataServico($servico["data_agendamento_TB_SolicitacaoServico"]) ?></li>
-                            <li><?= $iconeValor ?><?= formatarValorServico($servico["valorTotal_TB_SolicitacaoServico"]) ?></li>
+                            <li><?= $iconeData ?><?= formatarDataServico($servico["data_agendamento_TB_SolicitacaoServico"]) ?>
+                            </li>
+                            <li><?= $iconeValor ?><?= formatarValorServico($servico["valorTotal_TB_SolicitacaoServico"]) ?>
+                            </li>
                         </ul>
                     </div>
 
@@ -80,7 +84,8 @@
                             <input type="hidden" name="servico_id" value="<?= $servico["PK_id_TB_SolicitacaoServico"] ?>">
                             <input type="hidden" name="status" value="cancelado">
                             <input type="hidden" name="cliente" value="<?= $servico["FK_id_TB_cliente"] ?>">
-                            <input type="hidden" name="servico" value="<?= htmlspecialchars($servico["nome_TB_servico"]) ?>">
+                            <input type="hidden" name="servico"
+                                value="<?= htmlspecialchars($servico["nome_TB_servico"]) ?>">
                             <button type="submit" class="btn-recusar">Recusar</button>
                         </form>
 
@@ -88,7 +93,8 @@
                             <input type="hidden" name="servico_id" value="<?= $servico["PK_id_TB_SolicitacaoServico"] ?>">
                             <input type="hidden" name="status" value="aceito">
                             <input type="hidden" name="cliente" value="<?= $servico["FK_id_TB_cliente"] ?>">
-                            <input type="hidden" name="servico" value="<?= htmlspecialchars($servico["nome_TB_servico"]) ?>">
+                            <input type="hidden" name="servico"
+                                value="<?= htmlspecialchars($servico["nome_TB_servico"]) ?>">
                             <button type="submit" class="btn-aceitar">Aceitar</button>
                         </form>
                     </div>
@@ -105,25 +111,32 @@
                 $agendamento = new DateTime($servico["data_agendamento_TB_SolicitacaoServico"]);
                 $dataAtual = new DateTime();
                 $passouPrazo = $dataAtual > $agendamento ? true : false;
-            ?>
+                ?>
 
                 <dialog id="modal" closedby="any">
                     <h3> Digite o codigo passado pelo cliente! </h3>
                     <form action="?route=concluir-servico" method="post">
-                        <input type="text" placeholder="0000" maxlength="4" name="pin"
-                            inputmode="numeric" oninput="this.value = this.value.replace(/[^0-9]/g, '')">
-                        <input type="hidden" name="servico_id" id="" value="<?= $servico["PK_id_TB_SolicitacaoServico"] ?? "" ?>">
-                        <input type="hidden" name="cliente" id="" value="<?= $servico["FK_id_TB_cliente"] ?? "" ?>">
+                        <input type="text" placeholder="0000" maxlength="4" name="pin" inputmode="numeric"
+                            oninput="this.value = this.value.replace(/[^0-9]/g, '')">
+                        <input type="hidden" name="servico_id" id=""
+                            value="<?= $servico["PK_id_TB_SolicitacaoServico"] ?? "" ?>">
+                        <input type="hidden" name="servico" id="" value="<?= $servico["nome_TB_servico"] ?? "" ?>">
+                        <input type="hidden" name="prestador" id="" value="<?= $servico["nome_TB_prestador"] ?? "" ?>">
+                        <input type="hidden" name="id_user_cliente" id="" value="<?= $servico["id_usuario_cliente"] ?? "" ?>">
+                        <input type="hidden" name="id_user_prestador" id="" value="<?= $servico["id_usuario_prestador"] ?? "" ?>">
+
                         <button type="submit" class=""> Concluir Serviço </button>
                     </form>
                 </dialog>
-                
+
                 <article class="servico-card aceito">
                     <div class="servico-info">
                         <h3><?= htmlspecialchars($servico["nome_TB_servico"]) ?></h3>
                         <ul class="servico-meta">
-                            <li><?= $iconeData ?><?= formatarDataServico($servico["data_agendamento_TB_SolicitacaoServico"]) ?></li>
-                            <li><?= $iconeValor ?><?= formatarValorServico($servico["valorTotal_TB_SolicitacaoServico"]) ?></li>
+                            <li><?= $iconeData ?><?= formatarDataServico($servico["data_agendamento_TB_SolicitacaoServico"]) ?>
+                            </li>
+                            <li><?= $iconeValor ?><?= formatarValorServico($servico["valorTotal_TB_SolicitacaoServico"]) ?>
+                            </li>
                         </ul>
                     </div>
 
@@ -138,7 +151,8 @@
                             <input type="hidden" name="servico_id" value="<?= $servico["PK_id_TB_SolicitacaoServico"] ?>">
                             <input type="hidden" name="status" value="cancelado">
                             <input type="hidden" name="cliente" value="<?= $servico["FK_id_TB_cliente"] ?>">
-                            <input type="hidden" name="servico" value="<?= htmlspecialchars($servico["nome_TB_servico"]) ?>">
+                            <input type="hidden" name="servico"
+                                value="<?= htmlspecialchars($servico["nome_TB_servico"]) ?>">
                             <button type="submit" class="btn-recusar">Cancelar</button>
                         </form>
                     </div>
@@ -149,26 +163,26 @@
     </div>
 
     <script>
-        (function() {
+        (function () {
             var abas = document.querySelectorAll('.aba');
             var paineis = document.querySelectorAll('.painel');
 
             function mostrar(alvo) {
-                abas.forEach(function(aba) {
+                abas.forEach(function (aba) {
                     var ativa = aba.dataset.alvo === alvo;
                     aba.classList.toggle('ativa', ativa);
                     aba.setAttribute('aria-selected', ativa);
                 });
-                paineis.forEach(function(painel) {
+                paineis.forEach(function (painel) {
                     painel.classList.toggle('ativo', painel.id === alvo);
                 });
                 try {
                     sessionStorage.setItem('abaServicos', alvo);
-                } catch (e) {}
+                } catch (e) { }
             }
 
-            abas.forEach(function(aba) {
-                aba.addEventListener('click', function() {
+            abas.forEach(function (aba) {
+                aba.addEventListener('click', function () {
                     mostrar(aba.dataset.alvo);
                 });
             });
@@ -177,7 +191,7 @@
             try {
                 var salva = sessionStorage.getItem('abaServicos');
                 if (salva && document.getElementById(salva)) mostrar(salva);
-            } catch (e) {}
+            } catch (e) { }
         })();
     </script>
 </body>

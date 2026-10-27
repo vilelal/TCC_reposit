@@ -17,7 +17,7 @@
     // Tela do fluxo de perfil: mantém "Perfil" destacado no menu
     $paginaAtiva = 'perfil';
     $paginaTitulo = 'Meus serviços';
-    require __DIR__ . '/partials/menu.php';
+    require __DIR__ . '/../partials/menu.php';
     ?>
 
     <main class="conteudo">
@@ -35,20 +35,19 @@
             <section class="etapa">
                 <h3>Adicionar serviços</h3>
 
-                <label class="rotulo" for="categorias">Categoria</label>
-                <select name="categorias" id="categorias">
-                    <option value="">Selecione uma categoria</option>
+                <p class="rotulo" id="rotulo-categoria">Categoria</p>
+                <div class="container-chips" id="container-categorias" role="group" aria-labelledby="rotulo-categoria">
                     <?php
                     if (isset($categorias)) {
                         foreach ($categorias as $cat) {
-                            echo "<option value='" . (int) $cat["PK_id_TB_categoria"] . "'>" . htmlspecialchars($cat['nome_TB_categoria']) . "</option>";
+                            echo "<button type='button' class='chip-cat' data-id='" . (int) $cat["PK_id_TB_categoria"] . "' aria-pressed='false'>" . htmlspecialchars($cat['nome_TB_categoria']) . "</button>";
                         }
                     }
                     ?>
-                </select>
+                </div>
 
                 <p class="rotulo">Serviços da categoria</p>
-                <div class="container-servicos" id="container-servicos">
+                <div class="container-chips" id="container-servicos">
                     <p class="dica">Escolha uma categoria para ver os serviços disponíveis.</p>
                 </div>
             </section>
@@ -74,6 +73,9 @@
 
         const servicosId = servicosPrestador.map(servico => String(servico.PK_id_TB_servico));
         const servicosSelecionados = new Set(servicosId);
+
+        // Ícone de check exibido nas tags marcadas
+        const iconeCheck = '<svg class="chip-check" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg>';
 
         // Evita que nomes vindos do banco sejam interpretados como HTML
         function esc(texto) {
@@ -104,7 +106,7 @@
             }).join("");
         }
 
-        // Marca / desmarca a partir dos checkboxes da categoria
+        // Marca / desmarca a partir das tags da categoria
         container.addEventListener("change", function (e) {
             if (e.target && e.target.classList.contains("chk-servico")) {
                 const idServico = String(e.target.value);
@@ -127,7 +129,7 @@
             const idParaRemover = botao.getAttribute("data-id");
             servicosSelecionados.delete(idParaRemover);
 
-            // Se o checkbox estiver visível na categoria atual, desmarca também
+            // Se a tag estiver visível na categoria atual, desmarca também
             const chkVisivel = document.getElementById(`srv-${idParaRemover}`);
             if (chkVisivel) {
                 chkVisivel.checked = false;
@@ -136,15 +138,8 @@
             renderizarSelecionados();
         });
 
-        // Lista os serviços da categoria escolhida no <select>
-        document.getElementById("categorias").addEventListener("change", function () {
-            const categoria = this.value;
-
-            if (!categoria) {
-                container.innerHTML = "<p class='dica'>Escolha uma categoria para ver os serviços disponíveis.</p>";
-                return;
-            }
-
+        // Mostra os chips de serviço da categoria escolhida
+        function renderizarServicos(categoria) {
             const servicosFiltrados = servicos.filter(s => String(s.FK_id_TB_categoria) === String(categoria));
 
             if (servicosFiltrados.length === 0) {
@@ -157,11 +152,20 @@
                 const marcado = servicosSelecionados.has(id) ? "checked" : "";
 
                 return `
-                <div class="item-servico">
+                <label class="chip" for="srv-${esc(id)}">
                     <input type="checkbox" class="chk-servico" value="${esc(id)}" id="srv-${esc(id)}" ${marcado}>
-                    <label for="srv-${esc(id)}">${esc(servico.nome_TB_servico)}</label>
-                </div>`;
+                    <span class="chip-corpo">${iconeCheck}${esc(servico.nome_TB_servico)}</span>
+                </label>`;
             }).join("");
+        }
+
+        // Clique em uma categoria: destaca o chip e lista os serviços dela
+        document.getElementById("container-categorias").addEventListener("click", function (e) {
+            const botao = e.target.closest(".chip-cat");
+            if (!botao) return;
+
+            this.querySelectorAll(".chip-cat").forEach(b => b.setAttribute("aria-pressed", String(b === botao)));
+            renderizarServicos(botao.getAttribute("data-id"));
         });
 
         renderizarSelecionados();

@@ -107,7 +107,7 @@ class ServiceController
         ]);
 
         NotificacaoModel::enviarNotificacao([
-            "titulo" => " Solicitação do serviço {$servico}",
+            "titulo" => "Solicitação do serviço {$servico}",
             "mensagem" => "O serviço {$servico} foi agendado! Confira as informações na aba de
             serviços no painel",
             "user_id" => $user_prestador["PK_id_TB_usuario"]
@@ -127,8 +127,23 @@ class ServiceController
         $id = $_POST["user"];
         $nota = $_POST["nota"];
 
-        $avaliacao = AvaliacaoModel::avaliar($nota, $id);
+        AvaliacaoModel::avaliar($nota, $id);
 
-        header("Location: ?route=dashboard");
+        if ($_SESSION["tipo"] == "prestador") {
+            header("Location: ?route=dashboard");
+            return;
+        }
+
+        header("Location: ?route=");
+        return;
+    }
+
+    public static function avaliacao()
+    {
+        $userPrestador = $_POST["prestador"];
+        $id_notificacao = $_POST["notificacao"];
+        $avaliacao = NotificacaoModel::notificacaoAvaliada($id_notificacao);
+
+        require_once "app/Views/servicos/avaliar.php";
     }
 }

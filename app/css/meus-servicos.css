@@ -57,57 +57,112 @@
     color: var(--muted);
 }
 
-/* Select de categoria */
-#categorias {
+/* Grupos de chips (categorias e serviços) */
+.container-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.container-chips .dica {
     width: 100%;
-    padding: 11px 14px;
+}
+
+/* Categoria: escolha única, destaque âmbar cheio */
+.chip-cat {
+    padding: 8px 16px;
     border: 1px solid var(--line);
-    border-radius: var(--radius-sm);
-    background-color: var(--bg);
+    border-radius: var(--radius-pill);
+    background-color: var(--surface);
     font-family: 'Montserrat', sans-serif;
-    font-size: 0.92rem;
+    font-size: 0.88rem;
+    font-weight: 500;
     color: var(--ink);
     cursor: pointer;
-}
-
-#categorias:focus-visible {
-    outline-offset: 0;
-}
-
-/* Serviços da categoria */
-.container-servicos {
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
-}
-
-.item-servico {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    padding: 11px 14px;
-    border: 1px solid var(--line);
-    border-radius: var(--radius-sm);
     transition: background-color 0.15s ease, border-color 0.15s ease;
 }
 
-.item-servico:hover {
+.chip-cat:hover {
     background-color: var(--amber-soft);
     border-color: var(--amber-line);
 }
 
-.item-servico input {
-    width: 18px;
-    height: 18px;
-    accent-color: var(--amber);
+.chip-cat[aria-pressed="true"] {
+    background-color: var(--amber);
+    border-color: var(--amber);
+    font-weight: 700;
+}
+
+.chip-cat:focus-visible {
+    outline: 2px solid var(--ink);
+    outline-offset: 2px;
+}
+
+.container-chips+.rotulo {
+    margin-top: 20px;
+}
+
+.chip {
+    position: relative;
+    display: inline-flex;
     cursor: pointer;
 }
 
-.item-servico label {
-    flex: 1;
-    font-size: 0.92rem;
-    font-weight: 500;
+/* O checkbox continua existindo (teclado e leitores de tela), só some visualmente */
+.chip input {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    opacity: 0;
     cursor: pointer;
+}
+
+.chip-corpo {
+    display: inline-flex;
+    align-items: center;
+    gap: 0;
+    padding: 8px 16px;
+    border: 1px solid var(--line);
+    border-radius: var(--radius-pill);
+    background-color: var(--surface);
+    font-size: 0.88rem;
+    font-weight: 500;
+    color: var(--ink);
+    transition: background-color 0.15s ease, border-color 0.15s ease, gap 0.15s ease, padding 0.15s ease;
+}
+
+.chip:hover .chip-corpo {
+    background-color: var(--amber-soft);
+    border-color: var(--amber-line);
+}
+
+/* Ícone de check: escondido até a tag ser marcada */
+.chip-check {
+    width: 0;
+    height: 16px;
+    opacity: 0;
+    color: var(--ink);
+    transition: width 0.15s ease, opacity 0.15s ease;
+}
+
+.chip input:checked+.chip-corpo {
+    gap: 6px;
+    padding-left: 12px;
+    background-color: var(--amber-soft);
+    border-color: var(--amber);
+    font-weight: 600;
+}
+
+.chip input:checked+.chip-corpo .chip-check {
+    width: 16px;
+    opacity: 1;
+}
+
+.chip input:focus-visible+.chip-corpo {
+    outline: 2px solid var(--ink);
+    outline-offset: 2px;
 }
 
 /* Selecionados */
@@ -129,33 +184,32 @@
 
 .container-selecionados {
     display: flex;
-    flex-direction: column;
-    gap: 6px;
+    flex-wrap: wrap;
+    gap: 8px;
     margin: 14px 0 18px;
 }
 
 .item-servico-selecionado {
-    display: flex;
+    display: inline-flex;
     align-items: center;
-    justify-content: space-between;
-    gap: 12px;
-    padding: 9px 8px 9px 14px;
+    gap: 4px;
+    padding: 4px 4px 4px 14px;
     background-color: var(--amber-soft);
     border: 1px solid var(--amber-line);
-    border-radius: var(--radius-sm);
-    font-size: 0.9rem;
+    border-radius: var(--radius-pill);
+    font-size: 0.88rem;
     font-weight: 600;
 }
 
 .btn-remover {
     display: grid;
     place-items: center;
-    width: 28px;
-    height: 28px;
+    width: 24px;
+    height: 24px;
     border: none;
     border-radius: 50%;
     background: none;
-    font-size: 1.25rem;
+    font-size: 1.15rem;
     line-height: 1;
     color: var(--muted);
     cursor: pointer;
@@ -168,6 +222,7 @@
 }
 
 .vazio {
+    width: 100%;
     padding: 22px 14px;
     border: 1px dashed var(--amber-line);
     border-radius: var(--radius-sm);
@@ -207,5 +262,14 @@
 @media (max-width: 800px) {
     .etapa {
         padding: 18px 16px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+    .chip-cat,
+    .chip-corpo,
+    .chip-check {
+        transition: none;
     }
 }

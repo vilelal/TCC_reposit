@@ -1,5 +1,6 @@
 <?php
 $meusChats = $meusChats ?? [];
+$solicitacaoAtiva = $solicitacaoAtiva ?? null; // <-- ADICIONE ESTA LINHA AQUI!
 
 // Localiza a conversa aberta para exibir contato e serviço no cabeçalho
 $chatAtivo = null;
@@ -59,7 +60,7 @@ $fotoPadrao = 'app/css/img/icone-user.png';
 
                 <?php if (!empty($meusChats)): ?>
                     <?php foreach ($meusChats as $chat): ?>
-                        <?php $isAtivo = (isset($solicitacaoAtiva) && $solicitacaoAtiva == $chat['id_solicitacao']); ?>
+                        <?php $isAtivo = (isset($solicitacaoAtiva) && $solicitacaoAtiva ==$chat['id_solicitacao']); ?>
 
                         <a href="?route=chat&id_solicitacao=<?= (int) $chat['id_solicitacao'] ?>"
                            class="item-chat <?= $isAtivo ? 'ativo' : '' ?>">
@@ -93,26 +94,35 @@ $fotoPadrao = 'app/css/img/icone-user.png';
             </aside>
 
             <!-- ÁREA PRINCIPAL: CHAT ATIVO -->
-            <?php if (isset($solicitacaoAtiva) && $solicitacaoAtiva != null): ?>
+            <?php if (isset($solicitacaoAtiva) &&$solicitacaoAtiva != null): ?>
                 <section class="area-chat-ativo">
                     <div class="header-chat-ativo">
-                        <a href="?route=chat" class="btn-voltar" title="Voltar às conversas" aria-label="Voltar às conversas">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg>
-                        </a>
+                        <div style="display: flex; align-items: center; gap: 12px;">
+                            <a href="?route=chat" class="btn-voltar" title="Voltar às conversas" aria-label="Voltar às conversas">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg>
+                            </a>
 
-                        <?php if ($chatAtivo): ?>
-                            <img src="<?= !empty($chatAtivo['foto_contato']) ? htmlspecialchars($chatAtivo['foto_contato']) . '?v=' . time() : $fotoPadrao ?>"
-                                 class="foto-chat" alt="">
-                            <div class="header-chat-info">
-                                <div class="header-chat-nome"><?= htmlspecialchars($chatAtivo['nome_contato']) ?></div>
-                                <div class="header-chat-sub">
-                                    <?= htmlspecialchars($chatAtivo['nome_TB_servico']) ?> · Solicitação #<?= (int) $solicitacaoAtiva ?>
+                            <?php if ($chatAtivo): ?>
+                                <img src="<?= !empty($chatAtivo['foto_contato']) ? htmlspecialchars($chatAtivo['foto_contato']) . '?v=' . time() : $fotoPadrao ?>"
+                                     class="foto-chat" alt="">
+                                <div class="header-chat-info">
+                                    <div class="header-chat-nome"><?= htmlspecialchars($chatAtivo['nome_contato']) ?></div>
+                                    <div class="header-chat-sub">
+                                        <?= htmlspecialchars($chatAtivo['nome_TB_servico']) ?> · Solicitação #<?= (int) $solicitacaoAtiva ?>
+                                    </div>
                                 </div>
-                            </div>
-                        <?php else: ?>
-                            <div class="header-chat-info">
-                                <div class="header-chat-nome">Solicitação #<?= (int) $solicitacaoAtiva ?></div>
-                            </div>
+                            <?php else: ?>
+                                <div class="header-chat-info">
+                                    <div class="header-chat-nome">Solicitação #<?= (int) $solicitacaoAtiva ?></div>
+                                </div>
+                            <?php endif; ?>
+                        </div>
+
+                        <!-- BOTÃO DE DENÚNCIA DIRETO NO CABEÇALHO DO CHAT -->
+                        <?php if ($chatAtivo && !empty($chatAtivo['id_contato'])): ?>
+                            <button type="button" class="btn-denunciar" onclick="abrirModalDenuncia()" title="Denunciar usuário">
+                                🚩 Denunciar
+                            </button>
                         <?php endif; ?>
                     </div>
 
@@ -249,8 +259,6 @@ $fotoPadrao = 'app/css/img/icone-user.png';
                         } catch (erro) {
                             return;
                         }
-
-                        // Evita redesenhar (e piscar) quando nada mudou
                         const assinatura = mensagens.length + '|' + JSON.stringify(mensagens[mensagens.length - 1] || null);
                         if (assinatura === ultimaAssinatura && !forcarRolagem) return;
 
@@ -326,5 +334,67 @@ $fotoPadrao = 'app/css/img/icone-user.png';
         </div>
     </main>
 </div>
+
+<!-- MODAL DE DENÚNCIA -->
+<?php if ($chatAtivo && !empty($chatAtivo['id_contato'])): ?>
+<div id="modalDenuncia" class="modal-denuncia" style="display: none;">
+    <div class="modal-denuncia-content">
+        <h3>Denunciar <?= htmlspecialchars($chatAtivo['nome_contato']) ?></h3>
+        <p>Informe o motivo da sua denúncia. Ela será analisada de forma sigilosa pela administração do sistema.</p>
+
+        <form action="?route=enviar-denuncia" method="POST">
+            <!-- Puxa os dados com 100% de precisão da conversa ativa -->
+            <input type="hidden" name="id_solicitacao" value="<?= (int) $solicitacaoAtiva ?>">
+            <input type="hidden" name="id_denunciado" value="<?= (int) $chatAtivo['id_contato'] ?>">
+
+            <div class="form-group" style="margin-bottom: 15px; text-align: left;">
+                <p id="rotulo-motivo" class="rotulo-grupo">Motivo:</p>
+
+                <div class="motivo-chips" role="radiogroup" aria-labelledby="rotulo-motivo">
+                    <?php
+                    // Mesmos valores que o select antigo enviava no campo "motivo"
+                    $motivos = [
+                        'Comportamento Inadequado'     => 'Comportamento Inadequado / Ofensivo',
+                        'Fraude ou Golpe'              => 'Fraude ou Suspeita de Golpe',
+                        'Serviço Não Realizado'        => 'Serviço Pago e Não Realizado',
+                        'Spam / Mensagens Indesejadas' => 'Spam / Mensagens Indesejadas',
+                        'Outro'                        => 'Outro Motivo',
+                    ];
+                    foreach ($motivos as $valor => $rotulo): ?>
+                        <label class="chip-motivo">
+                            <input type="radio" name="motivo" value="<?= htmlspecialchars($valor) ?>" required>
+                            <span class="chip-motivo-corpo">
+                                <svg class="chip-motivo-check" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg>
+                                <?= htmlspecialchars($rotulo) ?>
+                            </span>
+                        </label>
+                    <?php endforeach; ?>
+                </div>
+            </div>
+
+            <div class="form-group" style="margin-bottom: 15px; text-align: left;">
+                <label for="descricao" style="display: block; font-weight: 600; margin-bottom: 5px;">Detalhes da denúncia:</label>
+                <textarea name="descricao" id="descricao" rows="4" placeholder="Descreva o ocorrido..." required style="width: 100%; padding: 8px; border-radius: 6px; border: 1px solid #ccc; font-family: inherit;"></textarea>
+            </div>
+
+            <div style="display: flex; justify-content: flex-end; gap: 10px;">
+                <button type="button" class="btn-cancelar" onclick="fecharModalDenuncia()" style="padding: 8px 16px; border-radius: 6px; border: none; background: #e0e0e0; cursor: pointer;">Cancelar</button>
+                <button type="submit" style="padding: 8px 16px; border-radius: 6px; border: none; background: #dc3545; color: white; font-weight: 600; cursor: pointer;">Enviar Denúncia</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script>
+    function abrirModalDenuncia() {
+        document.getElementById('modalDenuncia').style.display = 'flex';
+    }
+
+    function fecharModalDenuncia() {
+        document.getElementById('modalDenuncia').style.display = 'none';
+    }
+</script>
+<?php endif; ?>
+
 </body>
 </html>

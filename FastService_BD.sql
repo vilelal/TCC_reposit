@@ -93,7 +93,7 @@ CREATE TABLE TB_pagamento (
 -- 9. Avaliação do usuario
 CREATE TABLE TB_avaliacao (
     PK_id_TB_avaliacao INT AUTO_INCREMENT PRIMARY KEY,
-    FK_id_TB_usuario INT NOT NULL UNIQUE,
+    FK_id_TB_usuario INT NOT NULL,
     nota_TB_avaliacao INT NOT NULL CHECK (nota_TB_avaliacao BETWEEN 1 AND 5),
     data_avaliacao_TB_avaliacao DATETIME DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (FK_id_TB_usuario) REFERENCES TB_usuario(PK_id_TB_usuario)
@@ -121,6 +121,22 @@ CREATE TABLE TB_mensagem (
     FOREIGN KEY (FK_id_TB_SolicitacaoServico) REFERENCES TB_SolicitacaoServico(PK_id_TB_SolicitacaoServico),
     FOREIGN KEY (FK_id_TB_remetente) REFERENCES TB_usuario(PK_id_TB_usuario)
 );
+
+CREATE TABLE IF NOT EXISTS tb_denuncia (
+    PK_id_TB_denuncia INT AUTO_INCREMENT PRIMARY KEY,
+    FK_id_TB_denunciante INT NOT NULL,  -- Quem está denunciando
+    FK_id_TB_denunciado INT NOT NULL,    -- Quem está sendo denunciado
+    FK_id_TB_solicitacao INT NULL,       -- Solicitação/Chat onde ocorreu o fato (opcional)
+    motivo_TB_denuncia VARCHAR(100) NOT NULL,
+    descricao_TB_denuncia TEXT NOT NULL,
+    status_TB_denuncia ENUM('pendente', 'em_analise', 'resolvido', 'rejeitado') DEFAULT 'pendente',
+    data_TB_denuncia DATETIME DEFAULT CURRENT_TIMESTAMP,
+    
+    FOREIGN KEY (FK_id_TB_denunciante) REFERENCES tb_usuario(PK_id_TB_usuario) ON DELETE CASCADE,
+    FOREIGN KEY (FK_id_TB_denunciado) REFERENCES tb_usuario(PK_id_TB_usuario) ON DELETE CASCADE,
+    FOREIGN KEY (FK_id_TB_solicitacao) REFERENCES TB_SolicitacaoServico(PK_id_TB_SolicitacaoServico) ON DELETE SET NULL
+);
+
 ALTER TABLE TB_mensagem ADD COLUMN imagem_TB_mensagem VARCHAR(255) NULL;
 ALTER TABLE TB_clientePerfil ADD COLUMN foto_TB_cliente VARCHAR(255) NULL;
 ALTER TABLE TB_prestadorPerfil ADD COLUMN foto_TB_prestador VARCHAR(255) NULL;
