@@ -21,8 +21,7 @@
     $paginaTitulo = 'Notificações';
     if ($_SESSION["tipo"] == "prestador") {
         require __DIR__ . '/../partials/menu.php';
-    }
-    else {
+    } else {
         require __DIR__ . '/../partials/menu-cliente.php';
     }
 
@@ -53,13 +52,14 @@
                             <h3><?= htmlspecialchars($notificacao['titulo_TB_notificacao'] ?? '') ?></h3>
                             <p><?= htmlspecialchars($notificacao['mensagem_TB_notificacao'] ?? '') ?></p>
                         </div>
-                        
+
                         <?php if ($notificacao['titulo_TB_notificacao'] === 'Serviço concluído'): ?>
                             <form action="?route=avaliar-prestador" method="POST">
                                 <input type="hidden" name="prestador" value="<?= $prestador ?>">
                                 <input type="hidden" name="notificacao" value="<?= $notificacao['PK_id_TB_notificacao'] ?>">
                                 <button type="submit"> Avaliar prestador </button>
                             </form>
+
                         <?php endif; ?>
                         <div class="notificacao-lado">
                             <?php if ($nova): ?>

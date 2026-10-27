@@ -151,4 +151,24 @@ class ChatModel
         $conexao->close();
         return $sucesso;
     }
+
+    public static function enviarMensagemAutomatica($idSolicitacao, $idRemetente, $mensagemTexto)
+{
+    $conexao = Database::conectarBanco();
+    
+    // Ajuste os nomes das colunas conforme a estrutura real da sua tabela TB_mensagem
+    $sql = "INSERT INTO TB_mensagem (FK_id_TB_SolicitacaoServico, FK_id_TB_remetente, mensagem_TB_mensagem, data_envio_TB_mensagem) 
+            VALUES (?, ?, ?, NOW())";
+            
+    $stmt = $conexao->prepare($sql);
+    $stmt->bind_param("iis", $idSolicitacao, $idRemetente, $mensagemTexto);
+    $stmt->execute();
+    
+    $sucesso = $stmt->affected_rows > 0;
+    
+    $stmt->close();
+    $conexao->close();
+
+    return $sucesso;
+}
 }

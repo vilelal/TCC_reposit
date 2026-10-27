@@ -171,11 +171,6 @@ $ehAdmin = $tipo === "Admin";
                 <input type="datetime-local" id="data_agendamento" name="data_agendamento" required>
 
                 <br><br>
-                <label class="opcao-check">
-                     Desejo negociar um orçamento personalizado com o prestador
-                    <input type="checkbox" name="solicitar_orcamento" value="1">
-                   
-                </label>
 
                 <label style="margin-top: 15px; display:block;">Descrição adicional do problema:</label>
                 <textarea name="descricao" rows="3" placeholder="Descreva brevemente o que precisa ser feito..."></textarea>

@@ -73,4 +73,43 @@ class ChatController
         }
         exit;
     }
+    public function enviarOrcamento()
+{
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        $idSolicitacao = $_POST['id_solicitacao'] ?? null;
+        $novoValor = $_POST['novo_valor'] ?? null;
+
+        if ($idSolicitacao && $novoValor !== null) {
+            // 1. Atualiza o valor e o status da solicitação no banco
+            $sucesso = ServiceModel::atualizarOrcamentoSolicitacao($idSolicitacao, $novoValor);
+
+            if ($sucesso) {
+                // 2. Insere uma mensagem automática no chat informando o novo orçamento
+                $mensagemTexto = "O prestador enviou uma nova proposta de orçamento: R$ " . number_format((float)$novoValor, 2, ',', '.');
+                ChatModel::enviarMensagemAutomatica($idSolicitacao, $_SESSION['id'], $mensagemTexto);
+
+                // 3. Envia uma notificação para o cliente aceitar/recusar
+                // (Busca o ID do usuário cliente através da solicitação)
+                $idClienteUsuario = ServiceModel::getIdUsuarioClientePorSolicitacao($idSolicitacao);
+                if ($idClienteUsuario) {
+                    NotificacaoModel::enviarNotificacao([
+                        'titulo' => 'Novo orçamento recebido',
+                        'mensagem' => 'O prestador enviou um orçamento ajustado para o seu serviço. Acesse o chat para revisar e aceitar.',
+                        'user_id' => $idClienteUsuario
+                    ]);
+                }
+
+                // Redireciona de volta para o chat com sucesso
+                header("Location: ?route=chat&id=" . $idSolicitacao . "&status=orcamento_enviado");
+                exit;
+            }
+        }
+    }
+    header("Location: ?route=servicos&erro=falha_orcamento");
+    exit;
+}
+
+
+
+
 }

@@ -196,7 +196,7 @@ switch ($route) {
         break;
 
     case "painel-admin":
-        $controller = new AdminController(); 
+        $controller = new AdminController();
         $controller->exibirPainel();
         break;
 
@@ -228,7 +228,7 @@ switch ($route) {
     case "buscar-proximos":
         $controller = new PrestadorController();
         $controller->listarPrestadores();
-        break;     
+        break;
 
     case "solicitar":
         $controller = new PrestadorController();
@@ -239,7 +239,7 @@ switch ($route) {
         $controller = new ServiceController();
         $controller->avaliar();
         break;
-    
+
     case "avaliar-prestador":
         $controller = new ServiceController;
         $controller->avaliacao();
@@ -249,21 +249,27 @@ switch ($route) {
         $controller = new DenunciaController();
         $controller->registrarDenuncia();
         break;
-    
+
     case "admin-criar-categoria":
         $controller = new AdminController();
         $controller->criarCategoria();
-        break;  
-            
+        break;
+
     case "banir-via-denuncia":
         $controller = new AdminController();
         $controller->processarBanimentoPorDenuncia();
         break;
-    
+
     case "atualizar-status-denuncia":
         $controller = new AdminController();
         $controller->atualizarStatusDenuncia();
         break;
+
+    case 'enviar-orcamento':
+        $controller = new ChatController();
+        $controller->enviarOrcamento();
+        break;
+        
 
     default:
         $controller = new HomeController();
