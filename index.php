@@ -265,6 +265,11 @@ switch ($route) {
         $controller->atualizarStatusDenuncia();
         break;
 
+    case "perfil-prestador":
+        $controller = new PrestadorController();
+        $controller->exibirPerfil();
+        break;
+
     default:
         $controller = new HomeController();
         $controller->home();

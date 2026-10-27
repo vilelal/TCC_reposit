@@ -93,4 +93,12 @@ class PrestadorController
         header("Location: ?route=lista-servicos-cliente");
         return;
     }
+
+    public function exibirPerfil() {
+        $prestadorId = $_POST["prestador_id"];
+        $prestador = PrestadorModel::getPerfil($prestadorId);
+        $mediaAvaliacoes = $_POST["media"];
+
+        require_once "app/Views/prestador/prestador-perfil.php";
+    }
 }

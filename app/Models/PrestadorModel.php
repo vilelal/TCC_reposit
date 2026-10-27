@@ -40,4 +40,17 @@ class PrestadorModel
         }
         
     }
+
+    public static function getPerfil($id) {
+        $conexao = Database::conectarBanco();
+        $sql = "SELECT * FROM TB_prestadorPerfil WHERE PK_id_TB_prestadorPerfil = ?";
+        $stmt = $conexao->prepare($sql);
+        $stmt->bind_param("i", $id);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $prestador = $result->fetch_assoc();
+        $conexao->close();
+        $stmt->close();
+        return $prestador;
+    }
 }
