@@ -13,6 +13,10 @@ $ehAdmin = $tipo === "Admin";
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Solicitar Serviço</title>
  
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;600;700;800&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+
     <link rel="stylesheet" href="app/css/wizard.css">
     
     <link rel="stylesheet" href="app/css/detalhe.css">
@@ -107,17 +111,17 @@ $ehAdmin = $tipo === "Admin";
                 <h2>1. Escolha a Categoria</h2>
                 
 
-                <label for="select-categoria">Categoria do Serviço:</label>
-                <select id="select-categoria" name="FK_id_TB_categoria" onchange="filtrarServicos()" required>
-                    <option value="" disabled selected>Selecione uma categoria...</option>
+                <p class="rotulo-chips" id="rotulo-categoria">Categoria do Serviço:</p>
+                <div class="container-chips" role="radiogroup" aria-labelledby="rotulo-categoria">
                     <?php if (!empty($categorias)): ?>
                         <?php foreach ($categorias as $cat): ?>
-                            <option value="<?= $cat['PK_id_TB_categoria'] ?>">
-                                <?= htmlspecialchars($cat['nome_TB_categoria']) ?>
-                            </option>
+                            <label class="chip chip-cat">
+                                <input type="radio" name="FK_id_TB_categoria" value="<?= (int) $cat['PK_id_TB_categoria'] ?>" onchange="filtrarServicos()" required>
+                                <span class="chip-corpo"><?= htmlspecialchars($cat['nome_TB_categoria']) ?></span>
+                            </label>
                         <?php endforeach; ?>
                     <?php endif; ?>
-                </select>
+                </div>
 
                 <p id="erro-passo-1" class="erro-mensagem">Por favor, selecione uma categoria antes de prosseguir.</p>
                 <div class= "controls">
@@ -131,30 +135,43 @@ $ehAdmin = $tipo === "Admin";
             <div id="passo-2" class="step">
                 <h2>2. Detalhes e Urgência</h2>
                 
-                <label for="select-servico">Serviço Específico:</label>
-                <select id="select-servico" name="FK_id_TB_servico" required>
-                    <option value="" disabled selected>Selecione primeiro a categoria</option>
+                <p class="rotulo-chips" id="rotulo-servico">Serviço Específico:</p>
+                <div class="container-chips" id="container-servicos" role="radiogroup" aria-labelledby="rotulo-servico">
+                    <p class="dica" id="dica-servicos">Selecione primeiro a categoria.</p>
                     <?php if (!empty($todosServicos)): ?>
                         <?php foreach ($todosServicos as $servico): ?>
-                            <option value="<?= $servico['PK_id_TB_servico'] ?>" data-categoria="<?= $servico['FK_id_TB_categoria'] ?>" style="display:none;">
-                                <?= htmlspecialchars($servico['nome_TB_servico']) ?>
-                            </option>
+                            <label class="chip chip-servico" data-categoria="<?= (int) $servico['FK_id_TB_categoria'] ?>" hidden>
+                                <input type="radio" name="FK_id_TB_servico" value="<?= (int) $servico['PK_id_TB_servico'] ?>">
+                                <span class="chip-corpo">
+                                    <svg class="chip-check" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg>
+                                    <?= htmlspecialchars($servico['nome_TB_servico']) ?>
+                                </span>
+                            </label>
                         <?php endforeach; ?>
                     <?php endif; ?>
-                </select>
+                </div>
 
-                <label for="urgencia">Urgência do Serviço:</label>
-                <select id="urgencia" name="urgencia" required>
-                    <option value="urgente">Urgente (Ainda Hoje / Emergência)</option>
-                    <option value="moderada" selected>Moderada (Nos próximos 2 a 3 dias)</option>
-                    <option value="flexivel">Flexível (Sem data fixa)</option>
-                </select>
+                <p class="rotulo-chips" id="rotulo-urgencia">Urgência do Serviço:</p>
+                <div class="container-chips" role="radiogroup" aria-labelledby="rotulo-urgencia">
+                    <label class="chip chip-urgencia">
+                        <input type="radio" name="urgencia" value="urgente" required>
+                        <span class="chip-corpo"><svg class="chip-check" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg>Urgente (Ainda Hoje / Emergência)</span>
+                    </label>
+                    <label class="chip chip-urgencia">
+                        <input type="radio" name="urgencia" value="moderada" checked required>
+                        <span class="chip-corpo"><svg class="chip-check" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg>Moderada (Nos próximos 2 a 3 dias)</span>
+                    </label>
+                    <label class="chip chip-urgencia">
+                        <input type="radio" name="urgencia" value="flexivel" required>
+                        <span class="chip-corpo"><svg class="chip-check" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg>Flexível (Sem data fixa)</span>
+                    </label>
+                </div>
 
                 <label for="data_agendamento">Data/Hora Desejada:</label>
                 <input type="datetime-local" id="data_agendamento" name="data_agendamento" required>
 
                 <br><br>
-                <label>
+                <label class="opcao-check">
                      Desejo negociar um orçamento personalizado com o prestador
                     <input type="checkbox" name="solicitar_orcamento" value="1">
                    
@@ -240,14 +257,14 @@ $ehAdmin = $tipo === "Admin";
         let valido = true;
 
         if (atual === 1) {
-            const categoria = document.getElementById('select-categoria').value;
+            const categoria = document.querySelector('input[name="FK_id_TB_categoria"]:checked');
             if (!categoria) {
                 document.getElementById('erro-passo-1').style.display = 'block';
                 valido = false;
             }
         } 
         else if (atual === 2) {
-            const servico = document.getElementById('select-servico').value;
+            const servico = document.querySelector('input[name="FK_id_TB_servico"]:checked');
             const data = document.getElementById('data_agendamento').value;
 
             if (!servico || !data) {
@@ -261,22 +278,29 @@ $ehAdmin = $tipo === "Admin";
         }
     }
 
-    // 4. Filtro de serviços
+    // 4. Filtro de serviços: mostra só os chips da categoria escolhida
     function filtrarServicos() {
-        const categoriaId = document.getElementById('select-categoria').value;
-        const selectServico = document.getElementById('select-servico');
-        const options = selectServico.querySelectorAll('option');
+        const categoria = document.querySelector('input[name="FK_id_TB_categoria"]:checked');
+        const categoriaId = categoria ? categoria.value : "";
+        const chips = document.querySelectorAll('.chip-servico');
+        let visiveis = 0;
 
-        selectServico.value = "";
+        chips.forEach(chip => {
+            const mostrar = chip.getAttribute('data-categoria') === categoriaId;
+            chip.hidden = !mostrar;
+            if (mostrar) visiveis++;
 
-        options.forEach(option => {
-            const catOption = option.getAttribute('data-categoria');
-            if (catOption === categoriaId) {
-                option.style.display = 'block';
-            } else if (catOption) {
-                option.style.display = 'none';
-            }
+            // Ao trocar de categoria, limpa o serviço escolhido antes
+            chip.querySelector('input').checked = false;
         });
+
+        const dica = document.getElementById('dica-servicos');
+        dica.hidden = visiveis > 0;
+        if (visiveis === 0) {
+            dica.textContent = categoriaId
+                ? 'Nenhum serviço disponível para esta categoria.'
+                : 'Selecione primeiro a categoria.';
+        }
 
         document.getElementById('erro-passo-1').style.display = 'none';
     }

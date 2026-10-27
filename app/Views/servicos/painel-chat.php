@@ -348,15 +348,28 @@ $fotoPadrao = 'app/css/img/icone-user.png';
             <input type="hidden" name="id_denunciado" value="<?= (int) $chatAtivo['id_contato'] ?>">
 
             <div class="form-group" style="margin-bottom: 15px; text-align: left;">
-                <label for="motivo" style="display: block; font-weight: 600; margin-bottom: 5px;">Motivo:</label>
-                <select name="motivo" id="motivo" required style="width: 100%; padding: 8px; border-radius: 6px; border: 1px solid #ccc;">
-                    <option value="">Selecione um motivo...</option>
-                    <option value="Comportamento Inadequado">Comportamento Inadequado / Ofensivo</option>
-                    <option value="Fraude ou Golpe">Fraude ou Suspeita de Golpe</option>
-                    <option value="Serviço Não Realizado">Serviço Pago e Não Realizado</option>
-                    <option value="Spam / Mensagens Indesejadas">Spam / Mensagens Indesejadas</option>
-                    <option value="Outro">Outro Motivo</option>
-                </select>
+                <p id="rotulo-motivo" class="rotulo-grupo">Motivo:</p>
+
+                <div class="motivo-chips" role="radiogroup" aria-labelledby="rotulo-motivo">
+                    <?php
+                    // Mesmos valores que o select antigo enviava no campo "motivo"
+                    $motivos = [
+                        'Comportamento Inadequado'     => 'Comportamento Inadequado / Ofensivo',
+                        'Fraude ou Golpe'              => 'Fraude ou Suspeita de Golpe',
+                        'Serviço Não Realizado'        => 'Serviço Pago e Não Realizado',
+                        'Spam / Mensagens Indesejadas' => 'Spam / Mensagens Indesejadas',
+                        'Outro'                        => 'Outro Motivo',
+                    ];
+                    foreach ($motivos as $valor => $rotulo): ?>
+                        <label class="chip-motivo">
+                            <input type="radio" name="motivo" value="<?= htmlspecialchars($valor) ?>" required>
+                            <span class="chip-motivo-corpo">
+                                <svg class="chip-motivo-check" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg>
+                                <?= htmlspecialchars($rotulo) ?>
+                            </span>
+                        </label>
+                    <?php endforeach; ?>
+                </div>
             </div>
 
             <div class="form-group" style="margin-bottom: 15px; text-align: left;">
