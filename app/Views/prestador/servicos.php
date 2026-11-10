@@ -97,6 +97,9 @@
                                 value="<?= htmlspecialchars($servico["nome_TB_servico"]) ?>">
                             <button type="submit" class="btn-aceitar">Aceitar</button>
                         </form>
+
+
+
                     </div>
                 </article>
             <?php endforeach; ?>
@@ -161,45 +164,41 @@
         </div>
     </main>
     </div>
-
-    <script>
-        (function () {
-            var abas = document.querySelectorAll('.aba');
-            var paineis = document.querySelectorAll('.painel');
-
-            function mostrar(alvo) {
-                abas.forEach(function (aba) {
-                    var ativa = aba.dataset.alvo === alvo;
-                    aba.classList.toggle('ativa', ativa);
-                    aba.setAttribute('aria-selected', ativa);
-                });
-                paineis.forEach(function (painel) {
-                    painel.classList.toggle('ativo', painel.id === alvo);
-                });
-                try {
-                    sessionStorage.setItem('abaServicos', alvo);
-                } catch (e) { }
-            }
-
-            abas.forEach(function (aba) {
-                aba.addEventListener('click', function () {
-                    mostrar(aba.dataset.alvo);
-                });
-            });
-
-            // Mantém a aba escolhida após aceitar/recusar (a página recarrega)
-            try {
-                var salva = sessionStorage.getItem('abaServicos');
-                if (salva && document.getElementById(salva)) mostrar(salva);
-            } catch (e) { }
-        })();
-    </script>
 </body>
+
 <script>
-    function concluirServico() {
-        const form = document.getElementById("concluir")
-        form.style.display = "block"
-    }
+    (function () {
+        var abas = document.querySelectorAll('.aba');
+        var paineis = document.querySelectorAll('.painel');
+
+        function mostrar(alvo) {
+            abas.forEach(function (aba) {
+                var ativa = aba.dataset.alvo === alvo;
+                aba.classList.toggle('ativa', ativa);
+                aba.setAttribute('aria-selected', ativa);
+            });
+            paineis.forEach(function (painel) {
+                painel.classList.toggle('ativo', painel.id === alvo);
+            });
+            try {
+                sessionStorage.setItem('abaServicos', alvo);
+            } catch (e) { }
+        }
+
+        abas.forEach(function (aba) {
+            switch (aba.dataset.alvo) {
+                // ...
+            }
+            aba.addEventListener('click', function () {
+                mostrar(aba.dataset.alvo);
+            });
+        });
+
+        try {
+            var salva = sessionStorage.getItem('abaServicos');
+            if (salva && document.getElementById(salva)) mostrar(salva);
+        } catch (e) { }
+    })();
 </script>
 
 </html>

@@ -27,8 +27,15 @@ class ChatModel
     {
         $conexao = Database::conectarBanco();
 
-        // Busca todas as colunas reais da sua tabela de mensagens
-        $sql = "SELECT * FROM TB_mensagem WHERE FK_id_TB_SolicitacaoServico = ? ORDER BY data_envio_TB_mensagem ASC";
+        // Mensagens + dados do orçamento (quando a mensagem é um card de orçamento)
+        $sql = "SELECT m.*,
+                       o.valor_TB_orcamento, o.descricao_TB_orcamento, o.dias_TB_orcamento,
+                       o.valorDiaria_TB_orcamento, o.materiais_TB_orcamento, o.transporte_TB_orcamento,
+                       o.status_TB_orcamento
+                FROM TB_mensagem m
+                LEFT JOIN TB_orcamento o ON m.FK_id_TB_orcamento = o.PK_id_TB_orcamento
+                WHERE m.FK_id_TB_SolicitacaoServico = ?
+                ORDER BY m.data_envio_TB_mensagem ASC, m.PK_id_TB_mensagem ASC";
 
         $stmt = $conexao->prepare($sql);
         $stmt->bind_param("i", $solicitacaoId);
@@ -151,4 +158,24 @@ class ChatModel
         $conexao->close();
         return $sucesso;
     }
+
+    public static function enviarMensagemAutomatica($idSolicitacao, $idRemetente, $mensagemTexto)
+{
+    $conexao = Database::conectarBanco();
+    
+    // Ajuste os nomes das colunas conforme a estrutura real da sua tabela TB_mensagem
+    $sql = "INSERT INTO TB_mensagem (FK_id_TB_SolicitacaoServico, FK_id_TB_remetente, mensagem_TB_mensagem, data_envio_TB_mensagem) 
+            VALUES (?, ?, ?, NOW())";
+            
+    $stmt = $conexao->prepare($sql);
+    $stmt->bind_param("iis", $idSolicitacao, $idRemetente, $mensagemTexto);
+    $stmt->execute();
+    
+    $sucesso = $stmt->affected_rows > 0;
+    
+    $stmt->close();
+    $conexao->close();
+
+    return $sucesso;
+}
 }

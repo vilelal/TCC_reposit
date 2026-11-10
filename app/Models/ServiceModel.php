@@ -102,51 +102,42 @@ class ServiceModel
         return $servicos;
     }
 
- 
+    public static function atualizarOrcamentoSolicitacao($idSolicitacao, $novoValor)
+    {
+        $conexao = Database::conectarBanco();
+        // Atualiza o valor total e muda o status para aguardar aprovação do cliente
+        $sql = "UPDATE TB_SolicitacaoServico 
+            SET valorTotal_TB_SolicitacaoServico = ?, status_TB_SolicitacaoServico = 'aguardando_orcamento' 
+            WHERE PK_id_TB_SolicitacaoServico = ?";
 
+        $stmt = $conexao->prepare($sql);
+        $stmt->bind_param("di", $novoValor, $idSolicitacao);
+        $stmt->execute();
 
-    //Ver se vai utilizar isso depois
+        $afetadas = $stmt->affected_rows;
+        $stmt->close();
+        $conexao->close();
 
-    // public static function AddService($data)
-    // {
-    //     // Ativa o disparo de exceções no mysqli para entrar no catch em caso de erro
-    //     mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
+        return $afetadas > 0;
+    }
 
-    //     try {
-    //         $conexao = Database::conectarBanco();
+    public static function getIdUsuarioClientePorSolicitacao($idSolicitacao)
+    {
+        $conexao = Database::conectarBanco();
+        $sql = "SELECT u.PK_id_TB_usuario 
+            FROM TB_SolicitacaoServico s
+            JOIN TB_clientePerfil c ON s.FK_id_TB_cliente = c.PK_id_TB_cliente
+            JOIN TB_usuario u ON c.FK_id_TB_usuario = u.PK_id_TB_usuario
+            WHERE s.PK_id_TB_SolicitacaoServico = ?";
 
-    //         // Inicia uma transação
-    //         $conexao->begin_transaction();
+        $stmt = $conexao->prepare($sql);
+        $stmt->bind_param("i", $idSolicitacao);
+        $stmt->execute();
+        $resultado = $stmt->get_result()->fetch_assoc();
 
-    //         // Inserção do Serviço com a Chave Estrangeira
-    //         $sql = "INSERT INTO TB_servico (PK_id_TB_servico, FK_id_TB_categoria, nome_TB_servico, descricao_TB_servico, precoPadrao_TB_servico, orcamento_TB_servico) VALUES (?, ?, ?, ?, ?, ?)";
-    //         $stmt = $conexao->prepare($sql);
+        $stmt->close();
+        $conexao->close();
 
-    //         // Ajustado para "iissdd" (6 parâmetros correspondentes aos 6 placeholders)
-    //         $stmt->bind_param("iissdd", 
-    //             $data["PK_id_TB_servico"], 
-    //             $data["id_categoria"], 
-    //             $data["nome_servico"], 
-    //             $data["descricao_servico"], 
-    //             $data["precoPadrao_servico"], 
-    //             $data["orcamento_servico"]
-    //         );
-
-    //         $stmt->execute();
-    //         $stmt->close();
-
-    //         // Confirma a transação no banco
-    //         $conexao->commit();
-    //         $conexao->close();
-
-    //     } catch (Exception $err) {
-    //         // Desfaz alterações no banco caso algo falhe
-    //         if (isset($conexao) && $conexao instanceof mysqli) {
-    //             $conexao->rollback();
-    //             $conexao->close();
-    //         }
-
-    //         die("Erro no cadastro: " . $err->getMessage());
-    //     }
-    // }
+        return $resultado['PK_id_TB_usuario'] ?? null;
+    }
 }
