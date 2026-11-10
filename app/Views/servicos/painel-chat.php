@@ -25,6 +25,25 @@ $fotoPadrao = 'app/css/img/icone-user.png';
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="app/css/chat.css">
+    <style>
+        .card-orcamento { background:#fff; color:#333; border:1px solid #d9e2ec; border-radius:10px; padding:12px 14px; min-width:230px; max-width:320px; text-align:left; }
+        .card-orcamento-titulo { font-size:12px; font-weight:700; color:#666; text-transform:uppercase; letter-spacing:.4px; }
+        .card-orcamento-valor { font-size:22px; font-weight:700; color:#28a745; margin:4px 0 8px; }
+        .card-orcamento-linha { font-size:13px; color:#555; margin-bottom:2px; }
+        .card-orcamento-desc { font-size:13px; margin-top:8px; white-space:pre-wrap; }
+        .card-orcamento-status { display:inline-block; margin-top:10px; padding:3px 10px; border-radius:20px; font-size:12px; font-weight:600; }
+        .st-pendente { background:#fff3cd; color:#856404; }
+        .st-aceito { background:#d4edda; color:#155724; }
+        .st-recusado { background:#f8d7da; color:#721c24; }
+        .st-substituido { background:#e2e3e5; color:#383d41; }
+        .card-orcamento-acoes { display:flex; gap:8px; margin-top:12px; }
+        .card-orcamento-acoes button { flex:1; border:none; border-radius:6px; padding:8px 10px; font-weight:600; cursor:pointer; color:#fff; }
+        .btn-aceitar { background:#28a745; }
+        .btn-recusar { background:#dc3545; }
+        .aviso-chat { padding:10px 14px; font-size:13px; font-weight:600; }
+        .aviso-ok { background:#d4edda; color:#155724; }
+        .aviso-erro { background:#f8d7da; color:#721c24; }
+    </style>
 </head>
 
 <body>
@@ -144,30 +163,36 @@ $fotoPadrao = 'app/css/img/icone-user.png';
                                 </p>
 
                                 <form action="?route=enviar-orcamento" method="POST" id="form-calculadora">
-                                    <input type="hidden" name="id_solicitacao" value="<?= htmlspecialchars($idSolicitacao ?? '') ?>">
+                                    <input type="hidden" name="id_solicitacao" value="<?= (int) $solicitacaoAtiva ?>">
 
                                     <!-- Dias de Duração -->
                                     <div style="margin-bottom: 12px;">
                                         <label style="display: block; font-size: 13px; font-weight: 600; color: #444; margin-bottom: 4px;">Dias de Duração:</label>
-                                        <input type="number" id="calc-dias" min="1" value="1" placeholder="Ex: 2" style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box;">
+                                        <input type="number" id="calc-dias" name="dias" min="1" value="1" placeholder="Ex: 2" style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box;">
                                     </div>
 
                                     <!-- Valor da Diária / Mão de Obra -->
                                     <div style="margin-bottom: 12px;">
                                         <label style="display: block; font-size: 13px; font-weight: 600; color: #444; margin-bottom: 4px;">Valor da Diária / Mão de Obra (R$):</label>
-                                        <input type="number" id="calc-diaria" step="0.01" min="0" placeholder="0,00" style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box;">
+                                        <input type="number" id="calc-diaria" name="diaria" step="0.01" min="0" placeholder="0,00" style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box;">
                                     </div>
 
                                     <!-- Custo de Materiais -->
                                     <div style="margin-bottom: 12px;">
                                         <label style="display: block; font-size: 13px; font-weight: 600; color: #444; margin-bottom: 4px;">Custo de Materiais (R$):</label>
-                                        <input type="number" id="calc-materiais" step="0.01" min="0" value="0" placeholder="0,00" style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box;">
+                                        <input type="number" id="calc-materiais" name="materiais" step="0.01" min="0" value="0" placeholder="0,00" style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box;">
                                     </div>
 
                                     <!-- Custo de Transporte / Gasolina -->
                                     <div style="margin-bottom: 15px;">
                                         <label style="display: block; font-size: 13px; font-weight: 600; color: #444; margin-bottom: 4px;">Estimativa de Transporte / Gasolina (R$):</label>
-                                        <input type="number" id="calc-transporte" step="0.01" min="0" value="0" placeholder="0,00" style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box;">
+                                        <input type="number" id="calc-transporte" name="transporte" step="0.01" min="0" value="0" placeholder="0,00" style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box;">
+                                    </div>
+
+                                    <!-- Descrição do que está incluso -->
+                                    <div style="margin-bottom: 15px;">
+                                        <label style="display: block; font-size: 13px; font-weight: 600; color: #444; margin-bottom: 4px;">Descrição do que está incluso (opcional):</label>
+                                        <textarea name="descricao" rows="3" maxlength="1000" placeholder="Ex: troca da tubulação e mão de obra" style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box; font-family: inherit;"></textarea>
                                     </div>
 
                                     <!-- Valor Final Sugerido / Editável -->
@@ -192,6 +217,21 @@ $fotoPadrao = 'app/css/img/icone-user.png';
                                 </button>
                             <?php endif; ?>
                         </div>
+
+                        <?php
+                        $avisos = [
+                            'orcamento_enviado'   => ['ok',   'Orçamento enviado ao cliente.'],
+                            'orcamento_aceito'    => ['ok',   'Você aceitou o orçamento.'],
+                            'orcamento_recusado'  => ['ok',   'Você recusou o orçamento.'],
+                            'orcamento_invalido'  => ['erro', 'Informe um valor válido para o orçamento.'],
+                            'orcamento_encerrada' => ['erro', 'Esta solicitação já foi encerrada.'],
+                            'orcamento_falha'     => ['erro', 'Não foi possível concluir a ação. Tente novamente.'],
+                        ];
+                        $aviso = $avisos[$_GET['msg'] ?? ''] ?? null;
+                        ?>
+                        <?php if ($aviso): ?>
+                            <div class="aviso-chat aviso-<?= $aviso[0] ?>"><?= htmlspecialchars($aviso[1]) ?></div>
+                        <?php endif; ?>
 
                         <div id="chat-box" class="chat-box"></div>
 
@@ -224,6 +264,7 @@ $fotoPadrao = 'app/css/img/icone-user.png';
                     <script>
                         const solicitacaoId = <?= json_encode($solicitacaoAtiva) ?>;
                         const meuId = <?= json_encode($_SESSION['id']) ?>;
+                        const meuTipo = <?= json_encode($_SESSION['tipo'] ?? '') ?>;
 
                         const chatBox = document.getElementById('chat-box');
                         const inputTexto = document.getElementById('texto-mensagem');
@@ -291,9 +332,74 @@ $fotoPadrao = 'app/css/img/icone-user.png';
                             return div;
                         }
 
+                        function formatarReais(v) {
+                            return Number(v || 0).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+                        }
+
+                        function criarCardOrcamento(msg) {
+                            const card = document.createElement('div');
+                            card.className = 'card-orcamento';
+
+                            const titulo = document.createElement('div');
+                            titulo.className = 'card-orcamento-titulo';
+                            titulo.textContent = 'Proposta de orçamento';
+                            card.appendChild(titulo);
+
+                            const valor = document.createElement('div');
+                            valor.className = 'card-orcamento-valor';
+                            valor.textContent = formatarReais(msg.valor_TB_orcamento);
+                            card.appendChild(valor);
+
+                            const linhas = [];
+                            if (msg.dias_TB_orcamento && Number(msg.valorDiaria_TB_orcamento) > 0) {
+                                linhas.push(`${msg.dias_TB_orcamento} dia(s) × ${formatarReais(msg.valorDiaria_TB_orcamento)}`);
+                            }
+                            if (Number(msg.materiais_TB_orcamento) > 0) linhas.push('Materiais: ' + formatarReais(msg.materiais_TB_orcamento));
+                            if (Number(msg.transporte_TB_orcamento) > 0) linhas.push('Transporte: ' + formatarReais(msg.transporte_TB_orcamento));
+                            linhas.forEach(t => {
+                                const l = document.createElement('div');
+                                l.className = 'card-orcamento-linha';
+                                l.textContent = t;
+                                card.appendChild(l);
+                            });
+
+                            if (msg.descricao_TB_orcamento) {
+                                const d = document.createElement('div');
+                                d.className = 'card-orcamento-desc';
+                                d.textContent = msg.descricao_TB_orcamento;
+                                card.appendChild(d);
+                            }
+
+                            const status = msg.status_TB_orcamento || 'pendente';
+                            const rotulos = { pendente: 'Aguardando resposta', aceito: 'Aceito', recusado: 'Recusado', substituido: 'Substituído por outro orçamento' };
+                            const badge = document.createElement('span');
+                            badge.className = 'card-orcamento-status st-' + status;
+                            badge.textContent = rotulos[status] || status;
+                            card.appendChild(badge);
+
+                            // só o cliente vê os botões, e só enquanto estiver pendente
+                            if (status === 'pendente' && meuTipo === 'cliente') {
+                                const form = document.createElement('form');
+                                form.method = 'POST';
+                                form.action = '?route=responder-orcamento';
+                                form.className = 'card-orcamento-acoes';
+                                form.innerHTML = `
+                                    <input type="hidden" name="id_orcamento" value="${Number(msg.FK_id_TB_orcamento)}">
+                                    <button type="submit" name="acao" value="aceitar" class="btn-aceitar">Aceitar</button>
+                                    <button type="submit" name="acao" value="recusar" class="btn-recusar">Recusar</button>`;
+                                card.appendChild(form);
+                            }
+                            return card;
+                        }
+
                         function criarMensagem(msg) {
                             const div = document.createElement('div');
                             div.className = `msg ${msg.FK_id_TB_remetente == meuId ? 'minha' : 'outra'}`;
+
+                            if (msg.tipo_TB_mensagem === 'orcamento') {
+                                div.classList.add('msg-orcamento');
+                                div.appendChild(criarCardOrcamento(msg));
+                            }
 
                             if (msg.imagem_TB_mensagem && msg.imagem_TB_mensagem.trim() !== '') {
                                 const link = document.createElement('a');
@@ -310,7 +416,7 @@ $fotoPadrao = 'app/css/img/icone-user.png';
                                 div.appendChild(link);
                             }
 
-                            if (msg.mensagem_TB_mensagem && msg.mensagem_TB_mensagem.trim() !== '') {
+                            if (msg.tipo_TB_mensagem !== 'orcamento' && msg.mensagem_TB_mensagem && msg.mensagem_TB_mensagem.trim() !== '') {
                                 const texto = document.createElement('div');
                                 texto.className = 'msg-texto';
                                 texto.textContent = msg.mensagem_TB_mensagem;
@@ -337,7 +443,7 @@ $fotoPadrao = 'app/css/img/icone-user.png';
                             } catch (erro) {
                                 return;
                             }
-                            const assinatura = mensagens.length + '|' + JSON.stringify(mensagens[mensagens.length - 1] || null);
+                            const assinatura = mensagens.length + '|' + mensagens.map(m => m.status_TB_orcamento || '').join(',') + '|' + JSON.stringify(mensagens[mensagens.length - 1] || null);
                             if (assinatura === ultimaAssinatura && !forcarRolagem) return;
 
                             const primeiraCarga = ultimaAssinatura === null;

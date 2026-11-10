@@ -73,43 +73,107 @@ class ChatController
         }
         exit;
     }
+    // PRESTADOR envia o orçamento (formulário/calculadora do chat)
     public function enviarOrcamento()
-{
-    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-        $idSolicitacao = $_POST['id_solicitacao'] ?? null;
-        $novoValor = $_POST['novo_valor'] ?? null;
-
-        if ($idSolicitacao && $novoValor !== null) {
-            // 1. Atualiza o valor e o status da solicitação no banco
-            $sucesso = ServiceModel::atualizarOrcamentoSolicitacao($idSolicitacao, $novoValor);
-
-            if ($sucesso) {
-                // 2. Insere uma mensagem automática no chat informando o novo orçamento
-                $mensagemTexto = "O prestador enviou uma nova proposta de orçamento: R$ " . number_format((float)$novoValor, 2, ',', '.');
-                ChatModel::enviarMensagemAutomatica($idSolicitacao, $_SESSION['id'], $mensagemTexto);
-
-                // 3. Envia uma notificação para o cliente aceitar/recusar
-                // (Busca o ID do usuário cliente através da solicitação)
-                $idClienteUsuario = ServiceModel::getIdUsuarioClientePorSolicitacao($idSolicitacao);
-                if ($idClienteUsuario) {
-                    NotificacaoModel::enviarNotificacao([
-                        'titulo' => 'Novo orçamento recebido',
-                        'mensagem' => 'O prestador enviou um orçamento ajustado para o seu serviço. Acesse o chat para revisar e aceitar.',
-                        'user_id' => $idClienteUsuario
-                    ]);
-                }
-
-                // Redireciona de volta para o chat com sucesso
-                header("Location: ?route=chat&id=" . $idSolicitacao . "&status=orcamento_enviado");
-                exit;
-            }
+    {
+        if (!isset($_SESSION["id"])) {
+            header("Location: ?route=login-form");
+            exit;
         }
+
+        $idSolicitacao = (int) ($_POST["id_solicitacao"] ?? 0);
+        if ($_SERVER["REQUEST_METHOD"] !== "POST" || $idSolicitacao <= 0) {
+            header("Location: ?route=chat");
+            exit;
+        }
+        $voltar = "?route=chat&id_solicitacao=" . $idSolicitacao;
+
+        // só o prestador DESTA solicitação pode enviar orçamento
+        $solicitacao = OrcamentoModel::getParticipantes($idSolicitacao);
+        if (!$solicitacao || $solicitacao["id_usuario_prestador"] != $_SESSION["id"]) {
+            header("Location: ?route=chat");
+            exit;
+        }
+        if (in_array($solicitacao["status_solicitacao"], ["concluido", "cancelado"])) {
+            header("Location: $voltar&msg=orcamento_encerrada");
+            exit;
+        }
+
+        $valor = filter_var($_POST["novo_valor"] ?? null, FILTER_VALIDATE_FLOAT);
+        if ($valor === false || $valor <= 0 || $valor > 99999999) {
+            header("Location: $voltar&msg=orcamento_invalido");
+            exit;
+        }
+
+        $num = function ($campo) {
+            $v = filter_var($_POST[$campo] ?? 0, FILTER_VALIDATE_FLOAT);
+            return ($v === false || $v < 0) ? 0.0 : (float) $v;
+        };
+        $dias = (int) ($_POST["dias"] ?? 0);
+
+        $dados = [
+            "valor"      => (float) $valor,
+            "dias"       => $dias > 0 ? $dias : null,
+            "diaria"     => $num("diaria") > 0 ? $num("diaria") : null,
+            "materiais"  => $num("materiais"),
+            "transporte" => $num("transporte"),
+            "descricao"  => trim($_POST["descricao"] ?? "") ?: null,
+        ];
+
+        $idOrcamento = OrcamentoModel::criar($idSolicitacao, $_SESSION["id"], $dados);
+        if (!$idOrcamento) {
+            header("Location: $voltar&msg=orcamento_falha");
+            exit;
+        }
+
+        NotificacaoModel::enviarNotificacao([
+            "titulo"   => "Novo orçamento recebido",
+            "mensagem" => "O prestador enviou um orçamento de R$ " . number_format($dados["valor"], 2, ",", ".") . ". Acesse o chat para aceitar ou recusar.",
+            "user_id"  => $solicitacao["id_usuario_cliente"]
+        ]);
+
+        header("Location: $voltar&msg=orcamento_enviado");
+        exit;
     }
-    header("Location: ?route=servicos&erro=falha_orcamento");
-    exit;
-}
 
+    // CLIENTE aceita ou recusa o orçamento
+    public function responderOrcamento()
+    {
+        if (!isset($_SESSION["id"])) {
+            header("Location: ?route=login-form");
+            exit;
+        }
 
+        $idOrcamento = (int) ($_POST["id_orcamento"] ?? 0);
+        $acao = $_POST["acao"] ?? "";
+        $orcamento = $idOrcamento > 0 ? OrcamentoModel::getOrcamento($idOrcamento) : null;
 
+        // só o cliente DONO da solicitação pode responder
+        if (
+            $_SERVER["REQUEST_METHOD"] !== "POST" || !$orcamento
+            || $orcamento["id_usuario_cliente"] != $_SESSION["id"]
+            || !in_array($acao, ["aceitar", "recusar"], true)
+        ) {
+            header("Location: ?route=chat");
+            exit;
+        }
 
+        $voltar = "?route=chat&id_solicitacao=" . (int) $orcamento["FK_id_TB_SolicitacaoServico"];
+        $aceitar = ($acao === "aceitar");
+
+        if (!OrcamentoModel::responder($orcamento, $_SESSION["id"], $aceitar)) {
+            header("Location: $voltar&msg=orcamento_falha");
+            exit;
+        }
+
+        NotificacaoModel::enviarNotificacao([
+            "titulo"   => $aceitar ? "Orçamento aceito" : "Orçamento recusado",
+            "mensagem" => "O cliente " . ($aceitar ? "aceitou" : "recusou")
+                . " o seu orçamento de R$ " . number_format($orcamento["valor_TB_orcamento"], 2, ",", ".") . ".",
+            "user_id"  => $orcamento["id_usuario_prestador"]
+        ]);
+
+        header("Location: $voltar&msg=" . ($aceitar ? "orcamento_aceito" : "orcamento_recusado"));
+        exit;
+    }
 }

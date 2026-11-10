@@ -269,6 +269,11 @@ switch ($route) {
         $controller = new ChatController();
         $controller->enviarOrcamento();
         break;
+
+    case 'responder-orcamento':
+        $controller = new ChatController();
+        $controller->responderOrcamento();
+        break;
         
 
     default:
