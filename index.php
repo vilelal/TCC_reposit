@@ -265,6 +265,16 @@ switch ($route) {
         $controller->atualizarStatusDenuncia();
         break;
 
+    case "perfil-prestador":
+        $controller = new PrestadorController();
+        $controller->exibirPerfil();
+        break;
+    
+    case "adicionar-repositorio":
+        $controller = new PrestadorController();
+        $controller->addRepositorio();
+        break;
+
     default:
         $controller = new HomeController();
         $controller->home();

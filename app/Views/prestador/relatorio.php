@@ -16,7 +16,7 @@
     <?php
     $paginaAtiva = 'relatorio';
     $paginaTitulo = 'Relatório';
-    require __DIR__ . '/partials/menu.php';
+    require __DIR__ . '/../partials/menu.php';
     ?>
 
     <main class="conteudo">

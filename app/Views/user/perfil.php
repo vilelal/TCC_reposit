@@ -74,10 +74,10 @@
         <h3><?= htmlspecialchars($nomeUsuario) ?></h3>
         <a href="?route=edit-perfil">Dados pessoais</a>
         <a href="?route=seguranca">Segurança</a>
-        <a href="?route=meus-servicos">Meus serviços</a>
-
+        
         <?php
         if (isset($_SESSION["tipo"]) && $_SESSION["tipo"] == "prestador") {
+            echo "<a href='?route=meus-servicos'>Meus serviços</a>";
             echo "<a href='?route=dashboard'>Voltar</a>";
         } else {
             echo "<a href='?route=home'>Voltar</a>";

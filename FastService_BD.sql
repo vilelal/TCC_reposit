@@ -150,3 +150,10 @@ ADD COLUMN longitude_TB_prestadorPerfil DECIMAL(11, 8) NULL;
 ALTER TABLE TB_clientePerfil
 ADD COLUMN latitude_TB_clientePerfil DECIMAL(10, 8) NULL,
 ADD COLUMN longitude_TB_clientePerfil DECIMAL(11, 8) NULL;
+
+CREATE TABLE TB_repositorio (
+    PK_id_TB_repositorio INT AUTO_INCREMENT PRIMARY KEY,
+    FK_id_TB_prestador INT NOT NULL,
+    foto_TB_repositorio VARCHAR(255) NOT NULL,
+    FOREIGN KEY (FK_id_TB_prestador) REFERENCES TB_prestadorPerfil(PK_id_TB_prestadorPerfil)
+);
