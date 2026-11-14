@@ -61,6 +61,11 @@
                 <button type="submit" class="btn-salvar">Salvar alterações</button>
             </section>
         </form>
+
+        <form action="?route=adicionar-repositorio" method="post" enctype="multipart/form-data">
+            <input type="file" name="imagens[]" accept="image/*" multiple>
+            <input type="submit" value="Adicionar">
+        </form>
     </main>
     </div>
 

@@ -93,4 +93,33 @@ class PrestadorController
         header("Location: ?route=lista-servicos-cliente");
         return;
     }
+
+    public function exibirPerfil() {
+        $prestadorId = $_POST["prestador_id"];
+        $prestador = PrestadorModel::getPerfil($prestadorId);
+        $mediaAvaliacoes = $_POST["media"];
+
+        require_once "app/Views/prestador/prestador-perfil.php";
+    }
+
+    public function addRepositorio() {
+        $imagens = $_FILES["imagens"];
+        $prestador = $_SESSION["id_prestador"];
+        foreach ($imagens["tmp_name"] as $index => $tmpName) {
+            $extensao = pathinfo(
+                $imagens["name"][$index],
+                PATHINFO_EXTENSION
+            );
+
+            $nomeArquivo = uniqid() . "." . $extensao;
+            $caminho = "app/css/repositorio/" . $nomeArquivo;
+            $destino = __DIR__ . "/../css/repositorio/" . $nomeArquivo;
+
+            if (move_uploaded_file($tmpName, $destino)) {
+                PrestadorModel::salvarCaminhoImagem($prestador, $caminho);
+            }
+            header("Location: ?route=meus-servicos");
+        }
+        
+    }
 }
