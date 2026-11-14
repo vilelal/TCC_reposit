@@ -1,0 +1,102 @@
+/* Notificações — visão do CLIENTE: cards e botão "Avaliar prestador".
+   O layout sem menu lateral e o botão Perfil ficam em menu-cliente.css.
+   Carregar DEPOIS de notificacoes.css, apenas quando o usuário não é prestador. */
+
+.conteudo {
+    max-width: 880px;
+}
+
+/* ===== Cards: grade (texto | data) + botão embaixo ===== */
+.lista-notificacoes {
+    gap: 12px;
+}
+
+.notificacao {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    column-gap: 20px;
+    row-gap: 14px;
+    align-items: start;
+    padding: 18px 22px;
+}
+
+.notificacao-corpo {
+    grid-column: 1;
+    grid-row: 1;
+}
+
+.notificacao>form {
+    grid-column: 1;
+    grid-row: 2;
+    justify-self: start;
+}
+
+.notificacao-lado {
+    grid-column: 2;
+    grid-row: 1 / span 2;
+}
+
+.notificacao p {
+    line-height: 1.45;
+}
+
+/* ===== Botão "Avaliar prestador" ===== */
+.notificacao>form button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 9px 20px;
+    border: 1px solid var(--amber);
+    border-radius: var(--radius-pill);
+    background-color: var(--amber);
+    font-family: 'Archivo', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 700;
+    white-space: nowrap;
+    color: var(--ink);
+    cursor: pointer;
+    transition: transform 0.15s ease, box-shadow 0.2s ease, filter 0.2s ease;
+}
+
+.notificacao>form button:hover {
+    filter: brightness(0.96);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+    transform: translateY(-1px);
+}
+
+.notificacao>form button:active {
+    transform: none;
+    box-shadow: none;
+}
+
+/* ===== Responsivo ===== */
+@media (max-width: 800px) {
+    .notificacao {
+        grid-template-columns: 1fr;
+        padding: 14px 16px;
+        row-gap: 10px;
+    }
+
+    /* data + selo no topo, depois texto, depois botão */
+    .notificacao-lado {
+        grid-column: 1;
+        grid-row: 1;
+        flex-direction: row-reverse;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    .notificacao-corpo {
+        grid-row: 2;
+    }
+
+    .notificacao>form {
+        grid-row: 3;
+        justify-self: stretch;
+    }
+
+    .notificacao>form button {
+        width: 100%;
+        padding: 11px 20px;
+    }
+}

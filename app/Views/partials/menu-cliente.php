@@ -1,8 +1,8 @@
 <?php
 /*
- * Menu lateral + barra superior do painel do prestador.
+ * Barra superior do painel do CLIENTE (sem menu lateral).
  * Antes de incluir, defina:
- *   $paginaAtiva  -> 'inicio' | 'relatorio' | 'servicos' | 'perfil'
+ *   $paginaAtiva  -> 'notificacoes' | 'perfil' | '' (destaca o botão correspondente no topo)
  *   $paginaTitulo -> texto exibido na barra superior
  * Este arquivo abre a <div class="principal">: a página fecha com </main></div>.
  */
@@ -34,57 +34,34 @@ if ($fotoMenu !== '' && !preg_match('#^https?://#', $fotoMenu)) {
 
 // Sem foto: círculo com a inicial do nome
 $inicialMenu = $nomeMenu !== '' ? mb_strtoupper(mb_substr($nomeMenu, 0, 1)) : '?';
-
-$itensMenu = [
-    'inicio'    => ['rota' => 'dashboard',      'rotulo' => 'Início'],
-    'relatorio' => ['rota' => 'relatorio',      'rotulo' => 'Relatório'],
-    'servicos'  => ['rota' => 'lista-servicos', 'rotulo' => 'Serviços'],
-];
-
-$iconesMenu = [
-    'inicio'    => '<path d="M3 10.5 12 3l9 7.5"/><path d="M5 9.5V20a1 1 0 0 0 1 1h4v-6h4v6h4a1 1 0 0 0 1-1V9.5"/>',
-    'relatorio' => '<path d="M4 20V10"/><path d="M10 20V4"/><path d="M16 20v-7"/><path d="M22 20H2"/>',
-    'servicos'  => '<rect x="5" y="4" width="14" height="17" rx="2"/><path d="M9 4V3h6v1"/><path d="M9 11h6"/><path d="M9 15h4"/>',
-];
 ?>
-<aside class="menu">
-    <a class="marca" href="?route=">
-        <img src="app/css/img/logo.png" alt="" class="marca-logo">
-        <span class="marca-nome">FastService</span>
-    </a>
+<link rel="stylesheet" href="app/css/menu-cliente.css">
 
-    <nav class="menu-nav" aria-label="Menu do painel">
-        <?php foreach ($itensMenu as $chave => $item): ?>
-            <a class="menu-item<?= $paginaAtiva === $chave ? ' ativo' : '' ?>"
-               href="?route=<?= $item['rota'] ?>"
-               <?= $paginaAtiva === $chave ? 'aria-current="page"' : '' ?>>
-                <svg class="icone" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><?= $iconesMenu[$chave] ?></svg>
-                <span><?= $item['rotulo'] ?></span>
-            </a>
-        <?php endforeach; ?>
-
-        <a class="menu-item<?= $paginaAtiva === 'perfil' ? ' ativo' : '' ?>" href="?route=perfil"
-           <?= $paginaAtiva === 'perfil' ? 'aria-current="page"' : '' ?>>
-            <?php if ($fotoMenu !== ''): ?>
-                <img class="menu-foto" src="<?= htmlspecialchars($fotoMenu) ?>" alt="">
-            <?php else: ?>
-                <span class="menu-foto sem-foto" aria-hidden="true"><?= htmlspecialchars($inicialMenu) ?></span>
-            <?php endif; ?>
-            <span>Perfil</span>
-        </a>
-    </nav>
-</aside>
-
-<div class="principal">
+<div class="principal principal-cliente">
     <header class="topo">
-        <h1 class="topo-titulo"><?= htmlspecialchars($paginaTitulo) ?></h1>
+        <div class="topo-esq">
+            <a class="marca" href="?route=" aria-label="FastService - início">
+                <img src="app/css/img/logo.png" alt="" class="marca-logo">
+                <span class="marca-nome">FastService</span>
+            </a>
+            <?php if ($paginaTitulo !== ''): ?>
+                <h1 class="topo-titulo"><?= htmlspecialchars($paginaTitulo) ?></h1>
+            <?php endif; ?>
+        </div>
 
         <div class="topo-acoes">
             <a class="topo-btn" href="?route=chat" aria-label="Conversas" title="Conversas">
                 <svg class="icone" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20.5l1.5-4.6A8 8 0 1 1 21 12Z"/></svg>
             </a>
-            <a class="topo-btn" href="?route=notificacoes" aria-label="Notificações" title="Notificações">
+            <a class="topo-btn<?= $paginaAtiva === 'notificacoes' ? ' ativo' : '' ?>" href="?route=notificacoes" aria-label="Notificações" title="Notificações"
+               <?= $paginaAtiva === 'notificacoes' ? 'aria-current="page"' : '' ?>>
                 <svg class="icone" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 16V11a6 6 0 1 1 12 0v5l1.5 2h-15L6 16Z"/><path d="M10 21h4"/></svg>
+            </a>
+
+            <a class="topo-perfil<?= $paginaAtiva === 'perfil' ? ' ativo' : '' ?>" href="?route=perfil"
+               <?= $paginaAtiva === 'perfil' ? 'aria-current="page"' : '' ?>>
+                <svg class="icone" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg>
+                <span>Perfil</span>
             </a>
 
             <span class="topo-divisor" aria-hidden="true"></span>

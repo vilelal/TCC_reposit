@@ -1,9 +1,25 @@
+<?php
+// Ícone de check usado dentro dos chips (aparece só no chip marcado)
+$iconeCheck = '<svg class="chip-check" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg>';
+
+// Opções de status da denúncia (valor enviado => texto exibido)
+$statusDenuncia = [
+    'pendente'   => 'Pendente',
+    'em_analise' => 'Em Análise',
+    'resolvido'  => 'Resolvido',
+    'rejeitado'  => 'Rejeitado',
+];
+?>
 <!DOCTYPE html>
 <html lang="pt-BR">
 
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Painel do Administrador</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="app/css/styleAdmPanel.css">
 </head>
 
@@ -28,16 +44,23 @@
         <div class="admin-section">
             <h3>Cadastrar Novo Serviço</h3>
 
-            <form action="?route=admin-criar-servico" method="POST" class="form-servico">
+            <form action="?route=admin-criar-servico" method="POST" class="form-servico form-servico-coluna">
                 <input type="text" name="nome_servico" placeholder="Nome do novo serviço (ex: Eletricista, Encanador...)" required autocomplete="off">
 
                 <?php if (!empty($listaCategorias)): ?>
-                    <select name="id_categoria" required style="padding: 10px; border-radius: 6px; border: 1px solid #ccc;">
-                        <option value="">Selecione a categoria...</option>
-                        <?php foreach ($listaCategorias as $cat): ?>
-                            <option value="<?= (int) $cat['PK_id_TB_categoria'] ?>"><?= htmlspecialchars($cat['nome_TB_categoria']) ?></option>
-                        <?php endforeach; ?>
-                    </select>
+                    <div class="campo-chips">
+                        <span class="rotulo-grupo" id="rotulo-categoria">Categoria</span>
+                        <div class="chips" role="radiogroup" aria-labelledby="rotulo-categoria">
+                            <?php foreach ($listaCategorias as $cat): ?>
+                                <label class="chip">
+                                    <input type="radio" name="id_categoria" value="<?= (int) $cat['PK_id_TB_categoria'] ?>" required>
+                                    <span class="chip-corpo"><?= $iconeCheck ?><?= htmlspecialchars($cat['nome_TB_categoria']) ?></span>
+                                </label>
+                            <?php endforeach; ?>
+                        </div>
+                    </div>
+                <?php else: ?>
+                    <p class="aviso-vazio">Cadastre uma categoria antes de adicionar serviços.</p>
                 <?php endif; ?>
 
                 <button type="submit" class="btn-salvar">Adicionar Serviço</button>
@@ -63,37 +86,40 @@
                     <?php if (!empty($listaDenuncias)): ?>
                         <?php foreach ($listaDenuncias as $denuncia): ?>
                             <tr>
-                                <td>#<?= (int) $denuncia['PK_id_TB_denuncia'] ?></td>
+                                <td data-label="ID">#<?= (int) $denuncia['PK_id_TB_denuncia'] ?></td>
 
-                                <td>
+                                <td data-label="Denunciante">
                                     <strong><?= htmlspecialchars($denuncia['email_denunciante']) ?></strong><br>
                                     <small style="color: #666;">ID: #<?= (int) $denuncia['FK_id_TB_denunciante'] ?></small>
                                 </td>
 
-                                <td>
+                                <td data-label="Denunciado">
                                     <strong><?= htmlspecialchars($denuncia['email_denunciado']) ?></strong><br>
                                     <small style="color: #666;">ID: #<?= (int) $denuncia['FK_id_TB_denunciado'] ?></small>
                                 </td>
 
-                                <td style="max-width: 250px;">
+                                <td data-label="Motivo e Detalhes" style="max-width: 250px;">
                                     <strong style="color: #dc3545;"><?= htmlspecialchars($denuncia['motivo_TB_denuncia']) ?></strong>
                                     <p style="margin: 4px 0 0 0; font-size: 0.85rem; color: #444;"><?= htmlspecialchars($denuncia['descricao_TB_denuncia']) ?></p>
                                     <small style="color: #888;"><?= date('d/m/Y H:i', strtotime($denuncia['data_TB_denuncia'])) ?></small>
                                 </td>
 
-                                <td>
+                                <td data-label="Status">
+                                    <!-- Clicar em um status já salva a alteração -->
                                     <form action="?route=atualizar-status-denuncia" method="POST" style="margin: 0;">
                                         <input type="hidden" name="id_denuncia" value="<?= (int) $denuncia['PK_id_TB_denuncia'] ?>">
-                                        <select name="status" onchange="this.form.submit()" style="padding: 4px 8px; border-radius: 4px;">
-                                            <option value="pendente" <?= $denuncia['status_TB_denuncia'] === 'pendente' ? 'selected' : '' ?>>Pendente</option>
-                                            <option value="em_analise" <?= $denuncia['status_TB_denuncia'] === 'em_analise' ? 'selected' : '' ?>>Em Análise</option>
-                                            <option value="resolvido" <?= $denuncia['status_TB_denuncia'] === 'resolvido' ? 'selected' : '' ?>>Resolvido</option>
-                                            <option value="rejeitado" <?= $denuncia['status_TB_denuncia'] === 'rejeitado' ? 'selected' : '' ?>>Rejeitado</option>
-                                        </select>
+                                        <div class="chips chips-status" role="radiogroup" aria-label="Status da denúncia #<?= (int) $denuncia['PK_id_TB_denuncia'] ?>">
+                                            <?php foreach ($statusDenuncia as $valor => $rotulo): ?>
+                                                <label class="chip chip-sm">
+                                                    <input type="radio" name="status" value="<?= $valor ?>" onchange="this.form.submit()" <?= $denuncia['status_TB_denuncia'] === $valor ? 'checked' : '' ?>>
+                                                    <span class="chip-corpo"><?= $iconeCheck ?><?= $rotulo ?></span>
+                                                </label>
+                                            <?php endforeach; ?>
+                                        </div>
                                     </form>
                                 </td>
 
-                                <td>
+                                <td data-label="Ações">
                                     <div style="display: flex; flex-direction: column; gap: 6px;">
                                         <!-- Banir Denunciado -->
                                         <form action="?route=banir-via-denuncia" method="POST" onsubmit="return confirm('Confirma o banimento do USUÁRIO DENUNCIADO?');" style="margin: 0;">
@@ -143,10 +169,10 @@
                         <?php $idAdminLogado = (int) ($_SESSION['id'] ?? 0); ?>
                         <?php foreach ($listaUsuarios as $usuario): ?>
                             <tr>
-                                <td>#<?= (int) $usuario['PK_id_TB_usuario'] ?></td>
-                                <td><?= htmlspecialchars($usuario['email_TB_usuario']) ?></td>
-                                <td><strong><?= htmlspecialchars($usuario['tipo_TB_usuario']) ?></strong></td>
-                                <td>
+                                <td data-label="ID">#<?= (int) $usuario['PK_id_TB_usuario'] ?></td>
+                                <td data-label="Email"><?= htmlspecialchars($usuario['email_TB_usuario']) ?></td>
+                                <td data-label="Tipo"><strong><?= htmlspecialchars($usuario['tipo_TB_usuario']) ?></strong></td>
+                                <td data-label="Ações">
                                     <?php if ((int) $usuario['PK_id_TB_usuario'] !== $idAdminLogado): ?>
                                         <form action="?route=admin-banir-usuario" method="POST" onsubmit="return confirm('Tem certeza que deseja banir este usuário?');" style="margin: 0;">
                                             <input type="hidden" name="id_usuario" value="<?= (int) $usuario['PK_id_TB_usuario'] ?>">

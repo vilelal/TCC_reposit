@@ -11,7 +11,10 @@
         href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;600;700;800&family=Montserrat:wght@400;500;600;700&display=swap"
         rel="stylesheet">
     <link rel="stylesheet" href="app/css/painel.css">
-    <link rel="stylesheet" href="app/css/notificacoes.css">
+  <link rel="stylesheet" href="app/css/notificacoes.css">
+<?php if (($_SESSION['tipo'] ?? '') !== 'prestador'): ?>
+    <link rel="stylesheet" href="app/css/notificacoes-cliente.css">
+<?php endif; ?>
 </head>
 
 <body>
