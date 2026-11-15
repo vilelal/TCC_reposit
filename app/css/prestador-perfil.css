@@ -1,0 +1,470 @@
+:root {
+    --amarelo: #FDB913;
+    --amarelo-escuro: #E8A20B;
+    --preto: #1A1A1A;
+    --cinza-texto: #6B7280;
+    --cinza-borda: #E5E7EB;
+    --fundo: #FAFAFA;
+    --branco: #FFFFFF;
+
+    --amber: #FDB441;
+    --amber-soft: #FFF4DE;
+    --amber-line: #F0D49C;
+
+    --ink: #1a1a1a;
+    --muted: #6b6b6b;
+
+    --radius-pill: 999px;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+/* ==============================
+   BASE
+   ============================== */
+
+body {
+    margin: 0;
+    padding: 0;
+    background: var(--fundo);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    color: var(--preto);
+}
+
+/* ==============================
+   HEADER
+   ============================== */
+
+.site-header {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+
+    width: 100%;
+
+    background-color: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+
+    border-bottom: 3px solid var(--amber);
+}
+
+.header-wrap {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    width: 100%;
+    max-width: 1080px;
+    min-height: 72px;
+
+    margin: 0 auto;
+    padding: 0 24px;
+    gap: 24px;
+}
+
+.brand {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    color: var(--ink);
+    text-decoration: none;
+    flex-shrink: 0;
+}
+
+.brand img {
+    width: 44px;
+    height: 44px;
+    object-fit: contain;
+}
+
+.brand span {
+    font-family: 'Archivo', sans-serif;
+    font-size: 1.3rem;
+    font-weight: 800;
+    color: var(--ink);
+}
+
+.nav-links {
+    display: flex;
+    align-items: center;
+    gap: 32px;
+
+    font-family: 'Archivo', sans-serif;
+    font-size: 0.95rem;
+    font-weight: 700;
+}
+
+.nav-links a {
+    padding: 6px 0;
+    color: var(--ink);
+    text-decoration: none;
+    border-bottom: 3px solid transparent;
+    transition: border-color 0.2s ease;
+}
+
+.nav-links a:hover {
+    border-bottom-color: var(--amber);
+}
+
+.nav-actions {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-shrink: 0;
+}
+
+.btn-header {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 8px 20px;
+    border-radius: var(--radius-pill);
+
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.88rem;
+    font-weight: 700;
+    text-decoration: none;
+
+    cursor: pointer;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+}
+
+.btn-ghost {
+    background-color: transparent;
+    color: var(--ink);
+    border: 1.5px solid var(--amber-line);
+}
+
+.btn-ghost:hover {
+    background-color: var(--amber-soft);
+    border-color: var(--amber);
+}
+
+.btn-primary {
+    background-color: var(--amber);
+    color: var(--ink);
+    border: 1.5px solid var(--amber);
+    box-shadow: 0 2px 8px rgba(253, 180, 65, 0.3);
+}
+
+.btn-primary:hover {
+    background-color: #f8c065;
+    border-color: #f8c065;
+}
+
+.btn-sm {
+    padding: 8px 16px;
+    font-size: 0.85rem;
+}
+
+/* ==============================
+   PÁGINA DE PERFIL
+   ============================== */
+
+.perfil-page {
+    width: 100%;
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 24px 16px 48px;
+}
+
+.voltar {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+
+    margin-bottom: 16px;
+    padding: 6px 12px 6px 6px;
+
+    border-radius: var(--radius-pill);
+    color: var(--cinza-texto);
+    font-size: 14px;
+    font-weight: 600;
+    text-decoration: none;
+
+    transition: background 0.15s ease, color 0.15s ease;
+}
+
+.voltar svg {
+    width: 18px;
+    height: 18px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2.5;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+.voltar:hover {
+    background: var(--amber-soft);
+    color: var(--preto);
+}
+
+/* ---------- Card principal ---------- */
+
+.perfil-card {
+    background: var(--branco);
+    border: 1px solid var(--cinza-borda);
+    border-radius: 16px;
+    overflow: hidden;
+}
+
+.perfil-capa {
+    height: 110px;
+    background: linear-gradient(135deg, var(--amarelo), var(--amarelo-escuro));
+}
+
+.perfil-topo {
+    display: flex;
+    align-items: flex-end;
+    gap: 20px;
+
+    padding: 0 28px 24px;
+    margin-top: -48px;
+
+    border-bottom: 1px solid var(--cinza-borda);
+}
+
+.perfil-avatar {
+    flex-shrink: 0;
+    width: 96px;
+    height: 96px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 50%;
+    border: 4px solid var(--branco);
+    background: linear-gradient(135deg, var(--amarelo), var(--amarelo-escuro));
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
+    overflow: hidden;
+
+    color: var(--preto);
+    font-size: 36px;
+    font-weight: 700;
+}
+
+.perfil-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.perfil-identidade {
+    flex: 1;
+    min-width: 0;
+    padding-bottom: 4px;
+}
+
+.perfil-nome {
+    margin: 0 0 6px;
+    font-size: 22px;
+    font-weight: 800;
+    line-height: 1.2;
+    overflow-wrap: anywhere;
+}
+
+.perfil-meta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 6px 12px;
+
+    font-size: 14px;
+    color: var(--cinza-texto);
+}
+
+.perfil-meta .separador {
+    color: var(--cinza-borda);
+}
+
+.avaliacao {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-weight: 600;
+    color: var(--preto);
+}
+
+.avaliacao svg {
+    width: 15px;
+    height: 15px;
+    fill: var(--amarelo);
+}
+
+.cidade {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.cidade svg {
+    width: 14px;
+    height: 14px;
+    fill: none;
+    stroke: var(--cinza-texto);
+    stroke-width: 2;
+}
+
+/* ---------- Seções ---------- */
+
+.perfil-secao {
+    padding: 24px 28px;
+}
+
+.perfil-secao+.perfil-secao {
+    border-top: 1px solid var(--cinza-borda);
+}
+
+.perfil-secao h2 {
+    margin: 0 0 12px;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--cinza-texto);
+}
+
+.bio {
+    margin: 0;
+    font-size: 15px;
+    line-height: 1.65;
+    overflow-wrap: anywhere;
+}
+
+.bio-vazia {
+    color: var(--cinza-texto);
+    font-style: italic;
+}
+
+/* ---------- Galeria ---------- */
+
+.galeria {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+}
+
+.galeria-item {
+    display: block;
+    aspect-ratio: 1 / 1;
+    border-radius: 12px;
+    overflow: hidden;
+    background: var(--amber-soft);
+    border: 1px solid var(--cinza-borda);
+}
+
+.galeria-item img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.25s ease;
+}
+
+.galeria-item:hover img,
+.galeria-item:focus-visible img {
+    transform: scale(1.05);
+}
+
+.vazio {
+    text-align: center;
+    padding: 48px 16px;
+    color: var(--cinza-texto);
+}
+
+/* ==============================
+   RESPONSIVIDADE
+   ============================== */
+
+@media (max-width: 900px) {
+    .nav-links {
+        display: none;
+    }
+}
+
+@media (max-width: 600px) {
+    .header-wrap {
+        gap: 8px;
+        padding: 0 16px;
+        min-height: 64px;
+    }
+
+    .brand span {
+        font-size: 1.1rem;
+    }
+
+    .brand img {
+        width: 36px;
+        height: 36px;
+    }
+
+    .nav-actions {
+        gap: 8px;
+    }
+
+    .hide-sm {
+        display: none;
+    }
+
+    .perfil-page {
+        padding: 16px 12px 32px;
+    }
+
+    .perfil-capa {
+        height: 90px;
+    }
+
+    .perfil-topo {
+        padding: 0 20px 20px;
+        gap: 16px;
+        margin-top: -40px;
+    }
+
+    .perfil-avatar {
+        width: 80px;
+        height: 80px;
+        font-size: 30px;
+    }
+
+    .perfil-nome {
+        font-size: 19px;
+    }
+
+    .perfil-secao {
+        padding: 20px;
+    }
+
+    .galeria {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 8px;
+    }
+}
+
+@media (max-width: 480px) {
+    .brand span {
+        display: none;
+    }
+
+    .btn-header {
+        padding: 7px 12px;
+        font-size: 0.8rem;
+    }
+
+    /* avatar centralizado em cima, nome embaixo */
+    .perfil-topo {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+
+    .perfil-meta {
+        justify-content: center;
+    }
+}

@@ -91,15 +91,16 @@ $ehAdmin = $tipo === "Admin";
         <?php else: ?>
             <?php foreach ($prestadores as $prestador): ?>
                 <?php
-                $nome = $prestador["nome_TB_prestador"];
-                $inicial = mb_strtoupper(mb_substr($nome, 0, 1));
+                $nomePrestador = $prestador["nome_TB_prestador"];
+                $inicial = mb_strtoupper(mb_substr($nomePrestador, 0, 1));
                 $media = $prestador["media_avaliacoes"] ?? null;
                 $valor = $prestador["preco_customizado_TB_servico"] ?? $prestador["precoPadrao_TB_servico"];
                 ?>
 
 
-                <div class="card-prestador"
-                    onclick="document.getElementById('form-perfil-<?= $prestador['PK_id_TB_prestadorServico'] ?>').submit();">
+                <div class="card-prestador" role="link" tabindex="0"
+                    onclick="document.getElementById('form-perfil-<?= $prestador['PK_id_TB_prestadorServico'] ?>').submit();"
+                    onkeydown="if(event.key==='Enter'){this.click();}">
 
                     <div class="avatar">
                         <?= htmlspecialchars($inicial) ?>
@@ -107,7 +108,7 @@ $ehAdmin = $tipo === "Admin";
 
                     <div class="info">
                         <p class="nome">
-                            <?= htmlspecialchars($nome) ?>
+                            <?= htmlspecialchars($nomePrestador) ?>
                         </p>
                         <div class="meta">
                             <span>
@@ -161,9 +162,8 @@ $ehAdmin = $tipo === "Admin";
                     <input type="hidden" name="prestador" value="<?= $prestador["PK_id_TB_prestadorServico"] ?>">
                     <input type="hidden" name="valor" value="<?= $valor ?>">
                 </form>
-            </div>
-        <?php endforeach; ?>
-    <?php endif; ?>
+            <?php endforeach; ?>
+        <?php endif; ?>
     </div>
 
 </body>
