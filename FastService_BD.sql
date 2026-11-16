@@ -137,6 +137,30 @@ CREATE TABLE IF NOT EXISTS tb_denuncia (
     FOREIGN KEY (FK_id_TB_solicitacao) REFERENCES TB_SolicitacaoServico(PK_id_TB_SolicitacaoServico) ON DELETE SET NULL
 );
 
+-- Orçamento enviado pelo prestador dentro do chat de uma solicitação
+CREATE TABLE IF NOT EXISTS TB_orcamento (
+    PK_id_TB_orcamento INT AUTO_INCREMENT PRIMARY KEY,
+    FK_id_TB_SolicitacaoServico INT NOT NULL,
+    dias_TB_orcamento INT NULL,
+    valorDiaria_TB_orcamento DECIMAL(10,2) NULL,
+    materiais_TB_orcamento DECIMAL(10,2) NOT NULL DEFAULT 0,
+    transporte_TB_orcamento DECIMAL(10,2) NOT NULL DEFAULT 0,
+    valor_TB_orcamento DECIMAL(10,2) NOT NULL,
+    descricao_TB_orcamento TEXT NULL,
+    status_TB_orcamento ENUM('pendente','aceito','recusado','substituido') NOT NULL DEFAULT 'pendente',
+    data_criacao_TB_orcamento TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (FK_id_TB_SolicitacaoServico)
+        REFERENCES TB_SolicitacaoServico(PK_id_TB_SolicitacaoServico) ON DELETE CASCADE
+);
+
+-- A mensagem do chat passa a poder ser do tipo "orcamento" (renderizada como card)
+ALTER TABLE TB_mensagem
+    ADD COLUMN tipo_TB_mensagem ENUM('texto','orcamento') NOT NULL DEFAULT 'texto',
+    ADD COLUMN FK_id_TB_orcamento INT NULL,
+    ADD CONSTRAINT fk_mensagem_orcamento FOREIGN KEY (FK_id_TB_orcamento)
+        REFERENCES TB_orcamento(PK_id_TB_orcamento) ON DELETE SET NULL;
+
+
 ALTER TABLE TB_mensagem ADD COLUMN imagem_TB_mensagem VARCHAR(255) NULL;
 ALTER TABLE TB_clientePerfil ADD COLUMN foto_TB_cliente VARCHAR(255) NULL;
 ALTER TABLE TB_prestadorPerfil ADD COLUMN foto_TB_prestador VARCHAR(255) NULL;
