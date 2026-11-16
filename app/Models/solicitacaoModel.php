@@ -166,6 +166,9 @@ class solicitacaoModel
         if ($result == 0) {
             return false;
         }
+
+        // serviço concluído: o chat some da lista (ver filtro em ChatModel::buscarMeusChats)
+        // e não aceita novas mensagens, mas fica guardado no banco.
         return true;
     }
 }
