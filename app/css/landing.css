@@ -77,20 +77,17 @@ section[id] {
     font-family: 'Montserrat', sans-serif;
     font-size: 0.95rem;
     font-weight: 700;
+    white-space: nowrap;
     cursor: pointer;
     transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
-}
-
-.btn {
-    white-space: nowrap;
 }
 
 .btn:hover {
     transform: translateY(-2px);
 }
 
-.hero .wrap > *,
-.prestador-box > * {
+.hero .wrap>*,
+.prestador-box>* {
     min-width: 0;
 }
 
@@ -127,12 +124,17 @@ section[id] {
     font-size: 0.88rem;
 }
 
-/* ---------- HEADER ---------- */
+/* ==========================================================
+   HEADER
+   Desktop: logo | links | ações, tudo em uma linha.
+   Até 1100px: logo + botão de menu; links e ações vão para um painel.
+   ========================================================== */
+
 .site-header {
     position: sticky;
     top: 0;
     z-index: 50;
-    background-color: rgba(255, 255, 255, 0.92);
+    background-color: rgba(255, 255, 255, 0.96);
     backdrop-filter: blur(10px);
     border-bottom: 3px solid var(--amber);
 }
@@ -145,10 +147,14 @@ section[id] {
     gap: 24px;
 }
 
+/* LOGO */
+
 .brand {
     display: flex;
     align-items: center;
     gap: 8px;
+    flex-shrink: 0;
+    white-space: nowrap;
 }
 
 .brand img {
@@ -163,13 +169,63 @@ section[id] {
     font-weight: 800;
 }
 
+/* BOTÃO DO MENU (aparece só em telas menores) */
+
+.menu-toggle {
+    display: none;
+    place-items: center;
+    width: 44px;
+    height: 44px;
+    padding: 0;
+    background-color: transparent;
+    border: 2px solid var(--amber-line);
+    border-radius: var(--radius-pill);
+    color: var(--ink);
+    cursor: pointer;
+    transition: background-color 0.2s ease, border-color 0.2s ease;
+}
+
+.menu-toggle:hover {
+    background-color: var(--amber-soft);
+    border-color: var(--amber);
+}
+
+.menu-toggle svg {
+    width: 22px;
+    height: 22px;
+}
+
+.menu-toggle .ic-fechar {
+    display: none;
+}
+
+.menu-toggle[aria-expanded="true"] .ic-abrir {
+    display: none;
+}
+
+.menu-toggle[aria-expanded="true"] .ic-fechar {
+    display: block;
+}
+
+/* MENU (links + ações) */
+
+.menu {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    align-items: center;
+    gap: 24px;
+}
+
 .nav-links {
     display: flex;
     align-items: center;
-    gap: 32px;
+    gap: 24px;
+    margin-inline: auto;
     font-family: 'Archivo', sans-serif;
     font-weight: 700;
     font-size: 0.95rem;
+    white-space: nowrap;
 }
 
 .nav-links a {
@@ -182,16 +238,59 @@ section[id] {
     border-bottom-color: var(--amber);
 }
 
+/* AÇÕES DO USUÁRIO */
+
 .nav-actions {
     display: flex;
     align-items: center;
-    gap: 12px;
+    justify-content: flex-end;
+    gap: 8px;
+    flex-shrink: 0;
+    white-space: nowrap;
 }
 
+.site-header .btn {
+    min-height: 40px;
+}
+
+/* saudação só cabe em telas bem largas (e aparece sempre dentro do painel) */
 .saudacao {
+    display: none;
+    max-width: 160px;
+    margin-right: 6px;
+    overflow: hidden;
+    text-overflow: ellipsis;
     font-size: 0.9rem;
     font-weight: 600;
     color: var(--muted);
+}
+
+/* botão só com ícone (notificações): redondo no desktop */
+.btn-icone {
+    width: 40px;
+    padding: 0;
+}
+
+.btn-icone svg {
+    width: 18px;
+    height: 18px;
+    flex-shrink: 0;
+}
+
+/* o texto existe para leitores de tela; só aparece dentro do painel */
+.rotulo-icone {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+}
+
+@media (min-width: 1280px) {
+    .saudacao {
+        display: inline-block;
+    }
 }
 
 /* ---------- HERO ---------- */
@@ -760,7 +859,93 @@ section[id] {
     font-weight: 700;
 }
 
-/* ---------- RESPONSIVO ---------- */
+/* ==========================================================
+   RESPONSIVO
+   ========================================================== */
+
+/* Header recolhido: logo + botão de menu; o resto vai para um painel */
+@media (max-width: 1100px) {
+    .site-header .wrap {
+        gap: 12px;
+    }
+
+    .menu-toggle {
+        display: inline-grid;
+    }
+
+    .menu {
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        flex: none;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 18px;
+        max-height: calc(100vh - 75px);
+        padding: 12px 24px 24px;
+        overflow-y: auto;
+        background-color: var(--surface);
+        border-bottom: 3px solid var(--amber);
+        box-shadow: var(--shadow-md);
+    }
+
+    .menu.aberto {
+        display: flex;
+    }
+
+    /* links em lista, com área de toque grande */
+    .nav-links {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0;
+        margin-inline: 0;
+        font-size: 1rem;
+    }
+
+    .nav-links a {
+        padding: 14px 8px;
+        border-bottom: 1px solid var(--amber-line);
+        border-radius: var(--radius-sm) var(--radius-sm) 0 0;
+        transition: background-color 0.2s ease;
+    }
+
+    .nav-links a:hover {
+        background-color: var(--amber-soft);
+        border-bottom-color: var(--amber-line);
+    }
+
+    /* ações empilhadas, uma por linha */
+    .nav-actions {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 10px;
+    }
+
+    .saudacao {
+        display: block;
+        max-width: none;
+        margin: 0 0 2px 8px;
+    }
+
+    .menu .btn,
+    .menu .btn-icone {
+        width: 100%;
+        min-height: 46px;
+        padding: 12px 20px;
+        font-size: 0.95rem;
+    }
+
+    .rotulo-icone {
+        position: static;
+        width: auto;
+        height: auto;
+        overflow: visible;
+        clip: auto;
+    }
+}
+
 @media (max-width: 1024px) {
     .categorias-grid {
         grid-template-columns: repeat(3, 1fr);
@@ -768,10 +953,6 @@ section[id] {
 }
 
 @media (max-width: 900px) {
-    .nav-links {
-        display: none;
-    }
-
     .hero {
         padding: 48px 0 64px;
     }
@@ -810,15 +991,21 @@ section[id] {
     }
 
     .site-header .wrap {
-        gap: 8px;
+        min-height: 64px;
+    }
+
+    .menu {
+        padding: 8px 16px 20px;
+        max-height: calc(100vh - 67px);
     }
 
     .brand span {
         font-size: 1.1rem;
     }
 
-    .nav-actions {
-        gap: 8px;
+    .brand img {
+        width: 36px;
+        height: 36px;
     }
 
     .btn-sm {
@@ -839,16 +1026,6 @@ section[id] {
     .passos,
     .diferenciais {
         grid-template-columns: 1fr;
-    }
-
-    .saudacao,
-    .btn-ghost.hide-sm {
-        display: none;
-    }
-
-    .brand img {
-        width: 36px;
-        height: 36px;
     }
 
     .busca .btn {
@@ -879,12 +1056,6 @@ section[id] {
 
     .depoimento:nth-child(even) {
         margin-left: 0;
-    }
-}
-
-@media (max-width: 480px) {
-    .brand span {
-        display: none;
     }
 }
 

@@ -113,21 +113,25 @@
 
                 <section class="secao">
                     <h3>Serviços</h3>
+
+                    <!-- categorias: clique em uma para ver os serviços dela -->
                     <div class="campo">
-                        <label for="categorias">Categoria</label>
-                        <select name="categorias" id="categorias">
-                            <option value="">Tipo de serviço</option>
+                        <p class="rotulo-grupo" id="rotulo-categoria">Categoria</p>
+                        <div class="container-categorias" id="container-categorias" role="group" aria-labelledby="rotulo-categoria">
                             <?php
                             if (isset($categorias)) {
                                 foreach ($categorias as $cat) {
-                                    echo "<option value='{$cat["PK_id_TB_categoria"]}'>{$cat['nome_TB_categoria']}</option>";
+                                    echo "<button type='button' class='chip-cat' data-id='" . (int) $cat["PK_id_TB_categoria"] . "' aria-pressed='false'>"
+                                        . htmlspecialchars($cat['nome_TB_categoria'])
+                                        . "<span class='chip-cat-count'></span></button>";
                                 }
                             }
                             ?>
-                        </select>
+                        </div>
                     </div>
 
                     <!-- serviços da categoria escolhida -->
+                    <p class="rotulo-grupo rotulo-servicos" id="rotulo-servicos" hidden>Serviços da categoria</p>
                     <div class="container-servicos" id="container-servicos"></div>
 
                     <!-- serviços já selecionados -->
@@ -193,12 +197,35 @@
 
         // 2. Variáveis Globais
         const servicos = <?= json_encode($servicos ?? []) ?>;
+        const containerCategorias = document.getElementById("container-categorias");
+        const rotuloServicos = document.getElementById("rotulo-servicos");
         const container = document.getElementById("container-servicos");
         const containerSelecionados = document.getElementById("container-selecionados");
         const servicosSelecionados = new Set();
 
+        // Evita que nomes vindos do banco sejam interpretados como HTML
+        function esc(texto) {
+            const el = document.createElement("span");
+            el.textContent = texto;
+            return el.innerHTML;
+        }
+
+        // Mostra em cada categoria quantos serviços já foram escolhidos nela
+        function atualizarContagens() {
+            containerCategorias.querySelectorAll(".chip-cat").forEach(botao => {
+                const idCategoria = botao.getAttribute("data-id");
+                const total = Array.from(servicosSelecionados).filter(id => {
+                    const s = servicos.find(x => String(x.PK_id_TB_servico) === String(id));
+                    return s && String(s.FK_id_TB_categoria) === String(idCategoria);
+                }).length;
+                botao.querySelector(".chip-cat-count").textContent = total > 0 ? total : "";
+            });
+        }
+
         // 3. Atualiza a lista visual de Selecionados e os inputs do formulário
         function renderizarSelecionados() {
+            atualizarContagens();
+
             if (servicosSelecionados.size === 0) {
                 containerSelecionados.innerHTML = '<p class="vazio">Nenhum serviço selecionado.</p>';
                 return;
@@ -210,9 +237,9 @@
 
                 return `
                 <div class="item-servico-selecionado">
-                    <input type="hidden" name="servicos[]" value="${id}">
-                    <span>${nome}</span>
-                    <button type="button" class="btn-remover" data-id="${id}" aria-label="Remover ${nome}">✕</button>
+                    <input type="hidden" name="servicos[]" value="${esc(id)}">
+                    <span>${esc(nome)}</span>
+                    <button type="button" class="btn-remover" data-id="${esc(id)}" aria-label="Remover ${esc(nome)}">✕</button>
                 </div>`;
             }).join("");
 
@@ -250,14 +277,15 @@
             }
         });
 
-        // 6. Atualiza a lista da categoria no <select>
-        document.getElementById("categorias").addEventListener("change", function() {
-            const categoria = this.value;
-
+        // 6. Lista os serviços da categoria escolhida
+        function listarServicos(categoria) {
             if (!categoria) {
+                rotuloServicos.hidden = true;
                 container.innerHTML = "";
                 return;
             }
+
+            rotuloServicos.hidden = false;
 
             const servicosFiltrados = servicos.filter(s => String(s.FK_id_TB_categoria) === String(categoria));
 
@@ -272,10 +300,25 @@
 
                 return `
                 <div class="item-servico">
-                    <input type="checkbox" class="chk-servico" value="${id}" id="srv-${id}" ${marcado}>
-                    <label for="srv-${id}">${servico.nome_TB_servico}</label>
+                    <input type="checkbox" class="chk-servico" value="${esc(id)}" id="srv-${esc(id)}" ${marcado}>
+                    <label for="srv-${esc(id)}">${esc(servico.nome_TB_servico)}</label>
                 </div>`;
             }).join("");
+        }
+
+        // 7. Clique em uma categoria: destaca o chip e mostra os serviços dela
+        //    (clicar de novo na categoria ativa fecha a lista)
+        containerCategorias.addEventListener("click", function(e) {
+            const botao = e.target.closest(".chip-cat");
+            if (!botao) return;
+
+            const jaAtiva = botao.getAttribute("aria-pressed") === "true";
+
+            containerCategorias.querySelectorAll(".chip-cat").forEach(b => {
+                b.setAttribute("aria-pressed", String(b === botao && !jaAtiva));
+            });
+
+            listarServicos(jaAtiva ? "" : botao.getAttribute("data-id"));
         });
 
         // estado inicial da lista de selecionados

@@ -29,30 +29,40 @@ $ehAdmin = $tipo === "Admin";
                 <span>FastService</span>
             </a>
 
-            <nav class="nav-links" aria-label="Principal">
-                <a href="#como-funciona">Como funciona</a>
-                <a href="#categorias">Categorias</a>
-                <a href="#servicos">Serviços</a>
-            </nav>
+            <button type="button" class="menu-toggle" id="menu-toggle" aria-expanded="false" aria-controls="menu-principal" aria-label="Abrir menu">
+                <svg class="ic-abrir" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+                <svg class="ic-fechar" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>
+            </button>
 
-            <div class="nav-actions">
-                <?php if ($logado): ?>
-                    <span class="saudacao">Olá, <?= $nome ?></span>
-                    <a href="?route=lista-servicos-cliente" class="btn btn-ghost btn-sm hide-sm">Minhas Solicitações</a>
-                    <a href="?route=notificacoes" class="btn btn-ghost btn-sm hide-sm">N</a>
-                    <a href="?route=chat" class="btn btn-ghost btn-sm hide-sm">Chat</a>
-                    <?php if ($ehAdmin): ?>
-                        <a href="?route=painel-admin" class="btn btn-ghost btn-sm hide-sm">Painel</a>
-                    <?php elseif ($ehPrestador): ?>
-                        <a href="?route=dashboard" class="btn btn-primary btn-sm">Meu painel</a>
+            <div class="menu" id="menu-principal">
+                <nav class="nav-links" aria-label="Principal">
+                    <a href="#como-funciona">Como funciona</a>
+                    <a href="#categorias">Categorias</a>
+                    <a href="#servicos">Serviços</a>
+                </nav>
+
+                <div class="nav-actions">
+                    <?php if ($logado): ?>
+                        <span class="saudacao">Olá, <?= $nome ?></span>
+                        <a href="?route=lista-servicos-cliente" class="btn btn-ghost btn-sm">Minhas Solicitações</a>
+                        <a href="?route=notificacoes" class="btn btn-ghost btn-sm btn-icone" title="Notificações">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+                            <span class="rotulo-icone">Notificações</span>
+                        </a>
+                        <a href="?route=chat" class="btn btn-ghost btn-sm">Chat</a>
+                        <?php if ($ehAdmin): ?>
+                            <a href="?route=painel-admin" class="btn btn-ghost btn-sm">Painel</a>
+                        <?php elseif ($ehPrestador): ?>
+                            <a href="?route=dashboard" class="btn btn-primary btn-sm">Meu painel</a>
+                        <?php else: ?>
+                            <a href="?route=perfil" class="btn btn-primary btn-sm">Meu perfil</a>
+                        <?php endif; ?>
+                        <a href="?route=logout" class="btn btn-ghost btn-sm">Sair</a>
                     <?php else: ?>
-                        <a href="?route=perfil" class="btn btn-primary btn-sm">Meu perfil</a>
+                        <a href="?route=login-form" class="btn btn-ghost btn-sm">Entrar</a>
+                        <a href="?route=prestador-form" class="btn btn-primary btn-sm">Seja um profissional</a>
                     <?php endif; ?>
-                    <a href="?route=logout" class="btn btn-ghost btn-sm">Sair</a>
-                <?php else: ?>
-                    <a href="?route=login-form" class="btn btn-ghost btn-sm">Entrar</a>
-                    <a href="?route=prestador-form" class="btn btn-primary btn-sm">Seja um profissional</a>
-                <?php endif; ?>
+                </div>
             </div>
         </div>
     </header>
@@ -323,6 +333,47 @@ $ehAdmin = $tipo === "Admin";
             <p>&copy; 2026, FastService LTDA</p>
         </div>
     </footer>
+
+    <script>
+        // Menu do header em telas menores
+        (function () {
+            const botao = document.getElementById('menu-toggle');
+            const menu = document.getElementById('menu-principal');
+            if (!botao || !menu) return;
+
+            const telaPequena = window.matchMedia('(max-width: 1100px)');
+
+            function definir(aberto) {
+                menu.classList.toggle('aberto', aberto);
+                botao.setAttribute('aria-expanded', String(aberto));
+                botao.setAttribute('aria-label', aberto ? 'Fechar menu' : 'Abrir menu');
+            }
+
+            botao.addEventListener('click', () => definir(!menu.classList.contains('aberto')));
+
+            // fecha ao escolher um link do painel (inclusive os que rolam para uma seção)
+            menu.addEventListener('click', (e) => {
+                if (e.target.closest('a')) definir(false);
+            });
+
+            // fecha com Esc e ao clicar fora do header
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape' && menu.classList.contains('aberto')) {
+                    definir(false);
+                    botao.focus();
+                }
+            });
+
+            document.addEventListener('click', (e) => {
+                if (menu.classList.contains('aberto') && !e.target.closest('.site-header')) {
+                    definir(false);
+                }
+            });
+
+            // ao mudar o tamanho da janela, volta ao estado fechado
+            telaPequena.addEventListener('change', () => definir(false));
+        })();
+    </script>
 
 </body>
 

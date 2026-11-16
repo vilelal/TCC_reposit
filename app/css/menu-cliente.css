@@ -1,0 +1,96 @@
+/* Barra superior do CLIENTE (sem menu lateral). Carregado pelo próprio menu-cliente.php,
+   depois de painel.css. */
+
+/* O body do painel.css é uma grade [menu | principal]. Sem o menu, a área principal
+   ocupa todas as colunas, em qualquer página que use este partial. */
+.principal-cliente {
+    grid-column: 1 / -1;
+}
+
+/* No mobile o painel.css reserva espaço para a barra inferior do menu: aqui não existe */
+body:has(.principal-cliente) {
+    padding-bottom: 0;
+}
+
+/* ---------- Lado esquerdo: marca + título ---------- */
+.topo-esq {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    min-width: 0;
+}
+
+/* o painel.css esconde .marca no mobile (a marca ficava no menu); no cliente ela fica no topo */
+.topo .marca {
+    display: flex;
+    flex-shrink: 0;
+    padding: 0;
+}
+
+.topo .marca-logo {
+    width: 34px;
+    height: 34px;
+}
+
+.topo .marca-nome {
+    font-size: 1.15rem;
+}
+
+.topo-esq .topo-titulo {
+    padding-left: 16px;
+    border-left: 1px solid var(--amber-line);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+/* ---------- Ações ---------- */
+.topo-btn.ativo {
+    background-color: var(--amber-soft);
+}
+
+.topo-perfil {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    height: 40px;
+    margin-left: 4px;
+    padding: 0 16px;
+    border: 1px solid var(--amber-line);
+    border-radius: var(--radius-pill);
+    background-color: var(--surface);
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: var(--ink);
+    transition: background-color 0.15s ease, border-color 0.15s ease;
+}
+
+.topo-perfil:hover,
+.topo-perfil.ativo {
+    background-color: var(--amber-soft);
+    border-color: var(--amber);
+}
+
+/* ---------- Responsivo ---------- */
+@media (max-width: 800px) {
+    .topo-esq .topo-titulo {
+        display: none;
+    }
+}
+
+@media (max-width: 480px) {
+    .topo .marca-nome {
+        display: none;
+    }
+
+    /* no celular o Perfil vira só o ícone */
+    .topo-perfil {
+        width: 40px;
+        padding: 0;
+        justify-content: center;
+    }
+
+    .topo-perfil span {
+        display: none;
+    }
+}

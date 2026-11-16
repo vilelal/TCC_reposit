@@ -1,5 +1,5 @@
 /* ==========================================================
-   Cadastro de prestador — novo layout
+   Cadastro de prestador - novo layout
    Paleta original mantida: #ffbd59, #FBD34F, #ffc107,
    #F8F9FA, #FFFFFF, #E7E5E5 e #000000
    ========================================================== */
@@ -278,11 +278,80 @@ select {
 
 /* ---------- Serviços ---------- */
 
+/* título pequeno de um grupo de chips (mesmo visual dos rótulos dos campos) */
+.rotulo-grupo {
+    margin: 0;
+    font-size: 13px;
+    font-weight: 700;
+}
+
+.rotulo-servicos {
+    margin-top: 22px;
+}
+
+/* categorias: escolha única; a ativa fica preta */
+.container-categorias {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.chip-cat {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 9px 18px;
+    font-family: inherit;
+    font-size: 15px;
+    font-weight: 600;
+    line-height: 1.4;
+    color: var(--preto);
+    background-color: var(--branco);
+    border: 2px solid var(--borda);
+    border-radius: 999px;
+    cursor: pointer;
+    user-select: none;
+    transition: background-color 0.15s, border-color 0.15s, color 0.15s;
+}
+
+.chip-cat:hover {
+    border-color: var(--preto);
+}
+
+.chip-cat[aria-pressed="true"] {
+    background-color: var(--preto);
+    border-color: var(--preto);
+    color: var(--branco);
+}
+
+/* quantos serviços já foram escolhidos na categoria */
+.chip-cat-count {
+    display: inline-grid;
+    place-items: center;
+    min-width: 22px;
+    height: 22px;
+    padding: 0 6px;
+    font-size: 12px;
+    font-weight: 800;
+    line-height: 1;
+    color: var(--preto);
+    background-color: var(--amarelo);
+    border-radius: 999px;
+}
+
+.chip-cat-count:empty {
+    display: none;
+}
+
 .container-servicos {
     display: flex;
     flex-wrap: wrap;
     gap: 10px;
     margin-top: 16px;
+}
+
+.rotulo-servicos+.container-servicos {
+    margin-top: 8px;
 }
 
 .container-servicos:empty {
@@ -525,6 +594,12 @@ button:focus-visible {
 
     button[type="submit"] {
         font-size: 17px;
+    }
+
+    /* chips mais confortáveis para o toque */
+    .chip-cat,
+    .item-servico label {
+        padding: 10px 16px;
     }
 }
 
