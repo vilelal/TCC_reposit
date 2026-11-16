@@ -20,7 +20,7 @@ $inicial = $nomePrestador !== "" ? mb_strtoupper(mb_substr($nomePrestador, 0, 1)
 
 $media = (isset($mediaAvaliacoes) && is_numeric($mediaAvaliacoes)) ? (float) $mediaAvaliacoes : null;
 
-// Fotos do portfólio (ignora linhas sem foto)
+// Fotos do portfólio (ignora linhas sem foto).
 $fotos = [];
 foreach ($prestador as $prest) {
     $foto = trim($prest["foto_TB_repositorio"] ?? "");
