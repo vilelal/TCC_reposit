@@ -1,3 +1,6 @@
 .env
 app/Views/uploads/*
 !app/Views/uploads/.gitkeep
+
+app/css/repositorio/*
+!/app/css/repositorio/.gitkeep
