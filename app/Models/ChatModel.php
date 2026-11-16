@@ -110,7 +110,8 @@ class ChatModel
         ON pp.FK_id_TB_usuario = u_prestador.PK_id_TB_usuario
 
     -- Filtra os chats onde o usuário logado é o Cliente OU é o Prestador
-    WHERE c.FK_id_TB_usuario = ? OR pp.FK_id_TB_usuario = ?
+    WHERE (c.FK_id_TB_usuario = ? OR pp.FK_id_TB_usuario = ?)
+      AND s.status_TB_SolicitacaoServico <> 'concluido'
 
     ORDER BY 
         COALESCE(

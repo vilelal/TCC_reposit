@@ -2,6 +2,17 @@
 
 class ChatController
 {
+    // Usuário logado participa da solicitação? (devolve os dados dela ou null)
+    private function solicitacaoDoUsuario($solicitacaoId)
+    {
+        $sol = OrcamentoModel::getParticipantes((int) $solicitacaoId);
+        if (!$sol) return null;
+        $uid = (int) $_SESSION["id"];
+        if ($uid !== (int) $sol["id_usuario_cliente"] && $uid !== (int) $sol["id_usuario_prestador"]) {
+            return null;
+        }
+        return $sol;
+    }
 
     public function exibirChat()
     {
@@ -14,6 +25,12 @@ class ChatController
         $solicitacaoAtiva = $_GET["id_solicitacao"] ?? null;
 
         // Se ele clicou em um chat específico, marca as mensagens como lidas
+        // ignora chats que não são do usuário ou que já foram encerrados
+        $sol = $solicitacaoAtiva ? $this->solicitacaoDoUsuario($solicitacaoAtiva) : null;
+        if (!$sol || $sol["status_solicitacao"] === "concluido") {
+            $solicitacaoAtiva = null;
+        }
+
         if ($solicitacaoAtiva) {
             ChatModel::marcarMensagensComoLidas($solicitacaoAtiva, $usuarioId);
         }
@@ -34,6 +51,13 @@ class ChatController
     $caminhoImagem = null;
 
     if (!$solicitacaoId) return;
+
+    // só participantes, e só enquanto o serviço não foi concluído
+    $sol = $this->solicitacaoDoUsuario($solicitacaoId);
+    if (!$sol || $sol["status_solicitacao"] === "concluido") {
+        echo json_encode(["status" => "erro"]);
+        return;
+    }
 
     // Verifica se uma imagem foi enviada
     if (isset($_FILES['imagem']) && $_FILES['imagem']['error'] === UPLOAD_ERR_OK) {
@@ -66,7 +90,7 @@ class ChatController
     public function carregarMensagensJSON()
     {
         $solicitacaoId = $_GET["id_solicitacao"] ?? null;
-        if ($solicitacaoId) {
+        if ($solicitacaoId && isset($_SESSION["id"]) && $this->solicitacaoDoUsuario($solicitacaoId)) {
             $mensagens = ChatModel::buscarMensagens($solicitacaoId);
             header('Content-Type: application/json');
             echo json_encode($mensagens);
