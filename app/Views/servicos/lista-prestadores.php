@@ -151,7 +151,9 @@ $ehAdmin = $tipo === "Admin";
                 <form id="form-perfil-<?= $prestador["PK_id_TB_prestadorServico"] ?>" action="?route=perfil-prestador"
                     method="post" style="display: none;">
                     <input type="hidden" name="prestador_id" value="<?= $prestador["PK_id_TB_prestadorPerfil"] ?>">
+                    <input type="hidden" name="data_agendamento" value="<?= $data ?>">
                     <input type="hidden" name="media" value="<?= $prestador["media_avaliacoes"] ?>">
+                    <input type="hidden" name="servico" value="<?= $servico ?>">
                 </form>
 
                 <!-- FORMULÁRIO 2: Solicita o serviço -->

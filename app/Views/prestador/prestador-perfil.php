@@ -115,6 +115,12 @@ foreach ($prestador as $prest) {
             Voltar
         </a>
 
+        <form action="?route=buscar-proximos" method="post">
+            <input type="hidden" name="FK_id_TB_servico" value="<?= $servico ?>">
+            <input type="hidden" name="data_agendamento" value="<?= $data ?>">
+            <button><</button>
+        </form>
+        
         <?php if (empty($dados)): ?>
 
             <div class="vazio">Prestador não encontrado.</div>
@@ -193,7 +199,7 @@ foreach ($prestador as $prest) {
         <?php endif; ?>
 
     </main>
-
+    
 </body>
 
 </html>

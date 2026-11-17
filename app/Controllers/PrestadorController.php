@@ -96,6 +96,8 @@ class PrestadorController
 
     public function exibirPerfil() {
         $prestadorId = $_POST["prestador_id"];
+        $servico = $_POST["servico"];
+        $data = $_POST["data_agendamento"];
         $prestador = PrestadorModel::getPerfil($prestadorId);
         $mediaAvaliacoes = $_POST["media"];
 
