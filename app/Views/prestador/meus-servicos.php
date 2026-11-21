@@ -40,8 +40,8 @@
                     <?php
                     if (isset($categorias)) {
                         foreach ($categorias as $cat) {
-                            echo "<button type='button' class='chip-cat' data-id='" . (int) $cat["PK_id_TB_categoria"] . "' aria-pressed='false'>" . htmlspecialchars($cat['nome_TB_categoria']) . "</button>";
-                        }
+                            echo "<button type='button' class='chip-cat' data-id='" . (int) $cat["PK_id_TB_categoria"] . "' aria-pressed='false'>" . htmlspecialchars($cat['nome_TB_categoria']) . "</button>";  
+                          }
                     }
                     ?>
                 </div>
@@ -62,9 +62,9 @@
             </section>
         </form>
 
-        <form action="?route=adicionar-repositorio" method="post" enctype="multipart/form-data">
-            <input type="file" name="imagens[]" accept="image/*" multiple>
-            <input type="submit" value="Adicionar">
+        <form class="form-upload" action="?route=adicionar-repositorio" method="post" enctype="multipart/form-data">
+            <input type="file" class="input-arquivo" name="imagens[]" accept="image/*" multiple>
+            <input type="submit" class="btn-upload" value="Adicionar">
         </form>
     </main>
     </div>

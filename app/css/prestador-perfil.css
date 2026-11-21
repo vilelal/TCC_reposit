@@ -105,6 +105,53 @@ body {
     transition: border-color 0.2s ease;
 }
 
+.voltar-form {
+    margin: 0;
+}
+
+.voltar {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+
+    margin-bottom: 16px;
+    padding: 6px 14px 6px 8px;
+
+    background: transparent;
+    border: 1.5px solid var(--amber-line);
+    border-radius: var(--radius-pill);
+
+    color: var(--preto);
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 1;
+    text-decoration: none;
+    cursor: pointer;
+
+    transition: background 0.15s ease, border-color 0.15s ease;
+}
+
+.voltar svg {
+    width: 18px;
+    height: 18px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2.5;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+.voltar:hover {
+    background: var(--amber-soft);
+    border-color: var(--amber);
+}
+
+.voltar:focus-visible {
+    outline: 2px solid var(--amber);
+    outline-offset: 2px;
+}
+
 .nav-links a:hover {
     border-bottom-color: var(--amber);
 }
@@ -173,38 +220,6 @@ body {
     padding: 24px 16px 48px;
 }
 
-.voltar {
-    display: inline-flex;
-    align-items: center;
-    gap: 4px;
-
-    margin-bottom: 16px;
-    padding: 6px 12px 6px 6px;
-
-    border-radius: var(--radius-pill);
-    color: var(--cinza-texto);
-    font-size: 14px;
-    font-weight: 600;
-    text-decoration: none;
-
-    transition: background 0.15s ease, color 0.15s ease;
-}
-
-.voltar svg {
-    width: 18px;
-    height: 18px;
-    fill: none;
-    stroke: currentColor;
-    stroke-width: 2.5;
-    stroke-linecap: round;
-    stroke-linejoin: round;
-}
-
-.voltar:hover {
-    background: var(--amber-soft);
-    color: var(--preto);
-}
-
 /* ---------- Card principal ---------- */
 
 .perfil-card {
@@ -259,7 +274,7 @@ body {
 .perfil-identidade {
     flex: 1;
     min-width: 0;
-    padding-bottom: 4px;
+    padding-bottom: 0px;
 }
 
 .perfil-nome {
