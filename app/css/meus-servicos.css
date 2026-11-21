@@ -249,6 +249,74 @@
     background-color: #f8c065;
 }
 
+/* Envio de imagens: só os dois botões (escolher arquivos e adicionar) */
+.form-upload {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 12px;
+    margin-top: 16px;
+}
+
+/* Largura fixa para o texto "Nenhum arquivo escolhido" caber inteiro ao lado do botão.
+   Sem isso o navegador usa uma largura padrão menor e corta o texto com "...". */
+.input-arquivo {
+    width: 380px;
+    max-width: 100%;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.85rem;
+    color: var(--muted);
+}
+
+/* Botão "Escolher arquivos": contorno âmbar, como os botões secundários do site */
+.input-arquivo::file-selector-button {
+    margin-right: 12px;
+    padding: 9px 18px;
+    border: 1px solid var(--amber-line);
+    border-radius: var(--radius-pill);
+    background-color: var(--surface);
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.88rem;
+    font-weight: 600;
+    color: var(--ink);
+    cursor: pointer;
+    transition: background-color 0.15s ease, border-color 0.15s ease;
+}
+
+.input-arquivo::file-selector-button:hover {
+    background-color: var(--amber-soft);
+    border-color: var(--amber);
+}
+
+.input-arquivo:focus-visible {
+    outline: 2px solid var(--ink);
+    outline-offset: 4px;
+    border-radius: var(--radius-sm);
+}
+
+/* Botão "Adicionar": âmbar cheio, igual ao "Salvar alterações" */
+.btn-upload {
+    padding: 10px 24px;
+    border: none;
+    border-radius: var(--radius-pill);
+    background-color: var(--amber);
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.92rem;
+    font-weight: 700;
+    color: var(--ink);
+    cursor: pointer;
+    transition: background-color 0.15s ease;
+}
+
+.btn-upload:hover {
+    background-color: #f8c065;
+}
+
+.btn-upload:focus-visible {
+    outline: 2px solid var(--ink);
+    outline-offset: 2px;
+}
+
 @media (max-width: 900px) {
     .form-servicos {
         grid-template-columns: minmax(0, 1fr);
@@ -265,11 +333,25 @@
     }
 }
 
+@media (max-width: 480px) {
+
+    /* no celular o campo ocupa a linha toda e o botão "Adicionar" vem embaixo */
+    .input-arquivo {
+        width: 100%;
+    }
+
+    .btn-upload {
+        width: 100%;
+    }
+}
+
 @media (prefers-reduced-motion: reduce) {
 
     .chip-cat,
     .chip-corpo,
-    .chip-check {
+    .chip-check,
+    .input-arquivo::file-selector-button,
+    .btn-upload {
         transition: none;
     }
 }

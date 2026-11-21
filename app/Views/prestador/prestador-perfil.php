@@ -108,17 +108,15 @@ foreach ($prestador as $prest) {
 
     <main class="perfil-page">
 
-        <a href="?route=<?= htmlspecialchars($rotaLista) ?>" class="voltar">
-            <svg viewBox="0 0 24 24" aria-hidden="true">
-                <path d="M15 18l-6-6 6-6" />
-            </svg>
-            Voltar
-        </a>
-
-        <form action="?route=buscar-proximos" method="post">
-            <input type="hidden" name="FK_id_TB_servico" value="<?= $servico ?>">
-            <input type="hidden" name="data_agendamento" value="<?= $data ?>">
-            <button><</button>
+        <form action="?route=buscar-proximos" method="post" class="voltar-form">
+            <input type="hidden" name="FK_id_TB_servico" value="<?= htmlspecialchars($servico ?? "") ?>">
+            <input type="hidden" name="data_agendamento" value="<?= htmlspecialchars($data ?? "") ?>">
+            <button type="submit" class="voltar">
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M15 18l-6-6 6-6" />
+                </svg>
+                Voltar
+            </button>
         </form>
         
         <?php if (empty($dados)): ?>

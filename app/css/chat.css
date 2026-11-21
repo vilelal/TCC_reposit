@@ -92,22 +92,42 @@ img {
     gap: 12px;
 }
 
+/* SINO DE NOTIFICAÇÕES */
+
 .sino-link {
+    position: relative;
     display: flex;
     align-items: center;
-    padding: 6px;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border: 1px solid var(--ouro-borda);
     border-radius: 50%;
-    transition: background-color 0.2s;
+    background: #fff;
+    color: var(--texto);
+    transition: background-color 0.2s, border-color 0.2s, color 0.2s;
+}
+
+.sino-link svg {
+    width: 20px;
+    height: 20px;
 }
 
 .sino-link:hover {
     background: var(--ouro-fundo);
+    border-color: var(--ouro);
+    color: var(--ouro-escuro);
 }
 
-.icone-sino {
-    width: 24px;
-    height: 24px;
-    object-fit: contain;
+.sino-badge {
+    position: absolute;
+    top: 8px;
+    right: 9px;
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    background: #dc2626;
+    box-shadow: 0 0 0 2px #fff;
 }
 
 .user-name {
@@ -303,6 +323,11 @@ img {
     background: #fff;
 }
 
+/* o nome do contato pode encolher e truncar em vez de empurrar os botões */
+.header-chat-ativo>div:first-child {
+    min-width: 0;
+}
+
 .header-chat-ativo .foto-chat {
     width: 40px;
     height: 40px;
@@ -342,6 +367,46 @@ img {
 
 .btn-voltar:hover {
     background: var(--ouro-fundo);
+}
+
+/* BOTÃO AJUSTAR ORÇAMENTO (prestador) */
+
+.btn-orcamento {
+    flex-shrink: 0;
+    margin-left: auto;
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    padding: 6px 14px;
+    border: 1px solid var(--ouro);
+    border-radius: var(--raio);
+    background: var(--ouro);
+    color: var(--texto);
+    font-family: inherit;
+    font-size: 0.8rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.15s, border-color 0.15s;
+}
+
+.btn-orcamento svg {
+    width: 16px;
+    height: 16px;
+}
+
+.btn-orcamento:hover {
+    background: var(--ambar);
+    border-color: var(--ambar);
+}
+
+.btn-orcamento:focus-visible {
+    outline: 2px solid var(--ouro);
+    outline-offset: 2px;
+}
+
+/* com o botão de orçamento presente, os dois ficam juntos à direita */
+.btn-orcamento~.btn-denunciar {
+    margin-left: 0;
 }
 
 .chat-box {
@@ -416,6 +481,167 @@ img {
     font-size: 0.72rem;
     font-weight: 500;
     color: var(--texto-suave);
+}
+
+/* ==============================================
+   CARD DE ORÇAMENTO (dentro das mensagens)
+============================================== */
+
+/* o card já tem borda própria: a bolha da mensagem some para não duplicar */
+.msg.msg-orcamento {
+    padding: 0;
+    background: transparent;
+    border: none;
+}
+
+.msg-orcamento .msg-info,
+.msg.minha.msg-orcamento .msg-info {
+    padding: 0 4px;
+    color: var(--texto-suave);
+}
+
+.card-orcamento {
+    min-width: 240px;
+    max-width: 320px;
+    padding: 16px 18px;
+    border: 1px solid var(--ouro-borda);
+    border-top: 4px solid var(--ouro);
+    border-radius: var(--raio);
+    background: #fff;
+    color: var(--texto);
+    text-align: left;
+    box-shadow: 0 2px 8px rgba(30, 41, 59, 0.05);
+}
+
+.card-orcamento-titulo {
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--texto-suave);
+}
+
+.card-orcamento-valor {
+    margin: 4px 0 10px;
+    font-size: 1.6rem;
+    font-weight: 700;
+    line-height: 1.2;
+    color: var(--texto);
+}
+
+.card-orcamento-linha {
+    margin-bottom: 3px;
+    font-size: 0.82rem;
+    color: var(--texto-suave);
+}
+
+.card-orcamento-desc {
+    margin-top: 10px;
+    padding-top: 10px;
+    border-top: 1px solid var(--borda);
+    font-size: 0.85rem;
+    line-height: 1.5;
+    white-space: pre-wrap;
+    color: var(--texto);
+}
+
+.card-orcamento-status {
+    display: inline-block;
+    margin-top: 12px;
+    padding: 4px 12px;
+    border: 1px solid transparent;
+    border-radius: 999px;
+    font-size: 0.72rem;
+    font-weight: 600;
+}
+
+.st-pendente {
+    background: var(--ouro-fundo);
+    border-color: var(--ouro-borda);
+    color: var(--ouro-escuro);
+}
+
+.st-aceito {
+    background: #ecfdf3;
+    border-color: #bbf0d0;
+    color: #166534;
+}
+
+.st-recusado {
+    background: #fef2f2;
+    border-color: #fecaca;
+    color: #b91c1c;
+}
+
+.st-substituido {
+    background: var(--fundo);
+    border-color: var(--borda);
+    color: var(--texto-suave);
+}
+
+.card-orcamento-acoes {
+    display: flex;
+    gap: 8px;
+    margin-top: 14px;
+}
+
+.card-orcamento-acoes button {
+    flex: 1;
+    padding: 9px 12px;
+    border-radius: 999px;
+    font-family: inherit;
+    font-size: 0.82rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.15s, border-color 0.15s, color 0.15s;
+}
+
+/* Aceitar: amarelo cheio, a ação principal do site */
+.btn-aceitar {
+    border: 1px solid var(--ouro);
+    background: var(--ouro);
+    color: var(--texto);
+}
+
+.btn-aceitar:hover {
+    background: var(--ambar);
+    border-color: var(--ambar);
+}
+
+/* Recusar: contorno vermelho, igual ao botão "Denunciar" */
+.btn-recusar {
+    border: 1px solid #dc2626;
+    background: transparent;
+    color: #dc2626;
+}
+
+.btn-recusar:hover {
+    background: #fef2f2;
+    color: #991b1b;
+}
+
+.card-orcamento-acoes button:focus-visible {
+    outline: 2px solid var(--ouro);
+    outline-offset: 2px;
+}
+
+/* AVISOS (feedback das ações de orçamento) */
+
+.aviso-chat {
+    padding: 10px 20px;
+    border-bottom: 1px solid var(--borda);
+    font-size: 0.82rem;
+    font-weight: 600;
+}
+
+.aviso-ok {
+    background: #ecfdf3;
+    color: #166534;
+}
+
+.aviso-erro {
+    background: #fef2f2;
+    color: #b91c1c;
 }
 
 /* ESTADOS VAZIOS */
@@ -702,6 +928,204 @@ img {
 }
 
 /* ==============================================
+   MODAL: CALCULADORA DE ORÇAMENTO
+============================================== */
+
+.modal-orcamento {
+    width: calc(100% - 24px);
+    max-width: 480px;
+    max-height: calc(100vh - 24px);
+    padding: 24px;
+    border: 1px solid var(--borda);
+    border-radius: 16px;
+    background: #fff;
+    color: var(--texto);
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.12), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+    overflow-y: auto;
+}
+
+.modal-orcamento::backdrop {
+    background: rgba(15, 23, 42, 0.55);
+    backdrop-filter: blur(2px);
+}
+
+.orc-topo {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 8px;
+}
+
+.orc-topo h3 {
+    margin: 0;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--texto);
+}
+
+.orc-fechar {
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    padding: 0;
+    border: none;
+    border-radius: 50%;
+    background: transparent;
+    color: var(--texto-suave);
+    font-size: 22px;
+    line-height: 1;
+    cursor: pointer;
+    transition: background-color 0.15s, color 0.15s;
+}
+
+.orc-fechar:hover {
+    background: var(--ouro-fundo);
+    color: var(--texto);
+}
+
+.orc-intro {
+    margin: 0 0 18px;
+    font-size: 0.85rem;
+    line-height: 1.5;
+    color: var(--texto-suave);
+}
+
+.orc-grade {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px 14px;
+}
+
+.orc-campo {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    min-width: 0;
+}
+
+.orc-campo.orc-full {
+    grid-column: 1 / -1;
+}
+
+.orc-campo label,
+.orc-total label {
+    font-size: 0.825rem;
+    font-weight: 600;
+    color: var(--texto);
+}
+
+.orc-campo input,
+.orc-campo textarea,
+.orc-total input {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid var(--borda);
+    border-radius: var(--raio);
+    background: var(--fundo);
+    color: var(--texto);
+    font-family: inherit;
+    font-size: 0.9rem;
+    transition: border-color 0.15s, box-shadow 0.15s, background-color 0.15s;
+}
+
+.orc-campo textarea {
+    resize: vertical;
+    min-height: 80px;
+    line-height: 1.5;
+}
+
+.orc-campo input::placeholder,
+.orc-campo textarea::placeholder,
+.orc-total input::placeholder {
+    color: #94a3b8;
+}
+
+.orc-campo input:hover,
+.orc-campo textarea:hover {
+    border-color: var(--ouro-borda);
+}
+
+.orc-campo input:focus,
+.orc-campo textarea:focus,
+.orc-total input:focus {
+    outline: none;
+    background: #fff;
+    border-color: var(--ouro);
+    box-shadow: 0 0 0 3px rgba(255, 193, 7, 0.25);
+}
+
+/* caixa do valor final: destaque em dourado, não em verde */
+.orc-total {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    margin-top: 18px;
+    padding: 14px;
+    border: 1px solid var(--ouro-borda);
+    border-radius: var(--raio);
+    background: var(--ouro-fundo);
+}
+
+.orc-total input {
+    padding: 10px 12px;
+    border: 1.5px solid var(--ouro);
+    background: #fff;
+    font-size: 1.15rem;
+    font-weight: 700;
+}
+
+.orc-acoes {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.orc-btn-cancelar,
+.orc-btn-enviar {
+    padding: 10px 18px;
+    border-radius: 999px;
+    font-family: inherit;
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.15s, border-color 0.15s;
+}
+
+.orc-btn-cancelar {
+    border: 1px solid var(--ouro-borda);
+    background: transparent;
+    color: var(--texto);
+}
+
+.orc-btn-cancelar:hover {
+    background: var(--ouro-fundo);
+    border-color: var(--ouro);
+}
+
+.orc-btn-enviar {
+    border: 1px solid var(--ouro);
+    background: var(--ouro);
+    color: var(--texto);
+}
+
+.orc-btn-enviar:hover {
+    background: var(--ambar);
+    border-color: var(--ambar);
+}
+
+.orc-fechar:focus-visible,
+.orc-btn-cancelar:focus-visible,
+.orc-btn-enviar:focus-visible {
+    outline: 2px solid var(--ouro);
+    outline-offset: 2px;
+}
+
+/* ==============================================
    COMPOSER
 ============================================== */
 
@@ -867,6 +1291,16 @@ img {
         display: none;
     }
 
+    .sino-link {
+        width: 36px;
+        height: 36px;
+    }
+
+    .sino-badge {
+        top: 7px;
+        right: 8px;
+    }
+
     .chat-main {
         padding: 0;
     }
@@ -897,6 +1331,43 @@ img {
 
     .btn-voltar {
         display: flex;
+    }
+
+    .btn-orcamento {
+        width: 36px;
+        height: 36px;
+        padding: 0;
+        justify-content: center;
+    }
+
+    .btn-orcamento-texto {
+        display: none;
+    }
+
+    /* Modal de orçamento: uma coluna e botões na largura toda */
+    .modal-orcamento {
+        padding: 20px 16px;
+    }
+
+    .orc-grade {
+        grid-template-columns: 1fr;
+    }
+
+    .orc-acoes {
+        flex-direction: column-reverse;
+    }
+
+    .orc-btn-cancelar,
+    .orc-btn-enviar {
+        width: 100%;
+        padding: 12px 18px;
+    }
+
+    /* 16px evita o zoom automático dos campos no iPhone */
+    .orc-campo input,
+    .orc-campo textarea,
+    .orc-total input {
+        font-size: 16px;
     }
 
     .msg {

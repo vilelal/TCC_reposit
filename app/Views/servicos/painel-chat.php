@@ -25,25 +25,6 @@ $fotoPadrao = 'app/css/img/icone-user.png';
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="app/css/chat.css">
-    <style>
-        .card-orcamento { background:#fff; color:#333; border:1px solid #d9e2ec; border-radius:10px; padding:12px 14px; min-width:230px; max-width:320px; text-align:left; }
-        .card-orcamento-titulo { font-size:12px; font-weight:700; color:#666; text-transform:uppercase; letter-spacing:.4px; }
-        .card-orcamento-valor { font-size:22px; font-weight:700; color:#28a745; margin:4px 0 8px; }
-        .card-orcamento-linha { font-size:13px; color:#555; margin-bottom:2px; }
-        .card-orcamento-desc { font-size:13px; margin-top:8px; white-space:pre-wrap; }
-        .card-orcamento-status { display:inline-block; margin-top:10px; padding:3px 10px; border-radius:20px; font-size:12px; font-weight:600; }
-        .st-pendente { background:#fff3cd; color:#856404; }
-        .st-aceito { background:#d4edda; color:#155724; }
-        .st-recusado { background:#f8d7da; color:#721c24; }
-        .st-substituido { background:#e2e3e5; color:#383d41; }
-        .card-orcamento-acoes { display:flex; gap:8px; margin-top:12px; }
-        .card-orcamento-acoes button { flex:1; border:none; border-radius:6px; padding:8px 10px; font-weight:600; cursor:pointer; color:#fff; }
-        .btn-aceitar { background:#28a745; }
-        .btn-recusar { background:#dc3545; }
-        .aviso-chat { padding:10px 14px; font-size:13px; font-weight:600; }
-        .aviso-ok { background:#d4edda; color:#155724; }
-        .aviso-erro { background:#f8d7da; color:#721c24; }
-    </style>
 </head>
 
 <body>
@@ -57,8 +38,14 @@ $fotoPadrao = 'app/css/img/icone-user.png';
                 <h2>Central de mensagens</h2>
             </div>
             <div class="header-acoes">
-                <a href="?route=notificacoes" class="sino-link" title="Notificações">
-                    <img src="app/css/img_dashboard/icone-sino.png" alt="Notificações" class="icone-sino">
+                <a href="?route=notificacoes" class="sino-link" title="Notificações" aria-label="Notificações">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9" />
+                        <path d="M13.73 21a2 2 0 0 1-3.46 0" />
+                    </svg>
+                    <?php if (!empty($notificacoesNaoLidas)): ?>
+                        <span class="sino-badge" aria-hidden="true"></span>
+                    <?php endif; ?>
                 </a>
                 <?php if (isset($_SESSION["id"])): ?>
                     <span class="user-name"><?= htmlspecialchars($_SESSION['nome']) ?></span>
@@ -144,67 +131,83 @@ $fotoPadrao = 'app/css/img/icone-user.png';
                                 <?php endif; ?>
                             </div>
                             <?php if (isset($_SESSION["tipo"]) && $_SESSION["tipo"] === "prestador"): ?>
-                            <button type="button" onclick="document.getElementById('modal-orcamento').showModal()" style="background: #007bff; color: #fff; border: none; padding: 8px 14px; border-radius: 4px; cursor: pointer; font-weight: bold;">
-                                🛠️ Ajustar Orçamento (Calculadora)
+                            <button type="button" class="btn-orcamento"
+                                onclick="document.getElementById('modal-orcamento').showModal()"
+                                title="Ajustar orçamento" aria-label="Ajustar orçamento">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                    <rect x="4" y="2" width="16" height="20" rx="2" />
+                                    <line x1="8" y1="6" x2="16" y2="6" />
+                                    <line x1="8" y1="11" x2="8.01" y2="11" />
+                                    <line x1="12" y1="11" x2="12.01" y2="11" />
+                                    <line x1="16" y1="11" x2="16.01" y2="11" />
+                                    <line x1="8" y1="15" x2="8.01" y2="15" />
+                                    <line x1="12" y1="15" x2="12.01" y2="15" />
+                                    <line x1="16" y1="15" x2="16.01" y2="15" />
+                                </svg>
+                                <span class="btn-orcamento-texto">Ajustar orçamento</span>
                             </button>
                             <?php endif; ?>
 
                             <!-- ========================================================== -->
                             <!-- 🛠️ MODAL DE AUXÍLIO PARA CÁLCULO DE ORÇAMENTO (Prestador) -->
                             <!-- ========================================================== -->
-                            <dialog id="modal-orcamento" style="padding: 20px; border-radius: 8px; border: none; width: 100%; max-width: 450px; box-shadow: 0 4px 15px rgba(0,0,0,0.2);">
-                                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
-                                    <h3 style="margin: 0; color: #333;">Calculadora de Orçamento</h3>
-                                    <button type="button" onclick="document.getElementById('modal-orcamento').close()" style="background: none; border: none; font-size: 18px; cursor: pointer; color: #666;">&times;</button>
+                            <dialog id="modal-orcamento" class="modal-orcamento">
+                                <div class="orc-topo">
+                                    <h3>Calculadora de orçamento</h3>
+                                    <button type="button" class="orc-fechar" onclick="document.getElementById('modal-orcamento').close()" title="Fechar" aria-label="Fechar">&times;</button>
                                 </div>
 
-                                <p style="font-size: 13px; color: #666; margin-bottom: 15px;">
+                                <p class="orc-intro">
                                     Preencha os campos abaixo para estimar o valor ideal do serviço. Você poderá ajustar o total no final antes de enviar.
                                 </p>
 
                                 <form action="?route=enviar-orcamento" method="POST" id="form-calculadora">
                                     <input type="hidden" name="id_solicitacao" value="<?= (int) $solicitacaoAtiva ?>">
 
-                                    <!-- Dias de Duração -->
-                                    <div style="margin-bottom: 12px;">
-                                        <label style="display: block; font-size: 13px; font-weight: 600; color: #444; margin-bottom: 4px;">Dias de Duração:</label>
-                                        <input type="number" id="calc-dias" name="dias" min="1" value="1" placeholder="Ex: 2" style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box;">
-                                    </div>
+                                    <div class="orc-grade">
 
-                                    <!-- Valor da Diária / Mão de Obra -->
-                                    <div style="margin-bottom: 12px;">
-                                        <label style="display: block; font-size: 13px; font-weight: 600; color: #444; margin-bottom: 4px;">Valor da Diária / Mão de Obra (R$):</label>
-                                        <input type="number" id="calc-diaria" name="diaria" step="0.01" min="0" placeholder="0,00" style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box;">
-                                    </div>
+                                        <!-- Dias de Duração -->
+                                        <div class="orc-campo">
+                                            <label for="calc-dias">Dias de duração</label>
+                                            <input type="number" id="calc-dias" name="dias" min="1" value="1" placeholder="Ex: 2">
+                                        </div>
 
-                                    <!-- Custo de Materiais -->
-                                    <div style="margin-bottom: 12px;">
-                                        <label style="display: block; font-size: 13px; font-weight: 600; color: #444; margin-bottom: 4px;">Custo de Materiais (R$):</label>
-                                        <input type="number" id="calc-materiais" name="materiais" step="0.01" min="0" value="0" placeholder="0,00" style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box;">
-                                    </div>
+                                        <!-- Valor da Diária / Mão de Obra -->
+                                        <div class="orc-campo">
+                                            <label for="calc-diaria">Diária / mão de obra (R$)</label>
+                                            <input type="number" id="calc-diaria" name="diaria" step="0.01" min="0" placeholder="0,00">
+                                        </div>
 
-                                    <!-- Custo de Transporte / Gasolina -->
-                                    <div style="margin-bottom: 15px;">
-                                        <label style="display: block; font-size: 13px; font-weight: 600; color: #444; margin-bottom: 4px;">Estimativa de Transporte / Gasolina (R$):</label>
-                                        <input type="number" id="calc-transporte" name="transporte" step="0.01" min="0" value="0" placeholder="0,00" style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box;">
-                                    </div>
+                                        <!-- Custo de Materiais -->
+                                        <div class="orc-campo">
+                                            <label for="calc-materiais">Materiais (R$)</label>
+                                            <input type="number" id="calc-materiais" name="materiais" step="0.01" min="0" value="0" placeholder="0,00">
+                                        </div>
 
-                                    <!-- Descrição do que está incluso -->
-                                    <div style="margin-bottom: 15px;">
-                                        <label style="display: block; font-size: 13px; font-weight: 600; color: #444; margin-bottom: 4px;">Descrição do que está incluso (opcional):</label>
-                                        <textarea name="descricao" rows="3" maxlength="1000" placeholder="Ex: troca da tubulação e mão de obra" style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box; font-family: inherit;"></textarea>
+                                        <!-- Custo de Transporte / Gasolina -->
+                                        <div class="orc-campo">
+                                            <label for="calc-transporte">Transporte / gasolina (R$)</label>
+                                            <input type="number" id="calc-transporte" name="transporte" step="0.01" min="0" value="0" placeholder="0,00">
+                                        </div>
+
+                                        <!-- Descrição do que está incluso -->
+                                        <div class="orc-campo orc-full">
+                                            <label for="calc-descricao">Descrição do que está incluso (opcional)</label>
+                                            <textarea id="calc-descricao" name="descricao" rows="3" maxlength="1000" placeholder="Ex: troca da tubulação e mão de obra"></textarea>
+                                        </div>
+
                                     </div>
 
                                     <!-- Valor Final Sugerido / Editável -->
-                                    <div style="background: #f8f9fa; padding: 12px; border-radius: 6px; margin-bottom: 20px; border: 1px solid #e9ecef;">
-                                        <label style="display: block; font-size: 14px; font-weight: bold; color: #28a745; margin-bottom: 6px;">Valor Final da Proposta (R$):</label>
-                                        <input type="number" name="novo_valor" id="calc-total" step="0.01" min="0" required style="width: 100%; padding: 10px; font-size: 18px; font-weight: bold; color: #28a745; border: 2px solid #28a745; border-radius: 4px; background: #fff; box-sizing: border-box;">
+                                    <div class="orc-total">
+                                        <label for="calc-total">Valor final da proposta (R$)</label>
+                                        <input type="number" name="novo_valor" id="calc-total" step="0.01" min="0" required placeholder="0,00">
                                     </div>
 
                                     <!-- Botões de Ação -->
-                                    <div style="display: flex; gap: 10px; justify-content: flex-end;">
-                                        <button type="button" onclick="document.getElementById('modal-orcamento').close()" style="background: #6c757d; color: #fff; border: none; padding: 10px 15px; border-radius: 4px; cursor: pointer;">Cancelar</button>
-                                        <button type="submit" style="background: #28a745; color: #fff; border: none; padding: 10px 20px; border-radius: 4px; cursor: pointer; font-weight: bold;">Enviar Proposta ao Cliente</button>
+                                    <div class="orc-acoes">
+                                        <button type="button" class="orc-btn-cancelar" onclick="document.getElementById('modal-orcamento').close()">Cancelar</button>
+                                        <button type="submit" class="orc-btn-enviar">Enviar proposta ao cliente</button>
                                     </div>
                                 </form>
                             </dialog>

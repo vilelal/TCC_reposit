@@ -1,203 +1,302 @@
+:root {
+    --amarelo: #FDB913;
+    --amarelo-escuro: #E8A20B;
+    --amber: #FDB441;
+    --amber-soft: #FFF4DE;
+    --amber-line: #F0D49C;
+    --preto: #1A1A1A;
+    --cinza-texto: #6B7280;
+    --cinza-borda: #E5E7EB;
+    --fundo: #FAFAFA;
+    --branco: #FFFFFF;
+}
+
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
+/* ==============================
+   BASE
+   ============================== */
+
+body {
+    background-color: var(--fundo);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    color: var(--preto);
+}
+
 .container {
     width: 100%;
     display: flex;
-    flex-direction: row;
     justify-content: center;
-    padding: 5%;
+    padding: 40px 16px 56px;
 }
 
-body {
-    background-color: #F8F9FA;
-    font-family: 'Montserrat', sans-serif;
+/* ==============================
+   CARD
+   ============================== */
+
+.cadastro {
+    position: relative;
+    width: 100%;
+    max-width: 720px;
+    padding: 0 40px 40px;
+
+    background: var(--branco);
+    border: 1px solid var(--cinza-borda);
+    border-radius: 20px;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.06);
+    overflow: hidden;
+}
+
+/* faixa amarela no topo do card */
+.cadastro::before {
+    content: "";
+    display: block;
+    height: 8px;
+    margin: 0 -40px 28px;
+    background: linear-gradient(90deg, var(--amarelo), var(--amarelo-escuro));
+}
+
+.topo {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    margin-bottom: 20px;
+}
+
+.logo {
+    display: block;
+    width: 130px;
+    height: auto;
+    flex-shrink: 0;
+}
+
+.btn-voltar {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+
+    padding: 8px 16px 8px 10px;
+
+    border: 1.5px solid var(--amber-line);
+    border-radius: 999px;
+    background: transparent;
+    color: var(--preto);
+
+    font-size: 14px;
+    font-weight: 700;
+    text-decoration: none;
+
+    transition: background-color 0.15s ease, border-color 0.15s ease;
+}
+
+.btn-voltar svg {
+    width: 18px;
+    height: 18px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2.5;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+.btn-voltar:hover {
+    background-color: var(--amber-soft);
+    border-color: var(--amber);
+}
+
+.btn-voltar:focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 4px rgba(253, 180, 65, 0.35);
+}
+
+/* ==============================
+   SEÇÕES
+   ============================== */
+
+.secao+.secao {
+    margin-top: 32px;
+    padding-top: 28px;
+    border-top: 1px solid var(--cinza-borda);
+}
+
+.secao h3 {
+    margin-bottom: 18px;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--cinza-texto);
+}
+
+/* ==============================
+   CAMPOS
+   ============================== */
+
+.grade {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 18px 20px;
+}
+
+.campo {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    min-width: 0;
+}
+
+.campo.full {
+    grid-column: 1 / -1;
+}
+
+.campo label {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--preto);
 }
 
 input[type="text"],
 input[type="tel"],
-input[type="email"] {
-    width: 80%;
-    padding: 8px;
-    margin-bottom: 12px;
-    border-radius: 15px;
-    border: 1px solid #000000;
-    background-color: #E7E5E5;
-    color: #000000;
-    font-size: 18px;
-}
-
-select {
-    width: 80%;
-    padding: 8px;
-    margin-bottom: 12px;
-    border-radius: 15px;
-    border: 1px solid #000000;
-    background-color: #E7E5E5;
-    color: #000000;
-    font-size: 18px;
-}
-
-.lado-laranja {
-    width: 33%;
-    background-color: #ffbd59;
-    text-align: center;
-}
-.h1{
-    margin-top: 50%;
-    color: #FFFFFF;
-}
-
-.cadastro {
-    padding: 40px 50px;
-    background-color: #F8F9FA;
-    border-radius: 15px;
-    box-shadow: 0px 10px 25px rgba(0, 0, 0, 0.08);
-    box-sizing: border-box;
-    background-color: #FFFFFF;
-    box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.12);
-    width: 800px;
-    text-align: center;
-}
-
-
-/* Título */
-h1 {
-    font-size: 64px;
-    color: #FBD34F;
-    font-weight: 800;
-}
-
-/* Botão */
-.btnLogar {
-    margin-top: 5%;
-    background-color: #FFFFFF;
-    color: #000000;
-    padding: 12px 0;
-    width: 70%;
-    display: inline-block;
-    font-size: 36px;
-    font-weight: 800;
-    border-style: none;
-    border-radius: 15px;
-}
-
-/* Textos */
-p {
-    font-size: 24px;
-    line-height: 0.1;
-    color: #FFFFFF;
-    font-weight: 800;
-    margin-bottom: 30px;
-}
-
-.bemvindo {
-    margin-top: 50%;
-    font-size: 64px;
-    color: #FFFFFF;
-    font-weight: 800;
-}
-
-.dados {
-    font-size: 28px;
-
-}
-
-.lado-direito {
-    width: 75%;
-    /* Ganhou mais espaço lateral */
-    display: flex;
-    justify-content: center;
-    /* Mantém o card centralizado no espaço extra */
-    align-items: center;
-}
-
-.endereco {
-    display: none;
-}
-
-.botoes {
-    display: flex;
-    justify-content: center;
-    /* Coloca lado a lado e centraliza */
-    gap: 15px;
-    /* Espaço entre os botões */
-    margin-top: 25px;
+input[type="email"],
+select,
+textarea {
     width: 100%;
+    padding: 12px 14px;
+
+    border: 1.5px solid var(--cinza-borda);
+    border-radius: 12px;
+    background-color: var(--fundo);
+    color: var(--preto);
+
+    font-family: inherit;
+    font-size: 15px;
+
+    transition: border-color 0.15s ease, box-shadow 0.15s ease, background-color 0.15s ease;
 }
 
-.btn-cadastrar {
-    display: none;
+input::placeholder,
+textarea::placeholder {
+    color: #9CA3AF;
 }
 
-button {
-    padding: 10px 24px;
-    font-size: 16px;
-    font-weight: 700;
-    border-radius: 10px;
-    cursor: pointer;
-    border: none;
+input:hover,
+select:hover,
+textarea:hover {
+    border-color: var(--amber-line);
 }
 
-.btn-avancar {
-    background-color: #FBD34F;
-    color: #FFFFFF;
-    border: none;
-    border-radius: 10px;
-    padding: 10px 24px;
-    font-size: 16px;
-    font-weight: 700;
-    cursor: pointer;
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-}
-
-.btn-voltar {
-    background-color: #FFFFFF;
-    color: #000000;
-    border: 1px solid #E0E0E0;
-    border-radius: 10px;
-    padding: 10px 24px;
-    font-size: 16px;
-    font-weight: 700;
-    cursor: pointer;
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-}
-
-
-button[type="submit"] {
-    max-width: 200px;
-    background-color: #ffc107;
-    color: #ffffff;
-    border: none;
-    padding: 12px;
-    padding-inline: 30px;
-    border-radius: 15px;
-    font-weight: bold;
-    cursor: pointer;
-    margin: 15px auto 0 auto;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 8px;
-}
-
-.logo{
-    width: 150px;
-    height: auto;
-    margin-top: -160px;
-    margin-left:90%;
+input:focus,
+select:focus,
+textarea:focus {
+    outline: none;
+    border-color: var(--amber);
+    background-color: var(--branco);
+    box-shadow: 0 0 0 4px rgba(253, 180, 65, 0.2);
 }
 
 textarea {
-    width: 80%;
-    padding: 8px;
-    margin-bottom: 12px;
-    border-radius: 15px;
-    border: 1px solid #000000;
-    background-color: #E7E5E5;
-    color: #000000;
-    font-size: 18px;
+    resize: vertical;
+    min-height: 120px;
+    line-height: 1.5;
+}
+
+/* ==============================
+   BOTÃO
+   ============================== */
+
+button[type="submit"] {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 100%;
+    max-width: 260px;
+    margin: 36px auto 0;
+    padding: 14px 30px;
+
+    background-color: var(--amber);
+    color: var(--preto);
+
+    border: none;
+    border-radius: 999px;
+    box-shadow: 0 2px 8px rgba(253, 180, 65, 0.35);
+
+    font-family: inherit;
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+
+    transition: background-color 0.15s ease, transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+button[type="submit"]:hover {
+    background-color: #f8c065;
+    transform: translateY(-1px);
+    box-shadow: 0 6px 16px rgba(253, 180, 65, 0.4);
+}
+
+button[type="submit"]:active {
+    transform: translateY(0);
+}
+
+button[type="submit"]:focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 4px rgba(253, 180, 65, 0.35);
+}
+
+/* ==============================
+   RESPONSIVIDADE
+   ============================== */
+
+@media (max-width: 600px) {
+    .container {
+        padding: 16px 12px 40px;
+    }
+
+    .cadastro {
+        padding: 0 20px 28px;
+        border-radius: 16px;
+    }
+
+    .cadastro::before {
+        margin: 0 -20px 22px;
+    }
+
+    .topo {
+        margin-bottom: 16px;
+    }
+
+    .logo {
+        width: 96px;
+    }
+
+    /* tudo em uma coluna no celular */
+    .grade {
+        grid-template-columns: 1fr;
+        gap: 16px;
+    }
+
+    .secao+.secao {
+        margin-top: 26px;
+        padding-top: 22px;
+    }
+
+    /* 16px evita o zoom automático dos campos no iPhone */
+    input[type="text"],
+    input[type="tel"],
+    input[type="email"],
+    select,
+    textarea {
+        font-size: 16px;
+    }
+
+    button[type="submit"] {
+        max-width: none;
+        margin-top: 28px;
+    }
 }
