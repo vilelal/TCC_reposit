@@ -13,6 +13,33 @@ class PrestadorController
 
     public function relatorio()
     {
+        $idPrestador = $_SESSION["id_prestador"] ?? 0;
+    $mediaAvaliacao = PrestadorModel::obterMediaAvaliacao($idPrestador);
+
+    $periodos = [
+        '7d'  => ['dados' => PrestadorModel::obterDados7Dias($idPrestador),  'dias' => 7],
+        '30d' => ['dados' => PrestadorModel::obterDados30Dias($idPrestador), 'dias' => 30],
+        '12m' => ['dados' => PrestadorModel::obterDados12Meses($idPrestador),'dias' => 365],
+    ];
+
+    $dadosFormatados = [];
+    foreach ($periodos as $chave => $item) {
+        $d = $item['dados'];
+        $d['media']          = $mediaAvaliacao;
+        $d['aceite']         = PrestadorModel::obterTaxaAceite($idPrestador, $item['dias']);
+        $d['faturamentoVar'] = $d['faturamentoVar'] ?? 0;
+        $d['servicosVar']    = $d['servicosVar'] ?? 0;
+        $d['mediaVar']       = $d['mediaVar'] ?? 0;
+        $d['aceiteVar']      = $d['aceiteVar'] ?? 0;
+        $dadosFormatados[$chave] = $d;
+    }
+
+    $payloadRelatorio = [
+        'dados'   => $dadosFormatados,
+        'ranking' => PrestadorModel::buscarRankingServicos($idPrestador),
+        'ultimos' => PrestadorModel::buscarUltimosServicos($idPrestador, 4),
+    ];
+
         require_once "app/Views/prestador/relatorio.php";
     }
 
@@ -124,4 +151,41 @@ class PrestadorController
         }
         
     }
+
+
+
+    
+
+    //  public function relatorioo()  // servindo para ver concluidos e dinheiro
+    // {
+    // // Pega o parâmetro 'dia do js da pagina relatorio
+    // $periodoParam = $_GET['dias'] ?? '7'; 
+
+    // // quantos dias a pessoa ve
+    // switch ($periodoParam) {
+    //     case '7':
+    //     case '7d':
+    //         $diasSelecionados = 7;
+    //         break;
+    //     case '30':
+    //     case '30d':
+    //         $diasSelecionados = 30;
+    //         break;
+    //     case '365':
+    //     case '12m':
+    //         $diasSelecionados = 365; 
+    //         break;
+    //     default:
+    //         $diasSelecionados = 7; // Valor padrão 
+    //         break;
+    // }
+
+    //     $idprestador = $_SESSION["id_prestador"];
+    //     $dadosrelatorio = PrestadorModel::servicosConcluidos($idprestador, $diasSelecionados);
+
+    //     $trampo = $dadosrelatorio["total_concluidos"];
+    //     $money = $dadosrelatorio ["faturamento_total"];                 // olhga aquiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii
+    //     require_once "app/Views/prestador/relatorio.php";
+    // }
+      
 }
